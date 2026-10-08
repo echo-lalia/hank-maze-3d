@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c4y80yjg2gxku"]
+
+[ext_resource type="PackedScene" uid="uid://bstegkducyii3" path="res://hankalpeca.tscn" id="1_ig7tw"]
+
+[sub_resource type="Environment" id="Environment_ig7tw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
+size = Vector3(100, 10, 100)
+
+[node name="Node3D" type="Node3D" unique_id=119268813]
+
+[node name="HankAlpeca" parent="." unique_id=307689099 instance=ExtResource("1_ig7tw")]
+transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1688204225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9601943, 2.754424, 12.979232)
+environment = SubResource("Environment_ig7tw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=552266381]
+collision_layer = 65535
+collision_mask = 65535
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=627568425]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+shape = SubResource("BoxShape3D_pb32r")

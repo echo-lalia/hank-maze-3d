@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bstegkducyii3"]
+
+[ext_resource type="PackedScene" uid="uid://jmypsarx38dc" path="res://hankmodelgodot.blend" id="1_7v3u7"]
+[ext_resource type="Script" uid="uid://dmq0s77ijkuxr" path="res://hankalpeca.gd" id="2_ikp2g"]
+
+[node name="HankAlpeca" unique_id=307689099 instance=ExtResource("1_7v3u7")]
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
+script = ExtResource("2_ikp2g")
+
+[node name="Armature" parent="." index="0" unique_id=762976761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.945, -0.423)
+
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=280370685]
+bones/0/position = Vector3(0.47850117, -1.5357099, -0.18943094)
+bones/0/rotation = Quaternion(-0.5267019, 0.09644286, 0.006139578, 0.8445391)
+bones/1/position = Vector3(-0.47850117, -1.4084535, -0.33921945)
+bones/1/rotation = Quaternion(-0.5631299, -0.13863584, 0.015433062, 0.8145101)
+bones/2/position = Vector3(-2.5898093e-09, 0.09529313, 0.02606728)
+bones/2/rotation = Quaternion(-0.084932685, 1.1877856e-07, -1.0124763e-08, 0.9963867)
+bones/3/position = Vector3(0.59725165, -0.8016589, 1.4091294)
+bones/4/position = Vector3(-0.60019505, -0.801659, 1.4091291)
+bones/5/rotation = Quaternion(0.9233977, 0.13804334, 0.022789503, 0.3574374)
+bones/6/rotation = Quaternion(0.63128674, -0.029761711, 0.14290479, 0.7616886)
+bones/7/rotation = Quaternion(-0.5397175, -0.0958608, 0.011386583, 0.83629316)
+bones/8/rotation = Quaternion(0.91333884, -0.15472202, -0.033482023, 0.37516984)
+bones/9/rotation = Quaternion(0.7005765, 0.0271638, -0.1585898, 0.6952007)
+bones/10/rotation = Quaternion(-0.571302, 0.11368259, -0.069223985, 0.8098756)
+bones/11/rotation = Quaternion(0.05329336, 0.042241827, 0.004952275, 0.9976728)
+bones/12/rotation = Quaternion(0.008730209, 0.03817194, 0.0020862482, 0.99923086)
+bones/13/rotation = Quaternion(-0.019986946, -0.08359313, 0.008416768, 0.99626404)
+bones/14/rotation = Quaternion(-0.45599765, -0.47697875, -0.47368413, 0.5832503)
+bones/15/rotation = Quaternion(-0.40704137, -0.14997888, 0.052218053, 0.89949816)
+bones/16/rotation = Quaternion(-0.22191124, -0.1546968, -0.08818212, 0.95867014)
+bones/17/rotation = Quaternion(-0.032573774, 0.05784157, 0.030707888, 0.9973216)
+bones/18/rotation = Quaternion(-0.4578335, 0.47728586, 0.4734726, 0.5817306)
+bones/19/rotation = Quaternion(-0.3878946, 0.13677977, 0.0065230858, 0.91147494)
+bones/20/rotation = Quaternion(-0.16784775, 0.049331307, 0.006267125, 0.9845579)
+bones/21/rotation = Quaternion(-0.03117877, -0.21551608, -0.0321982, 0.97547126)
+
+[node name="FloorDetectionRaycast" type="RayCast3D" parent="." index="2" unique_id=89854284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5394348, 0)
+exclude_parent = false
+hit_from_inside = true
