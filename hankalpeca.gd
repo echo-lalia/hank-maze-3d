@@ -3,7 +3,7 @@ extends Node3D
 class_name HankAlpeca
 
 
-const RUN_ANIMATION_TRAVEL: float = 4.0
+const RUN_ANIMATION_TRAVEL: float = 3.0
 const RUN_ANIMATION_DURATION: float = 0.1667
 const RUN_ANIMATION_VELOCITY: float = RUN_ANIMATION_TRAVEL / RUN_ANIMATION_DURATION
 

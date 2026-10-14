@@ -7,10 +7,10 @@
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
 script = ExtResource("2_ikp2g")
 
-[node name="Armature" parent="." index="0" unique_id=618377117]
+[node name="Armature" parent="." index="0" unique_id=731819472]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312, 0)
 
-[node name="Skeleton3D" parent="Armature" index="0" unique_id=1082212881]
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=685556356]
 bones/0/position = Vector3(0.076560184, -0.2936643, -0.03425586)
 bones/0/rotation = Quaternion(-0.70325845, 5.090812e-11, -5.0907948e-11, 0.71093434)
 bones/1/position = Vector3(-0.076560184, -0.2936643, -0.03425586)
