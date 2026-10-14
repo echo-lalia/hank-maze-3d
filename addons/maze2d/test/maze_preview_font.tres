@@ -1,0 +1,9 @@
+[gd_resource type="FontVariation" format=3 uid="uid://b7xs00aic88h0"]
+
+[ext_resource type="FontFile" uid="uid://b2itbw3sn4cnx" path="res://addons/maze2d/test/LegacyComputing.otf" id="1_andxf"]
+
+[resource]
+base_font = ExtResource("1_andxf")
+variation_embolden = -0.92
+variation_transform = Transform2D(1.595, 0, 0, 1.555, 0, 0)
+spacing_glyph = 9

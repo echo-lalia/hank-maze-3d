@@ -1,25 +1,77 @@
 [gd_scene format=3 uid="uid://c4y80yjg2gxku"]
 
 [ext_resource type="PackedScene" uid="uid://bstegkducyii3" path="res://hankalpeca.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://batgh444m6nni" path="res://player_body.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="3_h2yge"]
 
-[sub_resource type="Environment" id="Environment_ig7tw"]
+[sub_resource type="QuadMesh" id="QuadMesh_h2yge"]
+size = Vector2(100, 100)
+orientation = 1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h2yge"]
+seed = 25
+frequency = 0.1062
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1bvp3"]
+noise = SubResource("FastNoiseLite_h2yge")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+albedo_color = Color(0.08417409, 0.14507586, 0.26683217, 1)
+albedo_texture = SubResource("NoiseTexture2D_1bvp3")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
 size = Vector3(100, 10, 100)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pp1bs"]
+sky_top_color = Color(0.30806684, 0.45837635, 0.6743981, 1)
+sky_horizon_color = Color(0.5647011, 0.54016536, 0.39796352, 1)
+sky_curve = 0.044595264
+ground_bottom_color = Color(0.12330372, 0.101218246, 0.07636473, 1)
+ground_horizon_color = Color(0.38231626, 0.38973343, 0.4045803, 1)
+sun_angle_max = 224.03
+sun_curve = 0.09896311
+
+[sub_resource type="Sky" id="Sky_pb32r"]
+sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
+
+[sub_resource type="Environment" id="Environment_ig7tw"]
+background_mode = 2
+sky = SubResource("Sky_pb32r")
 
 [node name="Node3D" type="Node3D" unique_id=119268813]
 
 [node name="HankAlpeca" parent="." unique_id=307689099 instance=ExtResource("1_ig7tw")]
 transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1688204225]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9601943, 2.754424, 12.979232)
-environment = SubResource("Environment_ig7tw")
-
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=552266381]
 collision_layer = 65535
 collision_mask = 65535
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1268722119]
+mesh = SubResource("QuadMesh_h2yge")
+surface_material_override/0 = SubResource("StandardMaterial3D_h2yge")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=627568425]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
 shape = SubResource("BoxShape3D_pb32r")
+
+[node name="PlayerBody" type="CharacterBody3D" parent="." unique_id=1725580008 node_paths=PackedStringArray("player_head")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.631571)
+script = ExtResource("2_0xm2m")
+player_head = NodePath("PlayerHead")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody" unique_id=1458434879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_pb32r")
+
+[node name="PlayerHead" type="Node3D" parent="PlayerBody" unique_id=1881446135 node_paths=PackedStringArray("player_body")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("3_h2yge")
+player_body = NodePath("..")
+
+[node name="PlayerCamera" type="Camera3D" parent="PlayerBody/PlayerHead" unique_id=1688204225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.138)
+environment = SubResource("Environment_ig7tw")
+fov = 90.0
