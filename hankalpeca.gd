@@ -44,6 +44,12 @@ var previous_position: Vector3 = Vector3.ZERO
 var velocity: Vector3 = Vector3.ZERO
 
 
+
+func _ready() -> void:
+	if not Engine.is_editor_hint():
+		_update_playing_animation()
+
+
 func _update_playing_animation() -> void:
 	if not is_node_ready():
 		await ready

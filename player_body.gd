@@ -19,9 +19,35 @@ enum MOVEMENT_STATES {
 	midair,
 }
 
-var movement_state: MOVEMENT_STATES = MOVEMENT_STATES.normal
+@onready var player_collision_normal: CollisionShape3D = $PlayerCollisionNormal
+@onready var player_collision_sneak: CollisionShape3D = $PlayerCollisionSneak
 
 @export var player_head: PlayerHead
+
+
+
+
+var movement_state: MOVEMENT_STATES = MOVEMENT_STATES.normal:
+	set(val):
+		if movement_state != val:
+			movement_state = val
+			_switch_movement_state()
+
+
+func _switch_movement_state() -> void:
+	if not is_node_ready():
+		await ready
+	
+	var is_sneaking: bool = movement_state == MOVEMENT_STATES.sneak
+	player_collision_normal.set_deferred("disabled", is_sneaking)
+	player_collision_sneak.set_deferred("disabled", not is_sneaking)
+
+
+
+static var current_player_instance: PlayerBody
+
+func _ready() -> void:
+	current_player_instance = self
 
 
 func _physics_process(delta: float) -> void:
