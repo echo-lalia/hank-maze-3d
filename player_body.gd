@@ -83,6 +83,8 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+	if OS.is_debug_build() and Input.is_action_pressed("dbg_fly"):
+		velocity.y = JUMP_VELOCITY
 	
 	# Add the gravity.
 	if not is_on_floor():

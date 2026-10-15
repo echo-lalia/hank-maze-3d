@@ -143,11 +143,11 @@ class Shape extends MazeShape:
 		'╦', # 1  0b0001 north wall
 		'╣', # 2  0b0010 east wall
 		'╗', # 3  0b0011 n/e wall
-		'╩', # 4  0b0100
-		'═', # 5  0b0101
-		'╝', # 6  0b0110
-		'╛', # 7  0b0111
-		'╠', # 8  0b1000
+		'╩', # 4  0b0100 south wall
+		'═', # 5  0b0101 n/s wall
+		'╝', # 6  0b0110 s/e wall
+		'╛', # 7  0b0111 n/e/s wall
+		'╠', # 8  0b1000 
 		'╔', # 9  0b1001
 		'║', # 10 0b1010
 		'╓', # 11 0b1011 # w/e/n wall (path south)

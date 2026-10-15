@@ -112,9 +112,9 @@ func recreate_sm():
 			sm.room(x, y).lock_door(door)
 	
 	#sm.room(0, 0).lock_door(MazeSquare.Room.N)
-	sm.room(0, 0).lock_door(MazeSquare.Room.E)
+	#sm.room(0, 0).lock_door(MazeSquare.Room.E)
 	#sm.room(0, 0).lock_door(MazeSquare.Room.S)
-	sm.room(0, 0).lock_door(MazeSquare.Room.W)
+	#sm.room(0, 0).lock_door(MazeSquare.Room.W)
 
 
 	MazeAlgoRecursiveBacktracker.generate(sm, sm.room(0, 0), maze_seed)
