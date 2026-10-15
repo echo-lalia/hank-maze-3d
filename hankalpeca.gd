@@ -3,14 +3,17 @@ extends Node3D
 class_name HankAlpeca
 
 
-const RUN_ANIMATION_TRAVEL: float = 3.0
+const RUN_ANIMATION_TRAVEL: float = 2.0
 const RUN_ANIMATION_DURATION: float = 0.1667
 const RUN_ANIMATION_VELOCITY: float = RUN_ANIMATION_TRAVEL / RUN_ANIMATION_DURATION
+const DIST_PER_STEP_SFX: float = 1
 
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var armature: Node3D = $Armature
 @onready var floor_detection_raycast: RayCast3D = $FloorDetectionRaycast
+
+@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 @export var auto_animation: bool = true
 @export var auto_speed_direction: bool = true
@@ -81,7 +84,15 @@ func update_animation_speed_direction() -> void:
 					rotation.y = move_direction
 
 
+var _step_sfx_current_distance: float = 0.0
+
+
 func _process(delta: float) -> void:
+	_step_sfx_current_distance += (global_position - previous_position).length()
+	if _step_sfx_current_distance > DIST_PER_STEP_SFX:
+		_step_sfx_current_distance = 0
+		audio_stream_player_3d.play()
+	
 	velocity = (global_position - previous_position) / delta
 	previous_position = global_position
 	
