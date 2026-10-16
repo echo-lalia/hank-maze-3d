@@ -26,11 +26,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="HankBody" unique_id=1482382425]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=552266381]
-collision_layer = 65535
-collision_mask = 65535
+[node name="Floor" type="StaticBody3D" parent="." unique_id=552266381]
+collision_layer = 9
+collision_mask = 9
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=627568425]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=627568425]
 shape = SubResource("WorldBoundaryShape3D_pb32r")
 
 [node name="PlayerBody" parent="." unique_id=1869904869 instance=ExtResource("3_1bvp3")]

@@ -13,7 +13,8 @@ const DIST_PER_STEP_SFX: float = 1
 @onready var armature: Node3D = $Armature
 @onready var floor_detection_raycast: RayCast3D = $FloorDetectionRaycast
 
-@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
+#@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
+@onready var raytraced_audio_player_3d: RaytracedAudioPlayer3D = $RaytracedAudioPlayer3D
 
 @export var auto_animation: bool = true
 @export var auto_speed_direction: bool = true
@@ -91,7 +92,7 @@ func _process(delta: float) -> void:
 	_step_sfx_current_distance += (global_position - previous_position).length()
 	if _step_sfx_current_distance > DIST_PER_STEP_SFX:
 		_step_sfx_current_distance = 0
-		audio_stream_player_3d.play()
+		raytraced_audio_player_3d.play()
 	
 	velocity = (global_position - previous_position) / delta
 	previous_position = global_position

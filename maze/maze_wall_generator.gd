@@ -18,6 +18,9 @@ const ROOM_SIZE_HALF: float = ROOM_SIZE / 2.0
 const MAZE_X_OFFSET: float = MAZE_WIDTH * ROOM_SIZE * 0.5 - ROOM_SIZE_HALF
 
 
+@export_flags_3d_physics var wall_collision: int = 0b1001
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	generate_maze()
@@ -52,6 +55,8 @@ func _make_single_wall(allow_special: bool = true) -> Node3D:
 	var result: CSGBox3D = CSGBox3D.new()
 	result.size = Vector3(ROOM_SIZE + WALL_THICKNESS, ROOM_HEIGHT, WALL_THICKNESS)
 	result.use_collision = true
+	result.collision_layer = wall_collision
+	result.collision_mask = wall_collision
 	result.position.y = ROOM_HEIGHT * 0.5
 	return result 
 

@@ -15,10 +15,18 @@ run/main_scene="uid://c4y80yjg2gxku"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://c2hriix1p7vup"
+
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/raytraced_audio/plugin.cfg")
 
 [input]
 
@@ -77,6 +85,7 @@ interact={
 
 [layer_names]
 
+3d_physics/layer_4="AudioRaycast"
 3d_physics/layer_5="InteractableArea"
 
 [navigation]
@@ -88,6 +97,11 @@ interact={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+
+[raytraced_audio]
+
+reverb_bus=&"RaytracedReverb"
+ambient_bus=&"RaytracedAmbient"
 
 [rendering]
 

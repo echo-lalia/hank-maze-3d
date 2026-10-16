@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://batgh444m6nni" path="res://player_body.gd" id="1_bvaq7"]
 [ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="2_2lce7"]
+[ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="3_2lce7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
 
@@ -71,3 +72,9 @@ grow_vertical = 2
 text = "Interact"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="RaytracedAudioListener" type="AudioListener3D" parent="PlayerHead" unique_id=678790517]
+script = ExtResource("3_2lce7")
+rayCollisionLayers = 8
+ray_scatter_model = 1
+metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
