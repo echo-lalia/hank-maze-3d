@@ -22,10 +22,23 @@ enum MOVEMENT_STATES {
 @onready var player_collision_normal: CollisionShape3D = $PlayerCollisionNormal
 @onready var player_collision_sneak: CollisionShape3D = $PlayerCollisionSneak
 @onready var interaction_raycast: RayCast3D = $PlayerHead/PlayerCamera/InteractionRaycast
+@onready var interaction_label: Label = $PlayerHead/PlayerCamera/InteractionLabel
 
 @export var player_head: PlayerHead
 
 
+var locked_for_animation: bool = false:
+	set(val):
+		locked_for_animation = val
+		process_mode = PROCESS_MODE_DISABLED if locked_for_animation else PROCESS_MODE_INHERIT
+		
+
+## Helper for accessing player head rotation.
+var head_rotation: Vector3:
+	set(val):
+		player_head.rotation = val
+	get:
+		return player_head.rotation
 
 
 var movement_state: MOVEMENT_STATES = MOVEMENT_STATES.normal:
@@ -97,13 +110,17 @@ func _handle_player_movement(delta: float) -> void:
 
 ## Handle detection of interactable area.
 func _handle_interactable_area() -> void:
-	if not interaction_raycast.is_colliding():
+	# collider SHOULD be an interactable area if it's not null.
+	var interactable_area: InteractableArea = interaction_raycast.get_collider()
+	if not interactable_area:
+		interaction_label.visible = false
 		return
 	
-	# collider SHOULD be an interactable area.
-	var interactable_area: InteractableArea = interaction_raycast.get_collider()
 	if Input.is_action_just_pressed("interact"):
 		interactable_area.interact(self)
+	else:
+		interaction_label.visible = true
+		interaction_label.text = interactable_area.ui_hint
 
 
 func _physics_process(delta: float) -> void:

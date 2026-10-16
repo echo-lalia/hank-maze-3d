@@ -28,7 +28,6 @@ func _process(delta: float) -> void:
 		SNEAK_HEAD_HEIGHT if player_body.movement_state == PlayerBody.MOVEMENT_STATES.sneak else NORMAL_HEAD_HEIGHT,
 		5.0 * delta,
 	)
-	
 
 
 

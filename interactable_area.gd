@@ -3,6 +3,7 @@ class_name InteractableArea
 
 
 @export var ui_hint: String = "Interact"
+@export_range(0, 10, 0.01, "or_greater", "suffix:s") var interact_disable_duration: float = 0.5
 
 
 ## Emitted when the interact function is executed by the given player body.
@@ -17,11 +18,13 @@ func _init() -> void:
 	collision_mask = 16
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
 
 
 ## Call this to interact with this object.
 func interact(player: PlayerBody) -> void:
+	process_mode = PROCESS_MODE_DISABLED
 	interacted.emit(player)
+	
+	await get_tree().create_timer(interact_disable_duration).timeout
+	process_mode = PROCESS_MODE_INHERIT
+	
