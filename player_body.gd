@@ -27,10 +27,10 @@ enum MOVEMENT_STATES {
 @export var player_head: PlayerHead
 
 
-var locked_for_animation: bool = false:
-	set(val):
-		locked_for_animation = val
-		process_mode = PROCESS_MODE_DISABLED if locked_for_animation else PROCESS_MODE_INHERIT
+var locked_for_animation: bool = false
+	#set(val):
+		#locked_for_animation = val
+		#process_mode = PROCESS_MODE_DISABLED if locked_for_animation else PROCESS_MODE_INHERIT
 		
 
 ## Helper for accessing player head rotation.
@@ -118,6 +118,7 @@ func _handle_interactable_area() -> void:
 	
 	if Input.is_action_just_pressed("interact"):
 		interactable_area.interact(self)
+		interaction_label.visible = false
 	else:
 		interaction_label.visible = true
 		interaction_label.text = interactable_area.ui_hint
@@ -125,4 +126,5 @@ func _handle_interactable_area() -> void:
 
 func _physics_process(delta: float) -> void:
 	_handle_interactable_area()
-	_handle_player_movement(delta)
+	if not locked_for_animation:
+		_handle_player_movement(delta)

@@ -3,14 +3,16 @@ class_name MazeWallGenerator
 
 const VAULTABLE_WALL = preload("uid://xrikcftunle")
 
-
+const EMPTY_WALL_THRESHOLD = 0.1
+const VAULT_CHANCE_THRESHOLD = 0.1
 
 const MAZE_LENGTH = 20
 const MAZE_RADIUS = 5
 const MAZE_WIDTH = MAZE_RADIUS*2 + 1
 
 
-const ROOM_SIZE: float = 4
+const ROOM_SIZE: float = 6
+const ROOM_HEIGHT: float = 4
 const WALL_THICKNESS: float = 0.2
 const ROOM_SIZE_HALF: float = ROOM_SIZE / 2.0
 const MAZE_X_OFFSET: float = MAZE_WIDTH * ROOM_SIZE * 0.5 - ROOM_SIZE_HALF
@@ -34,13 +36,23 @@ func _ready() -> void:
 	await bake_finished
 
 
-func _make_single_wall() -> Node3D:
-	return VAULTABLE_WALL.instantiate()
+func _make_single_wall(allow_special: bool = true) -> Node3D:
+	# Chance for a special wall.
+	if allow_special:
+		var special_rand: float = randf()
+		if special_rand < EMPTY_WALL_THRESHOLD:
+			return null
+		elif special_rand < (EMPTY_WALL_THRESHOLD + VAULT_CHANCE_THRESHOLD):
+			var wall: VaultableWall = VAULTABLE_WALL.instantiate()
+			wall.width = ROOM_SIZE
+			wall.height = ROOM_HEIGHT
+			wall.thickness = WALL_THICKNESS
+			return wall
 
 	var result: CSGBox3D = CSGBox3D.new()
-	result.size = Vector3(ROOM_SIZE + WALL_THICKNESS, ROOM_SIZE, WALL_THICKNESS)
+	result.size = Vector3(ROOM_SIZE + WALL_THICKNESS, ROOM_HEIGHT, WALL_THICKNESS)
 	result.use_collision = true
-	result.position.y = ROOM_SIZE_HALF
+	result.position.y = ROOM_HEIGHT * 0.5
 	return result 
 
 
@@ -61,20 +73,22 @@ func generate_maze() -> void:
 			var wall: Node3D
 			# WSEN
 			if wall_bits & 0b0001:  # N
-				wall = _make_single_wall()
-				wall.position += room_position + Vector3(0, 0, -ROOM_SIZE_HALF)
-				add_child(wall)
+				wall = _make_single_wall(y != 0)
+				if wall:
+					wall.position += room_position + Vector3(0, 0, -ROOM_SIZE_HALF)
+					add_child(wall)
 			if wall_bits & 0b1000:  # W
-				wall = _make_single_wall()
-				wall.rotation_degrees.y = 90
-				wall.position += room_position + Vector3(-ROOM_SIZE_HALF, 0, 0)
-				add_child(wall)
+				wall = _make_single_wall(x != 0)
+				if wall:
+					wall.rotation_degrees.y = 90
+					wall.position += room_position + Vector3(-ROOM_SIZE_HALF, 0, 0)
+					add_child(wall)
 			if (y == MAZE_LENGTH - 1) and (wall_bits & 0b0100):  # S
-				wall = _make_single_wall()
+				wall = _make_single_wall(false)
 				wall.position += room_position + Vector3(0, 0, ROOM_SIZE_HALF)
 				add_child(wall)
 			if (x == MAZE_WIDTH - 1) and (wall_bits & 0b0010):  # E
-				wall = _make_single_wall()
+				wall = _make_single_wall(false)
 				wall.rotation_degrees.y = 90
 				wall.position += room_position + Vector3(ROOM_SIZE_HALF, 0, 0)
 				add_child(wall)

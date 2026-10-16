@@ -29,8 +29,10 @@ func _ready() -> void:
 
 
 func _update_shapes() -> void:
-	csg_box_3d.size = Vector3(width, height / 2, thickness)
-	csg_box_3d.position.y = height / 4
+	if not is_node_ready():
+		return
+	csg_box_3d.size = Vector3(width, height, thickness)
+	csg_box_3d.position.y = height / 2
 	collision_shape_3d.shape.size = Vector3(width, height, thickness)
 	collision_shape_3d.position.y = height / 2
 
@@ -38,6 +40,7 @@ func _update_shapes() -> void:
 func _on_interactable_area_interacted(player: PlayerBody) -> void:
 	var point_start: Vector3 = to_global(Vector3(0, 0, 0.5))
 	var point_end: Vector3 = to_global(Vector3(0, 0, -0.5))
+	var mid_point: Vector3 = point_start.lerp(point_end, 0.5) + Vector3(0, 0.5, 0)
 	
 	# point_start should be the one closer to player. If it isn't, swap them!
 	if player.global_position.distance_to(point_end) < player.global_position.distance_to(point_start):
@@ -47,6 +50,8 @@ func _on_interactable_area_interacted(player: PlayerBody) -> void:
 	
 	player.locked_for_animation = true
 	var tween: Tween = create_tween()
-	tween.tween_property(player, "global_position", point_start, 0.1)
-	tween.tween_property(player, "global_position", point_end, 0.3)
+	if player.global_position.distance_to(point_start) > 2:
+		tween.tween_property(player, "global_position", point_start, 0.1)
+	tween.tween_property(player, "global_position", mid_point, 0.2)
+	tween.tween_property(player, "global_position", point_end, 0.1)
 	tween.tween_property(player, "locked_for_animation", false, 0)
