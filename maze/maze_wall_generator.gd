@@ -1,6 +1,7 @@
 extends NavigationRegion3D
 class_name MazeWallGenerator
 
+const VAULTABLE_WALL = preload("uid://xrikcftunle")
 
 
 
@@ -19,25 +20,28 @@ const MAZE_X_OFFSET: float = MAZE_WIDTH * ROOM_SIZE * 0.5 - ROOM_SIZE_HALF
 func _ready() -> void:
 	generate_maze()
 	
-	var floor: MeshInstance3D = MeshInstance3D.new()
+	var floor_instance: MeshInstance3D = MeshInstance3D.new()
 	var floor_shape: QuadMesh = QuadMesh.new()
 	floor_shape.size = Vector2(MAZE_WIDTH * ROOM_SIZE, ROOM_SIZE * MAZE_LENGTH)
 	floor_shape.orientation = PlaneMesh.FACE_Y
-	floor.mesh = floor_shape
-	floor.position = Vector3(0, 0, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
-	add_child(floor)
+	floor_instance.mesh = floor_shape
+	floor_instance.position = Vector3(0, 0, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	add_child(floor_instance)
 	
+	# Not sure if this is needed, but I want to be sure the CSG meshes have been generated.
 	await get_tree().process_frame
 	bake_navigation_mesh()
 	await bake_finished
 
 
-func _make_single_wall() -> CSGBox3D:
-		var result: CSGBox3D = CSGBox3D.new()
-		result.size = Vector3(ROOM_SIZE + WALL_THICKNESS, ROOM_SIZE, WALL_THICKNESS)
-		result.use_collision = true
-		result.position.y = ROOM_SIZE_HALF
-		return result 
+func _make_single_wall() -> Node3D:
+	return VAULTABLE_WALL.instantiate()
+
+	var result: CSGBox3D = CSGBox3D.new()
+	result.size = Vector3(ROOM_SIZE + WALL_THICKNESS, ROOM_SIZE, WALL_THICKNESS)
+	result.use_collision = true
+	result.position.y = ROOM_SIZE_HALF
+	return result 
 
 
 func generate_maze() -> void:
@@ -54,7 +58,7 @@ func generate_maze() -> void:
 			
 			# In order to only make one wall per wall, only create N/W walls
 			# except for when we reach the eastmost or southmost tiles.
-			var wall: CSGBox3D
+			var wall: Node3D
 			# WSEN
 			if wall_bits & 0b0001:  # N
 				wall = _make_single_wall()

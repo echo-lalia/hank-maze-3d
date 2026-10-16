@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bcd54nj8m7jmx"]
+
+[ext_resource type="Script" uid="uid://batgh444m6nni" path="res://player_body.gd" id="1_bvaq7"]
+[ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="2_2lce7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h2yge"]
+height = 1.2
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pp1bs"]
+sky_top_color = Color(0.30806684, 0.45837635, 0.6743981, 1)
+sky_horizon_color = Color(0.5647011, 0.54016536, 0.39796352, 1)
+sky_curve = 0.044595264
+ground_bottom_color = Color(0.12330372, 0.101218246, 0.07636473, 1)
+ground_horizon_color = Color(0.38231626, 0.38973343, 0.4045803, 1)
+sun_angle_max = 224.03
+sun_curve = 0.09896311
+
+[sub_resource type="Sky" id="Sky_pb32r"]
+sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
+
+[sub_resource type="Environment" id="Environment_ig7tw"]
+background_mode = 2
+sky = SubResource("Sky_pb32r")
+
+[node name="PlayerBody" type="CharacterBody3D" unique_id=1869904869 node_paths=PackedStringArray("player_head")]
+script = ExtResource("1_bvaq7")
+player_head = NodePath("PlayerHead")
+
+[node name="PlayerCollisionNormal" type="CollisionShape3D" parent="." unique_id=369430395]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_pb32r")
+
+[node name="PlayerCollisionSneak" type="CollisionShape3D" parent="." unique_id=830358726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("CapsuleShape3D_h2yge")
+disabled = true
+
+[node name="PlayerHead" type="Node3D" parent="." unique_id=1173930566 node_paths=PackedStringArray("player_body")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("2_2lce7")
+player_body = NodePath("..")
+
+[node name="PlayerCamera" type="Camera3D" parent="PlayerHead" unique_id=169823099]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.138)
+environment = SubResource("Environment_ig7tw")
+fov = 90.0
+
+[node name="InteractionRaycast" type="RayCast3D" parent="PlayerHead/PlayerCamera" unique_id=158961686]
+target_position = Vector3(0, 0, -5)
+collision_mask = 16
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.7248424, 0.21549428, 0.59837776, 1)
+debug_shape_thickness = 1

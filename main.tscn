@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" uid="uid://rd5nrxi4dg6g" path="res://hank_body.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bstegkducyii3" path="res://hankalpeca.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://batgh444m6nni" path="res://player_body.gd" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bcd54nj8m7jmx" path="res://player_body.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://cqjsc7vm14irb" path="res://maze/maze_wall_generator.tscn" id="5_lquwl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
@@ -11,27 +10,6 @@ radius = 0.16
 height = 0.6
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_pb32r"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h2yge"]
-height = 1.2
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pp1bs"]
-sky_top_color = Color(0.30806684, 0.45837635, 0.6743981, 1)
-sky_horizon_color = Color(0.5647011, 0.54016536, 0.39796352, 1)
-sky_curve = 0.044595264
-ground_bottom_color = Color(0.12330372, 0.101218246, 0.07636473, 1)
-ground_horizon_color = Color(0.38231626, 0.38973343, 0.4045803, 1)
-sun_angle_max = 224.03
-sun_curve = 0.09896311
-
-[sub_resource type="Sky" id="Sky_pb32r"]
-sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
-
-[sub_resource type="Environment" id="Environment_ig7tw"]
-background_mode = 2
-sky = SubResource("Sky_pb32r")
 
 [node name="Node3D" type="Node3D" unique_id=119268813]
 
@@ -55,29 +33,8 @@ collision_mask = 65535
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=627568425]
 shape = SubResource("WorldBoundaryShape3D_pb32r")
 
-[node name="PlayerBody" type="CharacterBody3D" parent="." unique_id=1725580008 node_paths=PackedStringArray("player_head")]
+[node name="PlayerBody" parent="." unique_id=1869904869 instance=ExtResource("3_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.631571)
-script = ExtResource("2_0xm2m")
-player_head = NodePath("PlayerHead")
-
-[node name="PlayerCollisionNormal" type="CollisionShape3D" parent="PlayerBody" unique_id=1458434879]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_pb32r")
-
-[node name="PlayerCollisionSneak" type="CollisionShape3D" parent="PlayerBody" unique_id=1875463803]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-shape = SubResource("CapsuleShape3D_h2yge")
-disabled = true
-
-[node name="PlayerHead" type="Node3D" parent="PlayerBody" unique_id=1881446135 node_paths=PackedStringArray("player_body")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-script = ExtResource("3_h2yge")
-player_body = NodePath("..")
-
-[node name="PlayerCamera" type="Camera3D" parent="PlayerBody/PlayerHead" unique_id=1688204225]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.138)
-environment = SubResource("Environment_ig7tw")
-fov = 90.0
 
 [node name="MazeWallGenerator" parent="." unique_id=866313809 instance=ExtResource("5_lquwl")]
 

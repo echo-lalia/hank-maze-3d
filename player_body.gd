@@ -21,6 +21,7 @@ enum MOVEMENT_STATES {
 
 @onready var player_collision_normal: CollisionShape3D = $PlayerCollisionNormal
 @onready var player_collision_sneak: CollisionShape3D = $PlayerCollisionSneak
+@onready var interaction_raycast: RayCast3D = $PlayerHead/PlayerCamera/InteractionRaycast
 
 @export var player_head: PlayerHead
 
@@ -50,7 +51,8 @@ func _ready() -> void:
 	current_player_instance = self
 
 
-func _physics_process(delta: float) -> void:
+## Handle main player movement
+func _handle_player_movement(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -91,3 +93,19 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	move_and_slide()
+
+
+## Handle detection of interactable area.
+func _handle_interactable_area() -> void:
+	if not interaction_raycast.is_colliding():
+		return
+	
+	# collider SHOULD be an interactable area.
+	var interactable_area: InteractableArea = interaction_raycast.get_collider()
+	if Input.is_action_just_pressed("interact"):
+		interactable_area.interact(self)
+
+
+func _physics_process(delta: float) -> void:
+	_handle_interactable_area()
+	_handle_player_movement(delta)
