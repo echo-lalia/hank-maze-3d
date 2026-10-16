@@ -2,12 +2,22 @@
 
 [ext_resource type="PackedScene" uid="uid://jmypsarx38dc" path="res://hankmodelgodot.blend" id="1_7v3u7"]
 [ext_resource type="Script" uid="uid://dmq0s77ijkuxr" path="res://hankalpeca.gd" id="2_ikp2g"]
-[ext_resource type="AudioStream" uid="uid://t4vnt73qna8l" path="res://sfx/slap.mp3" id="3_iskby"]
+[ext_resource type="AudioStream" uid="uid://dbm3sdfu81spd" path="res://sfx/slap0.mp3" id="3_utmuo"]
+[ext_resource type="AudioStream" uid="uid://1l0p12l27eh1" path="res://sfx/slap1.mp3" id="4_mra0b"]
+[ext_resource type="AudioStream" uid="uid://bl5caets0rv35" path="res://sfx/slap2.mp3" id="5_nm7sm"]
+[ext_resource type="AudioStream" uid="uid://k6f22ffup42o" path="res://sfx/slap3.mp3" id="6_bkn7k"]
+[ext_resource type="AudioStream" uid="uid://bycjnbelhvkwa" path="res://sfx/slap4.mp3" id="7_gavce"]
+[ext_resource type="AudioStream" uid="uid://brypc17c2llbr" path="res://sfx/slap5.mp3" id="8_phpk6"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ivksp"]
-random_pitch = 1.086421
-streams_count = 1
-stream_0/stream = ExtResource("3_iskby")
+random_pitch = 1.1553527
+streams_count = 6
+stream_0/stream = ExtResource("3_utmuo")
+stream_1/stream = ExtResource("4_mra0b")
+stream_2/stream = ExtResource("5_nm7sm")
+stream_3/stream = ExtResource("6_bkn7k")
+stream_4/stream = ExtResource("7_gavce")
+stream_5/stream = ExtResource("8_phpk6")
 
 [node name="HankAlpeca" unique_id=307689099 instance=ExtResource("1_7v3u7")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
