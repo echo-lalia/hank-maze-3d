@@ -1,0 +1,64 @@
+extends HankState
+
+
+@export var running_state: State
+
+
+
+## Called when entering this state
+func enter() -> void:
+	auto_animation = false
+	playing_animation = HANK_ANIMATION.looking
+	await get_tree().physics_frame
+	print("Entered looking state, ", playing_animation)
+	if not hank_mesh.animation_player.animation_finished.is_connected(_looking_finished):
+		hank_mesh.animation_player.animation_finished.connect(_looking_finished)
+
+
+const PATROL_DISTANCE: float = 10.0
+const PATROL_MAX_PATH: float = 15.0
+func _looking_finished(anim_name: StringName) -> void:
+	if not is_active_state() or anim_name != "LookingAction":
+		return
+	# Select a random nearby point to patrol to.
+	var direction: Vector3 = Vector3(PATROL_DISTANCE, 0, 0).rotated(Vector3(0, 1, 0), randf_range(0, deg_to_rad(360)))
+	target_position = global_position + direction
+	hank_body.navigation_agent_3d.get_next_path_position()
+	
+	if hank_body.navigation_agent_3d.get_path_length() > PATROL_MAX_PATH:
+		# The path is too long and we need to sample a point closer to us along the navigation path.
+		# We should be able to pick a point along the path that's one before the first one outside of our max range.
+		var navigation_path := hank_body.navigation_agent_3d.get_current_navigation_path()
+		for i in range(1, len(navigation_path)):
+			var point: Vector3 = navigation_path[i]
+			print(global_position.distance_to(point))
+			if global_position.distance_to(point) > PATROL_MAX_PATH:
+				target_position = navigation_path[i - 1]
+				break
+	
+	hank_body.navigation_agent_3d.get_next_path_position()
+	print("Length : ", hank_body.navigation_agent_3d.get_path_length())
+	
+	state_machine.current_state = running_state
+
+
+
+## Called when leaving this state
+func exit() -> void:
+	if hank_mesh.animation_player.animation_finished.is_connected(_looking_finished):
+		hank_mesh.animation_player.animation_finished.disconnect(_looking_finished)
+	auto_animation = true
+
+
+## Called every physics frame while this state is active
+func physics_update(_delta: float) -> void:
+	if hank_mesh.animation_player.is_playing() and hank_mesh.sees_player:
+		# We saw the player. Pause and see if they're really there.
+		hank_mesh.animation_player.pause()
+		await get_tree().create_timer(0.4).timeout
+		if is_active_state() and hank_mesh.sees_player:
+			target_position = PlayerBody.current_player_instance.global_position
+			state_machine.current_state = running_state
+		else:
+			if not hank_mesh.animation_player.is_playing():
+				hank_mesh.animation_player.play()

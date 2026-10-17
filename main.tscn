@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://rd5nrxi4dg6g" path="res://hank_body.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bstegkducyii3" path="res://hankalpeca.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bcd54nj8m7jmx" path="res://player_body.tscn" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://clopxxfu4w2x4" path="res://hank_state_machine.gd" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://k5rue6lvnwv3" path="res://looking_state.gd" id="4_7mycd"]
+[ext_resource type="Script" uid="uid://q5x0uhgpe7p6" path="res://running_state.gd" id="5_272bh"]
 [ext_resource type="PackedScene" uid="uid://cqjsc7vm14irb" path="res://maze/maze_wall_generator.tscn" id="5_lquwl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
@@ -14,7 +17,7 @@ height = 0.6
 [node name="Node3D" type="Node3D" unique_id=119268813]
 
 [node name="HankBody" type="CharacterBody3D" parent="." unique_id=238060491]
-transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0, 0, 96.19722)
+transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0.9656391, 0, 4.888681)
 script = ExtResource("1_1bvp3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HankBody" unique_id=86886429]
@@ -22,9 +25,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("CapsuleShape3D_j7oc2")
 
 [node name="HankAlpeca" parent="HankBody" unique_id=307689099 instance=ExtResource("1_ig7tw")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="HankBody" unique_id=1482382425]
+
+[node name="HankStateMachine" type="Node" parent="HankBody" unique_id=393325296 node_paths=PackedStringArray("hank_body", "hank_mesh", "initial_state")]
+script = ExtResource("3_lquwl")
+hank_body = NodePath("..")
+hank_mesh = NodePath("../HankAlpeca")
+initial_state = NodePath("LookingState")
+
+[node name="LookingState" type="Node" parent="HankBody/HankStateMachine" unique_id=1711975146 node_paths=PackedStringArray("running_state")]
+script = ExtResource("4_7mycd")
+running_state = NodePath("../RunningState")
+metadata/_custom_type_script = "uid://djnomfm13aoxm"
+
+[node name="RunningState" type="Node" parent="HankBody/HankStateMachine" unique_id=1963580236 node_paths=PackedStringArray("looking_state")]
+script = ExtResource("5_272bh")
+looking_state = NodePath("../LookingState")
+metadata/_custom_type_script = "uid://byhpn01aq0yc7"
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=552266381]
 collision_layer = 9

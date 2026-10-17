@@ -35,9 +35,11 @@ enum HANK_ANIMATION {
 	idle,
 	running,
 	falling,
+	looking,
 }
 
 
+## Update the currently playing hank animation.
 var playing_animation: HANK_ANIMATION = HANK_ANIMATION.idle:
 	set(val):
 		playing_animation = val
@@ -67,6 +69,8 @@ func _update_playing_animation() -> void:
 			animation_player.play("FallingAction")
 		HANK_ANIMATION.running:
 			animation_player.play("RunAction")
+		HANK_ANIMATION.looking:
+			animation_player.play("LookingAction")
 	
 	animation_player.speed_scale = 1.0
 
@@ -85,6 +89,8 @@ func update_animation_speed_direction() -> void:
 					rotation.y = lerpf(rotation.y, move_direction, 0.5)
 				else:
 					rotation.y = move_direction
+		_:
+			animation_player.speed_scale = 1.0
 
 
 var _step_sfx_current_distance: float = 0.0
