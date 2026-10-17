@@ -124,7 +124,7 @@ var rays: Array[AudioRay] = []
 @export var muffle_enabled: bool = true
 ## The interpolation strength of the muffle
 ## [br]See [member muffle_enabled]
-@export_range(1.0, 25.0, 0.1) var muffle_interpolation: float = 5.0
+@export_range(1.0, 25.0, 0.1, "or_greater", "or_less") var muffle_interpolation: float = 5.0
 @export_category("Echo")
 ## Enables updates to the reverb audio bus
 ## [br]See [code]Project Settings > Raytraced Audio > Reverb Bus[/code]

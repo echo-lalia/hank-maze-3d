@@ -1,4 +1,3 @@
-@tool
 extends Node3D
 class_name HankAlpeca
 
@@ -12,12 +11,15 @@ const DIST_PER_STEP_SFX: float = 1
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var armature: Node3D = $Armature
 @onready var floor_detection_raycast: RayCast3D = $FloorDetectionRaycast
+@onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneFollower/PlayerDetectionRaycast
 
 #@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
 @onready var raytraced_audio_player_3d: RaytracedAudioPlayer3D = $RaytracedAudioPlayer3D
 
 @export var auto_animation: bool = true
 @export var auto_speed_direction: bool = true
+
+var sees_player: bool = false
 
 
 @export_flags_3d_physics var floor_detection_collision_mask: int = 1:
@@ -98,7 +100,7 @@ func _process(delta: float) -> void:
 	previous_position = global_position
 	
 	if auto_animation:
-		if (not Engine.is_editor_hint()) and (not floor_detection_raycast.is_colliding()):
+		if (not floor_detection_raycast.is_colliding()):
 			playing_animation = HANK_ANIMATION.falling
 		
 		elif playing_animation == HANK_ANIMATION.idle and velocity.length() > 0.1:
@@ -109,3 +111,13 @@ func _process(delta: float) -> void:
 	
 	if auto_speed_direction:
 		update_animation_speed_direction()
+	
+	
+	if player_detection_raycast.is_colliding():
+		var collider: Object = player_detection_raycast.get_collider()
+		if collider is PlayerBody:
+			sees_player = true
+		else:
+			sees_player = false
+	else:
+		sees_player = false

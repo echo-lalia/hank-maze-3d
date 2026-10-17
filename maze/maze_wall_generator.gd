@@ -3,8 +3,10 @@ class_name MazeWallGenerator
 
 const VAULTABLE_WALL = preload("uid://xrikcftunle")
 
-const EMPTY_WALL_THRESHOLD = 0.1
+const BIG_ROOM_CHANCE = 0.25
 const VAULT_CHANCE_THRESHOLD = 0.1
+const CHANCE_TO_DELETE_WALL_ENDS = 0.5
+
 
 const MAZE_LENGTH = 20
 const MAZE_RADIUS = 5
@@ -16,6 +18,12 @@ const ROOM_HEIGHT: float = 4
 const WALL_THICKNESS: float = 0.2
 const ROOM_SIZE_HALF: float = ROOM_SIZE / 2.0
 const MAZE_X_OFFSET: float = MAZE_WIDTH * ROOM_SIZE * 0.5 - ROOM_SIZE_HALF
+
+# WSEN
+const NORTH: int = 0b0001
+const EAST: int = 0b0010
+const SOUTH: int = 0b0100
+const WEST: int = 0b1000
 
 
 @export_flags_3d_physics var wall_collision: int = 0b1001
@@ -43,9 +51,7 @@ func _make_single_wall(allow_special: bool = true) -> Node3D:
 	# Chance for a special wall.
 	if allow_special:
 		var special_rand: float = randf()
-		if special_rand < EMPTY_WALL_THRESHOLD:
-			return null
-		elif special_rand < (EMPTY_WALL_THRESHOLD + VAULT_CHANCE_THRESHOLD):
+		if special_rand < VAULT_CHANCE_THRESHOLD:
 			var wall: VaultableWall = VAULTABLE_WALL.instantiate()
 			wall.width = ROOM_SIZE
 			wall.height = ROOM_HEIGHT
@@ -61,8 +67,122 @@ func _make_single_wall(allow_special: bool = true) -> Node3D:
 	return result 
 
 
+
+func _test_wall_exists(maze: MazeSquare.Shape, x: int, y: int, wall: int) -> bool:
+	return maze.room(x, y).walls_id() & wall
+
+
+## Maps a room's walls with the neighboring walls to test/count.
+static var _CONNECTED_WALL_MAP: Dictionary[int, Array] = {
+	NORTH: [
+		[0, -1, WEST], [0, -1, EAST],
+		[-1, 0, NORTH], [1, 0, NORTH],
+		[0, 0, WEST], [0, 0, EAST],
+	],
+	EAST: [
+		[0, 0, NORTH], [0, 0, SOUTH],
+		[0, 1, EAST], [0, -1, EAST],
+		[1, 0, NORTH], [1, 0, SOUTH],
+	],
+	SOUTH: [
+		[0, 0, WEST], [0, 0, EAST],
+		[-1, 0, SOUTH], [1, 0, SOUTH],
+		[0, 1, WEST], [0, 1, EAST],
+	],
+	WEST: [
+		[0, 0, NORTH], [0, 0, SOUTH],
+		[0, 1, WEST], [0, -1, WEST],
+		[-1, 0, NORTH], [-1, 0, SOUTH],
+	],
+}
+func _count_maze_wall_connections(maze: MazeSquare.Shape, x: int, y: int, wall: int) -> int:
+	var result: int = 0
+
+	var test_map: Array = _CONNECTED_WALL_MAP[wall]
+	for tst in test_map:
+		var tx: int = x + tst[0]
+		var ty: int = y + tst[1]
+		var twall: int = tst[2]
+		if (0 <= tx and tx < MAZE_WIDTH) and (0 <= ty and ty < MAZE_LENGTH) \
+		and maze.room(tx, ty).walls_id() & twall:
+			result += 1
+	
+	return result
+
+
+## Maps a room's walls with the neighboring walls to test/count, grouped by side (arbitrary order).
+static var _END_WALL_MAP: Dictionary[int, Array] = {
+	NORTH: [
+		[[0, -1, WEST], [-1, 0, NORTH], [0, 0, WEST]],   # west end
+		[[0, -1, EAST], [1, 0, NORTH], [0, 0, EAST]],    # east end
+	],
+	EAST: [
+		[[0, 0, NORTH], [0, -1, EAST], [1, 0, NORTH]],   # north end
+		[[0, 0, SOUTH], [0, 1, EAST], [1, 0, SOUTH]],    # south end
+	],
+	SOUTH: [
+		[[0, 0, WEST], [-1, 0, SOUTH], [0, 1, WEST]],    # west end
+		[[0, 0, EAST], [1, 0, SOUTH], [0, 1, EAST]],     # east end
+	],
+	WEST: [
+		[[0, 0, NORTH], [0, -1, WEST], [-1, 0, NORTH]],  # north end
+		[[0, 0, SOUTH], [0, 1, WEST], [-1, 0, SOUTH]],   # south end
+	],
+}
+## Check if a wall has connections on each side, return 0, 1, or 2 for number of sides connected.
+func _wall_sides_with_connections(maze: MazeSquare.Shape, x: int, y: int, wall: int) -> int:
+	var connections: int = 0
+
+	var test_map: Array = _END_WALL_MAP[wall]
+	for side in test_map:
+		for tst in side:
+			var tx: int = x + tst[0]
+			var ty: int = y + tst[1]
+			var twall: int = tst[2]
+			if (0 <= tx and tx < MAZE_WIDTH) and (0 <= ty and ty < MAZE_LENGTH) \
+			and maze.room(tx, ty).walls_id() & twall:
+				connections += 1
+				break
+	
+	return connections
+
+
+## Connect the given room to the rooms to the east and south (those rooms MUST exist, or this will error).
+func _connect_room_square(maze: MazeSquare.Shape, x: int, y: int) -> void:
+	var room: MazeSquare.Room = maze.room(x, y)
+	room.open_wall_between(maze.room(x + 1, y))
+	room.open_wall_between(maze.room(x, y + 1))
+	var corner_room: MazeSquare.Room = maze.room(x + 1, y + 1)
+	corner_room.open_wall_between(maze.room(x + 1, y))
+	corner_room.open_wall_between(maze.room(x, y + 1))
+	
+
+func _dbg_label_wall_connections(wall: Node3D, maze: MazeSquare.Shape, x: int, y: int, wallid: int) -> void:
+	var label: Label3D = Label3D.new()
+	label.text = str(_wall_sides_with_connections(maze, x, y, wallid))
+	wall.add_child(label)
+	label.position.y += 5
+
+
 func generate_maze() -> void:
 	var maze: MazeSquare.Shape = MazeSquare.Shape.new(MAZE_WIDTH, MAZE_LENGTH)
+	
+	
+	
+	# Open some random walls before generating the maze
+	for i in 2:
+		var x := randi_range(0, MAZE_WIDTH - 2)
+		var y := randi_range(0, MAZE_LENGTH - 2)
+		_connect_room_square(maze, x, y)
+		
+		var wide: bool = (x < MAZE_WIDTH - 3) and (randf() < BIG_ROOM_CHANCE)
+		var tall: bool = (y < MAZE_LENGTH - 3) and (randf() < BIG_ROOM_CHANCE)
+		if wide:
+			_connect_room_square(maze, x + 1, y)
+		if tall:
+			_connect_room_square(maze, x, y + 1)
+		if wide and tall:
+			_connect_room_square(maze, x + 1, y + 1)
 	
 	MazeAlgoRecursiveBacktracker.generate(maze, maze.room(MAZE_RADIUS, 0))
 	
@@ -77,22 +197,27 @@ func generate_maze() -> void:
 			# except for when we reach the eastmost or southmost tiles.
 			var wall: Node3D
 			# WSEN
-			if wall_bits & 0b0001:  # N
-				wall = _make_single_wall(y != 0)
-				if wall:
+			if wall_bits & NORTH:  # N
+				var delete_wall_end: bool = (_wall_sides_with_connections(maze, x, y, NORTH) <= 1) and (randf() < CHANCE_TO_DELETE_WALL_ENDS)
+				if not delete_wall_end:
+					wall = _make_single_wall(y != 0)
 					wall.position += room_position + Vector3(0, 0, -ROOM_SIZE_HALF)
 					add_child(wall)
-			if wall_bits & 0b1000:  # W
-				wall = _make_single_wall(x != 0)
-				if wall:
+
+			if wall_bits & WEST:  # W
+				var delete_wall_end: bool = (_wall_sides_with_connections(maze, x, y, WEST) <= 1) and (randf() < CHANCE_TO_DELETE_WALL_ENDS)
+				if not delete_wall_end:
+					wall = _make_single_wall(x != 0)
 					wall.rotation_degrees.y = 90
 					wall.position += room_position + Vector3(-ROOM_SIZE_HALF, 0, 0)
 					add_child(wall)
-			if (y == MAZE_LENGTH - 1) and (wall_bits & 0b0100):  # S
+
+			if (y == MAZE_LENGTH - 1) and (wall_bits & SOUTH):  # S
 				wall = _make_single_wall(false)
 				wall.position += room_position + Vector3(0, 0, ROOM_SIZE_HALF)
 				add_child(wall)
-			if (x == MAZE_WIDTH - 1) and (wall_bits & 0b0010):  # E
+
+			if (x == MAZE_WIDTH - 1) and (wall_bits & EAST):  # E
 				wall = _make_single_wall(false)
 				wall.rotation_degrees.y = 90
 				wall.position += room_position + Vector3(ROOM_SIZE_HALF, 0, 0)
