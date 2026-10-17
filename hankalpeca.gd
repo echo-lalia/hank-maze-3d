@@ -11,7 +11,12 @@ const DIST_PER_STEP_SFX: float = 1
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var armature: Node3D = $Armature
 @onready var floor_detection_raycast: RayCast3D = $FloorDetectionRaycast
-@onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneFollower/PlayerDetectionRaycast
+@onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast
+@onready var player_detection_raycast_2: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast2
+@onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
+@onready var player_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycastShort
+
+@onready var bone_attachment_3d: BoneAttachment3D = $Armature/Skeleton3D/BoneAttachment3D
 
 #@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
 @onready var raytraced_audio_player_3d: RaytracedAudioPlayer3D = $RaytracedAudioPlayer3D
@@ -22,6 +27,7 @@ const DIST_PER_STEP_SFX: float = 1
 var sees_player: bool = false
 
 
+
 @export_flags_3d_physics var floor_detection_collision_mask: int = 1:
 	set(val):
 		floor_detection_collision_mask = val
@@ -29,6 +35,9 @@ var sees_player: bool = false
 			await ready
 		floor_detection_raycast.collision_mask = floor_detection_collision_mask
 
+
+var override_head_look_at: Vector3
+var override_head_lerp_factor: float = 0.5
 
 
 enum HANK_ANIMATION {
@@ -56,6 +65,16 @@ var velocity: Vector3 = Vector3.ZERO
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		_update_playing_animation()
+	if OS.is_debug_build():
+		await get_tree().process_frame
+		PlayerBody.current_player_instance.played_sound.connect(_dbg_sound_heard)
+
+
+func _dbg_sound_heard(sound_position: Vector3, travel_distance: float) -> void:
+	if global_position.distance_to(sound_position) < travel_distance:
+		print("Hank heard a sound at ", sound_position)
+	else:
+		print("A sound at ", sound_position, " was not audible to hank uh.")
 
 
 func _update_playing_animation() -> void:
@@ -96,6 +115,26 @@ func update_animation_speed_direction() -> void:
 var _step_sfx_current_distance: float = 0.0
 
 
+func _raycast_sees_player(raycast: RayCast3D) -> bool:
+	if raycast.is_colliding() and player_detection_raycast.get_collider() is HankSightArea:
+		return true
+	return false
+
+
+func _handle_hank_lookat() -> void:
+	if override_head_look_at:
+		bone_attachment_3d.override_pose = true
+		var new_transform := (
+			bone_attachment_3d.global_transform
+			.looking_at(override_head_look_at, Vector3.UP, true)
+			.rotated_local(Vector3(1, 0, 0), 12)
+		)
+		bone_attachment_3d.global_transform = bone_attachment_3d.global_transform.interpolate_with(new_transform, override_head_lerp_factor)
+	else:
+		bone_attachment_3d.override_pose = false
+	
+
+
 func _process(delta: float) -> void:
 	_step_sfx_current_distance += (global_position - previous_position).length()
 	if _step_sfx_current_distance > DIST_PER_STEP_SFX:
@@ -118,12 +157,17 @@ func _process(delta: float) -> void:
 	if auto_speed_direction:
 		update_animation_speed_direction()
 	
-	
-	if player_detection_raycast.is_colliding():
-		var collider: Object = player_detection_raycast.get_collider()
-		if collider is PlayerBody:
-			sees_player = true
-		else:
-			sees_player = false
+	if player_detection_raycast_short.is_colliding() \
+	or _raycast_sees_player(player_detection_raycast_3) \
+	or _raycast_sees_player(player_detection_raycast_2) \
+	or _raycast_sees_player(player_detection_raycast):
+		sees_player = true
 	else:
 		sees_player = false
+	
+	_handle_hank_lookat()
+	
+
+
+
+	

@@ -85,6 +85,8 @@ interact={
 
 [layer_names]
 
+3d_physics/layer_1="Standard"
+3d_physics/layer_3="HankSight"
 3d_physics/layer_4="AudioRaycast"
 3d_physics/layer_5="InteractableArea"
 

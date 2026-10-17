@@ -2,6 +2,9 @@ extends CharacterBody3D
 class_name PlayerBody
 
 
+const PLAYER_STEP_AUDIO_STREAM_RANDOMIZER = preload("uid://dvscylno686kl")
+
+
 const SNEAK_SPEED: float = 2.0
 const SPEED: float = 5.0
 const SPRINT_SPEED: float = 10.0
@@ -23,8 +26,17 @@ enum MOVEMENT_STATES {
 @onready var player_collision_sneak: CollisionShape3D = $PlayerCollisionSneak
 @onready var interaction_raycast: RayCast3D = $PlayerHead/PlayerCamera/InteractionRaycast
 @onready var interaction_label: Label = $PlayerHead/PlayerCamera/InteractionLabel
+@onready var player_step_sound_player: PlayerAudioPlayer = $PlayerStepSoundPlayer
 
 @export var player_head: PlayerHead
+
+
+
+@warning_ignore("unused_signal")
+## Emitted by PlayerAudioPlayer nodes when a hank audible sound is played.
+signal played_sound(sound_position: Vector3, travel_distance: float)
+
+var has_hank_line_of_sight: bool = false
 
 
 var locked_for_animation: bool = false
@@ -44,6 +56,9 @@ var head_rotation: Vector3:
 var movement_state: MOVEMENT_STATES = MOVEMENT_STATES.normal:
 	set(val):
 		if movement_state != val:
+			# Play a loud step when finishing a jump
+			if movement_state == MOVEMENT_STATES.midair:
+				player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 40.0, 20.0)
 			movement_state = val
 			_switch_movement_state()
 
@@ -128,3 +143,35 @@ func _physics_process(delta: float) -> void:
 	_handle_interactable_area()
 	if not locked_for_animation:
 		_handle_player_movement(delta)
+	
+	# Handle the line of sight check.
+	var space := get_world_3d().direct_space_state
+	var params := PhysicsRayQueryParameters3D.create(HankBody.current_hank_body_instance.global_position, player_head.global_position, 1)
+	var result: Dictionary = space.intersect_ray(params)
+	if "collider" in result and result["collider"] and result["collider"] is PlayerBody:
+		has_hank_line_of_sight = true
+	else:
+		has_hank_line_of_sight = false
+
+
+## Travel distance per step sound
+const STEP_SOUND_DISTANCE: float = 2.0
+var _current_step_travel: float = 0.0
+var _previous_global_position: Vector3 = position
+## Handle playing player stepp sounds.
+func _handle_step_sounds() -> void:
+	_current_step_travel += global_position.distance_to(_previous_global_position)
+	_previous_global_position = global_position
+	if _current_step_travel > STEP_SOUND_DISTANCE:
+		_current_step_travel -= STEP_SOUND_DISTANCE
+		#print(MOVEMENT_STATES.find_key(movement_state))
+		if movement_state == MOVEMENT_STATES.sneak:
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 5.0, 0.5)
+		elif movement_state == MOVEMENT_STATES.sprint:
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 30.0, 10.0)
+		elif movement_state == MOVEMENT_STATES.normal:
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 10.0, 0.9)
+
+
+func _process(_delta: float) -> void:
+	_handle_step_sounds()

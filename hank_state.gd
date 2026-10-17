@@ -33,3 +33,15 @@ var auto_animation: bool:
 		return hank_mesh.auto_animation
 	set(val):
 		hank_mesh.auto_animation = val
+
+var override_head_look_at: Vector3:
+	get:
+		return hank_mesh.override_head_look_at
+	set(val):
+		hank_mesh.override_head_look_at = val
+
+var override_head_lerp_factor: float:
+	get:
+		return hank_mesh.override_head_lerp_factor
+	set(val):
+		hank_mesh.override_head_lerp_factor = val

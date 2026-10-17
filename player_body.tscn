@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://batgh444m6nni" path="res://player_body.gd" id="1_bvaq7"]
 [ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="2_2lce7"]
 [ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="3_2lce7"]
+[ext_resource type="Script" uid="uid://cvg4fnyip5rv5" path="res://hank_sight_area.gd" id="4_io3rj"]
+[ext_resource type="Script" uid="uid://c5d0rwkq0q1fc" path="res://player_audio_player.gd" id="5_0slni"]
+[ext_resource type="AudioStream" uid="uid://dvscylno686kl" path="res://sfx/player_step_audio_stream_randomizer.tres" id="5_kx4q5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
 
@@ -24,6 +27,17 @@ sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
 [sub_resource type="Environment" id="Environment_ig7tw"]
 background_mode = 2
 sky = SubResource("Sky_pb32r")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pb32r"]
+radius = 0.6
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2lce7"]
+height = 1.3226318
+radius = 0.4
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_io3rj"]
+height = 2.4052734
+radius = 0.9667969
 
 [node name="PlayerBody" type="CharacterBody3D" unique_id=1869904869 node_paths=PackedStringArray("player_head")]
 script = ExtResource("1_bvaq7")
@@ -79,3 +93,32 @@ script = ExtResource("3_2lce7")
 rayCollisionLayers = 8
 rays_count = 8
 metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
+
+[node name="HankSightArea" type="Area3D" parent="." unique_id=1238339586 node_paths=PackedStringArray("player_body")]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("4_io3rj")
+player_body = NodePath("..")
+
+[node name="NormalShape" type="CollisionShape3D" parent="HankSightArea" unique_id=1456617418]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_pb32r")
+debug_color = Color(0.75136834, 0.4569714, 0.11682358, 0.41960785)
+
+[node name="SneakShape" type="CollisionShape3D" parent="HankSightArea" unique_id=1655448387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6613159, 0)
+shape = SubResource("CylinderShape3D_2lce7")
+debug_color = Color(0.75136834, 0.4569714, 0.11682358, 0.41960785)
+
+[node name="RunShape" type="CollisionShape3D" parent="HankSightArea" unique_id=271037845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2026367, 0)
+shape = SubResource("CylinderShape3D_io3rj")
+debug_color = Color(0.75136834, 0.4569714, 0.11682358, 0.41960785)
+
+[node name="PlayerStepSoundPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1552827038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72366047, 0)
+stream = ExtResource("5_kx4q5")
+attenuation_model = 3
+max_polyphony = 3
+script = ExtResource("5_0slni")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
