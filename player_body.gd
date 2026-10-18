@@ -30,7 +30,7 @@ enum MOVEMENT_STATES {
 
 @export var player_head: PlayerHead
 
-
+@export var maze_generator: MazeWallGenerator
 
 @warning_ignore("unused_signal")
 ## Emitted by PlayerAudioPlayer nodes when a hank audible sound is played.
@@ -77,6 +77,11 @@ static var current_player_instance: PlayerBody
 
 func _ready() -> void:
 	current_player_instance = self
+	
+	if maze_generator:
+		if not maze_generator.is_node_ready():
+			await maze_generator.ready
+		global_position = maze_generator.start_room_position.global_position
 
 
 ## Handle main player movement

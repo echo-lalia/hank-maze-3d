@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ctxrr6hfuxpr"]
+
+[ext_resource type="Shader" uid="uid://bsn3w12ms600x" path="res://wall_shader.gdshader" id="1_s7fe0"]
+[ext_resource type="Texture2D" uid="uid://bmehxxtgnt2pv" path="res://textures/wall.png" id="2_j0jxg"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_s7fe0")
+shader_parameter/GENERATED_TEXTURE_WIDTH_MULT = 0.1
+shader_parameter/GENERATED_TEXTURE_HEIGHT_MULT = -0.25
+shader_parameter/GENERATED_TEXTURE_HEIGHT_ADD = 0.0
+shader_parameter/wall_texture = ExtResource("2_j0jxg")

@@ -8,6 +8,9 @@ const ACCEL = 100.0
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 
 
+@export var maze_generator: MazeWallGenerator
+
+
 static var current_hank_body_instance: HankBody
 
 
@@ -28,7 +31,10 @@ func _ready() -> void:
 	navigation_agent_3d.path_desired_distance = 1.0
 	navigation_agent_3d.target_desired_distance = 1.0
 	
-	#target_position = PlayerBody.current_player_instance.global_position
+	if maze_generator:
+		if not maze_generator.is_node_ready():
+			await maze_generator.ready
+		global_position = maze_generator.end_room_position.global_position
 	
 
 func _physics_process(delta: float) -> void:

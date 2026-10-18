@@ -2,6 +2,7 @@ extends NavigationRegion3D
 class_name MazeWallGenerator
 
 const VAULTABLE_WALL = preload("uid://xrikcftunle")
+const WALL_SHADER = preload("uid://ctxrr6hfuxpr")
 
 const BIG_ROOM_CHANCE = 0.25
 const VAULT_CHANCE_THRESHOLD = 0.1
@@ -25,9 +26,12 @@ const EAST: int = 0b0010
 const SOUTH: int = 0b0100
 const WEST: int = 0b1000
 
+@onready var csg_combiner_3d: CSGCombiner3D = $CSGCombiner3D
 
 @export_flags_3d_physics var wall_collision: int = 0b1001
 
+@onready var start_room_position: Node3D = $StartRoomPosition
+@onready var end_room_position: Node3D = $EndRoomPosition
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,6 +44,9 @@ func _ready() -> void:
 	floor_instance.mesh = floor_shape
 	floor_instance.position = Vector3(0, 0, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
 	add_child(floor_instance)
+	
+	start_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, 0)
+	end_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH - 1)
 	
 	# Not sure if this is needed, but I want to be sure the CSG meshes have been generated.
 	await get_tree().process_frame
@@ -64,6 +71,7 @@ func _make_single_wall(allow_special: bool = true) -> Node3D:
 	result.collision_layer = wall_collision
 	result.collision_mask = wall_collision
 	result.position.y = ROOM_HEIGHT * 0.5
+	result.material = WALL_SHADER
 	return result 
 
 
@@ -164,6 +172,11 @@ func _dbg_label_wall_connections(wall: Node3D, maze: MazeSquare.Shape, x: int, y
 	label.position.y += 5
 
 
+
+func room_coord_to_relative_position(x: int, y: int) -> Vector3:
+	return Vector3(x * ROOM_SIZE - MAZE_X_OFFSET, 0, y * ROOM_SIZE)
+
+
 func generate_maze() -> void:
 	var maze: MazeSquare.Shape = MazeSquare.Shape.new(MAZE_WIDTH, MAZE_LENGTH)
 	
@@ -189,7 +202,7 @@ func generate_maze() -> void:
 	
 	for y in MAZE_LENGTH:
 		for x in MAZE_WIDTH:
-			var room_position: Vector3 = Vector3(x * ROOM_SIZE - MAZE_X_OFFSET, 0, y * ROOM_SIZE)
+			var room_position: Vector3 = room_coord_to_relative_position(x, y)
 			var room: MazeSquare.Room = maze.room(x, y)
 			var wall_bits: int = room.walls_id()
 			
@@ -202,7 +215,7 @@ func generate_maze() -> void:
 				if not delete_wall_end:
 					wall = _make_single_wall(y != 0)
 					wall.position += room_position + Vector3(0, 0, -ROOM_SIZE_HALF)
-					add_child(wall)
+					csg_combiner_3d.add_child(wall)
 
 			if wall_bits & WEST:  # W
 				var delete_wall_end: bool = (_wall_sides_with_connections(maze, x, y, WEST) <= 1) and (randf() < CHANCE_TO_DELETE_WALL_ENDS)
@@ -210,15 +223,15 @@ func generate_maze() -> void:
 					wall = _make_single_wall(x != 0)
 					wall.rotation_degrees.y = 90
 					wall.position += room_position + Vector3(-ROOM_SIZE_HALF, 0, 0)
-					add_child(wall)
+					csg_combiner_3d.add_child(wall)
 
 			if (y == MAZE_LENGTH - 1) and (wall_bits & SOUTH):  # S
 				wall = _make_single_wall(false)
 				wall.position += room_position + Vector3(0, 0, ROOM_SIZE_HALF)
-				add_child(wall)
+				csg_combiner_3d.add_child(wall)
 
 			if (x == MAZE_WIDTH - 1) and (wall_bits & EAST):  # E
 				wall = _make_single_wall(false)
 				wall.rotation_degrees.y = 90
 				wall.position += room_position + Vector3(ROOM_SIZE_HALF, 0, 0)
-				add_child(wall)
+				csg_combiner_3d.add_child(wall)

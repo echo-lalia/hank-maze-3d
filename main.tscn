@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://k5rue6lvnwv3" path="res://looking_state.gd" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://q5x0uhgpe7p6" path="res://running_state.gd" id="5_272bh"]
 [ext_resource type="PackedScene" uid="uid://cqjsc7vm14irb" path="res://maze/maze_wall_generator.tscn" id="5_lquwl"]
+[ext_resource type="Material" uid="uid://ctxrr6hfuxpr" path="res://wall_shader.tres" id="8_5vw27"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
 radius = 0.16
@@ -16,9 +17,10 @@ height = 0.6
 
 [node name="Node3D" type="Node3D" unique_id=119268813]
 
-[node name="HankBody" type="CharacterBody3D" parent="." unique_id=238060491]
+[node name="HankBody" type="CharacterBody3D" parent="." unique_id=238060491 node_paths=PackedStringArray("maze_generator")]
 transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0.9656391, 0, 4.888681)
 script = ExtResource("1_1bvp3")
+maze_generator = NodePath("../MazeWallGenerator")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HankBody" unique_id=86886429]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
@@ -52,10 +54,14 @@ collision_mask = 9
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=627568425]
 shape = SubResource("WorldBoundaryShape3D_pb32r")
 
-[node name="PlayerBody" parent="." unique_id=1869904869 instance=ExtResource("3_1bvp3")]
+[node name="PlayerBody" parent="." unique_id=1869904869 node_paths=PackedStringArray("maze_generator") instance=ExtResource("3_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.631571)
+maze_generator = NodePath("../MazeWallGenerator")
 
 [node name="MazeWallGenerator" parent="." unique_id=866313809 instance=ExtResource("5_lquwl")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1755988078]
 transform = Transform3D(0.23571831, -0.93257666, 0.27338204, 0.41871732, 0.3513185, 0.83740747, -0.8769908, -0.082922444, 0.47329816, 0, 17.823101, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2057861146]
+material = ExtResource("8_5vw27")
