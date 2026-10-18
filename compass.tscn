@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c1u8hu2m8mme7"]
+
+[ext_resource type="Script" uid="uid://d0lsu2givxv24" path="res://compass.gd" id="1_2gf7n"]
+[ext_resource type="PackedScene" uid="uid://fxtn76ecc6lr" path="res://compass_internal.tscn" id="2_2gf7n"]
+
+[sub_resource type="Environment" id="Environment_bnahb"]
+adjustment_brightness = 15.0
+
+[sub_resource type="World3D" id="World3D_3nwcl"]
+environment = SubResource("Environment_bnahb")
+
+[node name="Compass" type="SubViewport" unique_id=791740663]
+world_3d = SubResource("World3D_3nwcl")
+transparent_bg = true
+size = Vector2i(128, 128)
+script = ExtResource("1_2gf7n")
+
+[node name="Compass" parent="." unique_id=120086369 instance=ExtResource("2_2gf7n")]

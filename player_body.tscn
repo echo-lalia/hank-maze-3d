@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://batgh444m6nni" path="res://player_body.gd" id="1_bvaq7"]
 [ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="2_2lce7"]
 [ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="3_2lce7"]
+[ext_resource type="PackedScene" uid="uid://c1u8hu2m8mme7" path="res://compass.tscn" id="3_ly6kn"]
 [ext_resource type="Script" uid="uid://cvg4fnyip5rv5" path="res://hank_sight_area.gd" id="4_io3rj"]
 [ext_resource type="Script" uid="uid://c5d0rwkq0q1fc" path="res://player_audio_player.gd" id="5_0slni"]
 [ext_resource type="AudioStream" uid="uid://dvscylno686kl" path="res://sfx/player_step_audio_stream_randomizer.tres" id="5_kx4q5"]
@@ -87,14 +88,20 @@ text = "Interact"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PlayerHead/PlayerCamera" unique_id=333617737]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerHead/PlayerCamera" unique_id=1362781914]
 anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.6
-anchor_right = 0.9
-anchor_bottom = 1.0
+anchor_left = 0.8480903
+anchor_top = 0.75771606
+anchor_right = 0.9592014
+anchor_bottom = 0.9552469
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Compass" parent="PlayerHead/PlayerCamera/SubViewportContainer" unique_id=446895720 node_paths=PackedStringArray("player") instance=ExtResource("3_ly6kn")]
+handle_input_locally = false
+render_target_update_mode = 4
+player = NodePath("../../../..")
 
 [node name="RaytracedAudioListener" type="AudioListener3D" parent="PlayerHead" unique_id=678790517]
 doppler_tracking = 2
