@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://jmypsarx38dc" path="res://hankmodelgodot.blend" id="1_7v3u7"]
 [ext_resource type="Script" uid="uid://dmq0s77ijkuxr" path="res://hankalpeca.gd" id="2_ikp2g"]
+[ext_resource type="AudioStream" uid="uid://csttkax1whkpk" path="res://sfx/organ_sting.mp3" id="4_utmuo"]
 [ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="9_bkn7k"]
 
 [sub_resource type="AudioStreamMP3" id="AudioStreamMP3_gavce"]
@@ -61,7 +62,7 @@ bones/10/rotation = Quaternion(-0.5567252, 0.023021184, -0.01645242, 0.83021474)
 bones/11/rotation = Quaternion(-0.046517022, 0.00023003675, -0.0022712364, 0.99891496)
 bones/12/rotation = Quaternion(0.13422608, -0.00013486453, 0.010508733, 0.99089503)
 bones/13/position = Vector3(0.001472115, 0.11113064, -0.011771303)
-bones/13/rotation = Quaternion(-0.13572288, 0.0014493307, 0.0011268578, 0.99074525)
+bones/13/rotation = Quaternion(-0.13663769, 0.00012316807, -0.008224086, 0.99058694)
 bones/14/position = Vector3(0.016039204, 0.07188197, -0.0013175088)
 bones/14/rotation = Quaternion(-0.4520754, -0.48228177, -0.47475344, 0.58106905)
 bones/15/rotation = Quaternion(-0.3300739, -0.1521288, 0.015228186, 0.93149143)
@@ -114,8 +115,13 @@ hit_from_inside = true
 [node name="RaytracedAudioPlayer3D" type="AudioStreamPlayer3D" parent="." index="3" unique_id=43209655]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 stream = SubResource("AudioStreamRandomizer_vhyvb")
+unit_size = 20.0
 pitch_scale = 0.9
 max_polyphony = 2
 doppler_tracking = 2
 script = ExtResource("9_bkn7k")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="OrganStingPlayer" type="AudioStreamPlayer" parent="." index="4" unique_id=361379016]
+stream = ExtResource("4_utmuo")
+bus = &"RaytracedAmbient"

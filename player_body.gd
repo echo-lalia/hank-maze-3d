@@ -3,6 +3,7 @@ class_name PlayerBody
 
 
 const PLAYER_STEP_AUDIO_STREAM_RANDOMIZER = preload("uid://dvscylno686kl")
+const BIG_STOP_RANDOM_STREAM = preload("uid://b4f4mdt8nxoxp")
 
 
 const SNEAK_SPEED: float = 2.0
@@ -64,7 +65,7 @@ var movement_state: MOVEMENT_STATES = MOVEMENT_STATES.normal:
 		if movement_state != val:
 			# Play a loud step when finishing a jump
 			if movement_state == MOVEMENT_STATES.midair:
-				player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 40.0, 20.0)
+				player_step_sound_player.play_player_sound(BIG_STOP_RANDOM_STREAM, 60.0, 1.0)
 			movement_state = val
 			_switch_movement_state()
 
@@ -167,7 +168,8 @@ func _physics_process(delta: float) -> void:
 
 ## Win the game.
 func win() -> void:
-	print("YOU WON.")
+	## TODO: Store run information!!
+	Main.start_main_menu()
 
 
 ## Travel distance per step sound
@@ -182,11 +184,11 @@ func _handle_step_sounds() -> void:
 		_current_step_travel -= STEP_SOUND_DISTANCE
 		#print(MOVEMENT_STATES.find_key(movement_state))
 		if movement_state == MOVEMENT_STATES.sneak:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 5.0, 0.2)
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 8.0, 0.2)
 		elif movement_state == MOVEMENT_STATES.sprint:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 20.0, 0.9)
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 40.0, 1.0)
 		elif movement_state == MOVEMENT_STATES.normal:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 10.0, 0.4)
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 20.0, 0.4)
 
 
 func _process(_delta: float) -> void:

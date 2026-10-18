@@ -1,0 +1,8 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://b4f4mdt8nxoxp"]
+
+[ext_resource type="AudioStream" uid="uid://dapxs88ctb5cu" path="res://sfx/big_stomp.mp3" id="1_m8aak"]
+
+[resource]
+random_pitch = 1.122462
+streams_count = 1
+stream_0/stream = ExtResource("1_m8aak")

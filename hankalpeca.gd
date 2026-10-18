@@ -15,6 +15,7 @@ const DIST_PER_STEP_SFX: float = 1
 @onready var player_detection_raycast_2: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast2
 @onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
 @onready var player_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycastShort
+@onready var organ_sting_player: AudioStreamPlayer = $OrganStingPlayer
 
 @onready var bone_attachment_3d: BoneAttachment3D = $Armature/Skeleton3D/BoneAttachment3D
 
@@ -24,6 +25,10 @@ const DIST_PER_STEP_SFX: float = 1
 @export var auto_animation: bool = true
 @export var auto_speed_direction: bool = true
 
+
+const SAW_PLAYER_RECENTLY_THRESHOLD = 20000
+var last_time_seeing_player: int = 0
+var saw_player_recently: bool = false
 var sees_player: bool = false
 
 
@@ -162,8 +167,17 @@ func _process(delta: float) -> void:
 	or _raycast_sees_player(player_detection_raycast_2) \
 	or _raycast_sees_player(player_detection_raycast):
 		sees_player = true
+		last_time_seeing_player = Time.get_ticks_msec()
+		if not saw_player_recently:
+			organ_sting_player.play()
+			
 	else:
 		sees_player = false
+	
+	if Time.get_ticks_msec() - last_time_seeing_player < SAW_PLAYER_RECENTLY_THRESHOLD:
+		saw_player_recently = true
+	else:
+		saw_player_recently = false
 	
 	_handle_hank_lookat()
 	

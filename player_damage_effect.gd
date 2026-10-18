@@ -47,3 +47,7 @@ func _physics_process(delta: float) -> void:
 	if is_zero_approx(health):
 		Main.start_hank_death_screen()
 	
+
+
+func _on_body_entered(_body: Node3D) -> void:
+	pass # Replace with function body.
