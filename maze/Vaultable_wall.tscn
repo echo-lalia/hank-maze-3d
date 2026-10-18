@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://qamxt83ugmm6" path="res://maze/vaultable_wall.gd" id="1_jy0t4"]
 [ext_resource type="Script" uid="uid://2kuklnqfavku" path="res://interactable_area.gd" id="2_74gcs"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jy0t4"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_m6kwv"]
 size = Vector3(4, 4, 0.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_74gcs"]
@@ -16,8 +16,8 @@ size = Vector3(4.065, 1.955, 1)
 script = ExtResource("1_jy0t4")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1188635198]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-size = Vector3(4, 2, 0.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+size = Vector3(4, 4, 0.4)
 
 [node name="CSGBoxCutout" type="CSGBox3D" parent="CSGBox3D" unique_id=159918802]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.558, 0)
@@ -28,7 +28,7 @@ size = Vector3(4, 3, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=814984501]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-shape = SubResource("BoxShape3D_jy0t4")
+shape = SubResource("BoxShape3D_m6kwv")
 
 [node name="AudioCollider" type="StaticBody3D" parent="." unique_id=1566166601]
 collision_layer = 8

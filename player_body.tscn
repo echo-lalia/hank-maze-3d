@@ -87,6 +87,15 @@ text = "Interact"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="RichTextLabel" type="RichTextLabel" parent="PlayerHead/PlayerCamera" unique_id=333617737]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.6
+anchor_right = 0.9
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="RaytracedAudioListener" type="AudioListener3D" parent="PlayerHead" unique_id=678790517]
 doppler_tracking = 2
 script = ExtResource("3_2lce7")

@@ -40,7 +40,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	#if PlayerBody.current_player_instance.movement_state != PlayerBody.MOVEMENT_STATES.sneak:
 		#navigation_agent_3d.target_position = PlayerBody.current_player_instance.global_position
-	navigation_agent_3d.debug_enabled = true
+	#navigation_agent_3d.debug_enabled = true
 	
 	var current_target_position: Vector3
 	if navigation_agent_3d.is_navigation_finished():

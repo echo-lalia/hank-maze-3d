@@ -22,6 +22,10 @@ enum MOVEMENT_STATES {
 	midair,
 }
 
+## True if the player has taken the gourd.
+var has_gourd: bool = false
+
+
 @onready var player_collision_normal: CollisionShape3D = $PlayerCollisionNormal
 @onready var player_collision_sneak: CollisionShape3D = $PlayerCollisionSneak
 @onready var interaction_raycast: RayCast3D = $PlayerHead/PlayerCamera/InteractionRaycast
@@ -157,6 +161,11 @@ func _physics_process(delta: float) -> void:
 		has_hank_line_of_sight = true
 	else:
 		has_hank_line_of_sight = false
+
+
+## Win the game.
+func win() -> void:
+	print("YOU WON.")
 
 
 ## Travel distance per step sound

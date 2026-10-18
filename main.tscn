@@ -7,13 +7,27 @@
 [ext_resource type="Script" uid="uid://k5rue6lvnwv3" path="res://looking_state.gd" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://q5x0uhgpe7p6" path="res://running_state.gd" id="5_272bh"]
 [ext_resource type="PackedScene" uid="uid://cqjsc7vm14irb" path="res://maze/maze_wall_generator.tscn" id="5_lquwl"]
-[ext_resource type="Material" uid="uid://ctxrr6hfuxpr" path="res://wall_shader.tres" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://2kuklnqfavku" path="res://interactable_area.gd" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://dm5e5y1tvoj2x" path="res://gourd.gd" id="8_kek77"]
+[ext_resource type="Script" uid="uid://shguuhjohfkl" path="res://exit.gd" id="10_4c57u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
 radius = 0.16
 height = 0.6
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_pb32r"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_272bh"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pb32r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kek77"]
+size = Vector3(1.8, 3.09, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
+size = Vector3(1.9, 3.087, 0.208)
 
 [node name="Node3D" type="Node3D" unique_id=119268813]
 
@@ -63,5 +77,37 @@ maze_generator = NodePath("../MazeWallGenerator")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1755988078]
 transform = Transform3D(0.23571831, -0.93257666, 0.27338204, 0.41871732, 0.3513185, 0.83740747, -0.8769908, -0.082922444, 0.47329816, 0, 17.823101, 0)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2057861146]
-material = ExtResource("8_5vw27")
+[node name="Gourd" type="Node3D" parent="." unique_id=368050681 node_paths=PackedStringArray("maze_generator")]
+script = ExtResource("8_kek77")
+maze_generator = NodePath("../MazeWallGenerator")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Gourd" unique_id=111530203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6979537, 0)
+mesh = SubResource("SphereMesh_272bh")
+
+[node name="InteractableArea" type="Area3D" parent="Gourd" unique_id=57786165]
+script = ExtResource("8_5vw27")
+ui_hint = "Take"
+metadata/_custom_type_script = "uid://2kuklnqfavku"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Gourd/InteractableArea" unique_id=777911872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6907213, 0)
+shape = SubResource("SphereShape3D_pb32r")
+
+[node name="Exit" type="Node3D" parent="." unique_id=1704075833 node_paths=PackedStringArray("maze_generator")]
+script = ExtResource("10_4c57u")
+maze_generator = NodePath("../MazeWallGenerator")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Exit" unique_id=1466135903]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5449257, -2.902)
+mesh = SubResource("BoxMesh_kek77")
+
+[node name="InteractableArea" type="Area3D" parent="Exit" unique_id=1568260762]
+script = ExtResource("8_5vw27")
+ui_hint = "Exit"
+interact_disable_duration = 2.0
+metadata/_custom_type_script = "uid://2kuklnqfavku"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit/InteractableArea" unique_id=1941357177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.572526, -2.8727775)
+shape = SubResource("BoxShape3D_pb32r")
