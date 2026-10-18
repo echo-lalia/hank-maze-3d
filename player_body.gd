@@ -34,6 +34,8 @@ var has_gourd: bool = false
 
 @export var player_head: PlayerHead
 
+@export var game_run: GameRun
+
 @export var maze_generator: MazeWallGenerator
 
 @warning_ignore("unused_signal")

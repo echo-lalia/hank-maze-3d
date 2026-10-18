@@ -4,9 +4,11 @@
 [ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="2_2lce7"]
 [ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="3_2lce7"]
 [ext_resource type="PackedScene" uid="uid://c1u8hu2m8mme7" path="res://compass.tscn" id="3_ly6kn"]
+[ext_resource type="Shader" uid="uid://c3oa6jds0ihpw" path="res://damage_filter_shader.gdshader" id="4_ct3yx"]
 [ext_resource type="Script" uid="uid://cvg4fnyip5rv5" path="res://hank_sight_area.gd" id="4_io3rj"]
 [ext_resource type="Script" uid="uid://c5d0rwkq0q1fc" path="res://player_audio_player.gd" id="5_0slni"]
 [ext_resource type="AudioStream" uid="uid://dvscylno686kl" path="res://sfx/player_step_audio_stream_randomizer.tres" id="5_kx4q5"]
+[ext_resource type="Script" uid="uid://bx7kd82dyoi2g" path="res://player_damage_effect.gd" id="5_xs03g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
 
@@ -29,6 +31,20 @@ sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
 background_mode = 2
 sky = SubResource("Sky_pb32r")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ly6kn"]
+shader = ExtResource("4_ct3yx")
+shader_parameter/amount = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ly6kn"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.13755459, 0.709607, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.32781747, 0.30882472, 2.4065375e-07, 1, 0.122599356, 0.04449465, 6.016344e-09, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ly6kn"]
+gradient = SubResource("Gradient_ly6kn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pb32r"]
 radius = 0.6
 
@@ -39,6 +55,13 @@ radius = 0.4
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_io3rj"]
 height = 2.4052734
 radius = 0.9667969
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xs03g"]
+radius = 0.71533203
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xcy0b"]
+height = 3.0
+radius = 1.5
 
 [node name="PlayerBody" type="CharacterBody3D" unique_id=1869904869 node_paths=PackedStringArray("player_head")]
 script = ExtResource("1_bvaq7")
@@ -103,6 +126,15 @@ handle_input_locally = false
 render_target_update_mode = 4
 player = NodePath("../../../..")
 
+[node name="PlayerDamageEffect" type="TextureRect" parent="PlayerHead/PlayerCamera" unique_id=1821691951]
+material = SubResource("ShaderMaterial_ly6kn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_ly6kn")
+
 [node name="RaytracedAudioListener" type="AudioListener3D" parent="PlayerHead" unique_id=678790517]
 doppler_tracking = 2
 script = ExtResource("3_2lce7")
@@ -138,3 +170,21 @@ attenuation_model = 3
 max_polyphony = 3
 script = ExtResource("5_0slni")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="PlayerHurtArea" type="Area3D" parent="." unique_id=693048740 node_paths=PackedStringArray("player", "player_damage_effect")]
+collision_layer = 32
+collision_mask = 32
+monitorable = false
+script = ExtResource("5_xs03g")
+player = NodePath("..")
+player_damage_effect = NodePath("../PlayerHead/PlayerCamera/PlayerDamageEffect")
+
+[node name="CollisionShape3DSmall" type="CollisionShape3D" parent="PlayerHurtArea" unique_id=134721138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_xs03g")
+debug_color = Color(0.9950301, 0, 0.22954392, 0.41960785)
+
+[node name="CollisionShape3DBig" type="CollisionShape3D" parent="PlayerHurtArea" unique_id=1470627730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_xcy0b")
+debug_color = Color(0.9950301, 0, 0.22954392, 0.41960785)

@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://c3xba446ythyp"]
+
+[ext_resource type="Script" uid="uid://ctulxfn44uerb" path="res://GameRun.gd" id="1_3b0hh"]
+[ext_resource type="Script" uid="uid://rd5nrxi4dg6g" path="res://hank_body.gd" id="2_gag4w"]
+[ext_resource type="PackedScene" uid="uid://bstegkducyii3" path="res://hankalpeca.tscn" id="3_1213d"]
+[ext_resource type="Script" uid="uid://clopxxfu4w2x4" path="res://hank_state_machine.gd" id="4_bltg3"]
+[ext_resource type="Script" uid="uid://k5rue6lvnwv3" path="res://looking_state.gd" id="5_4vk6t"]
+[ext_resource type="Script" uid="uid://q5x0uhgpe7p6" path="res://running_state.gd" id="6_uhk2m"]
+[ext_resource type="PackedScene" uid="uid://bcd54nj8m7jmx" path="res://player_body.tscn" id="7_ldgum"]
+[ext_resource type="PackedScene" uid="uid://cqjsc7vm14irb" path="res://maze/maze_wall_generator.tscn" id="8_kuosh"]
+[ext_resource type="Script" uid="uid://dm5e5y1tvoj2x" path="res://gourd.gd" id="9_vvw86"]
+[ext_resource type="Script" uid="uid://2kuklnqfavku" path="res://interactable_area.gd" id="10_juchs"]
+[ext_resource type="Script" uid="uid://shguuhjohfkl" path="res://exit.gd" id="11_qem8s"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
+radius = 0.16
+height = 0.6
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_pb32r"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_272bh"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pb32r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kek77"]
+size = Vector3(1.8, 3.09, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
+size = Vector3(1.9, 3.087, 0.208)
+
+[node name="GameRun" type="Node3D" unique_id=2100628311]
+script = ExtResource("1_3b0hh")
+
+[node name="HankBody" type="CharacterBody3D" parent="." unique_id=1783211460 node_paths=PackedStringArray("maze_generator")]
+transform = Transform3D(0.9999995, 0, 0, 0, 1, 0, 0, 0, 0.9999995, 0.9656391, 0, 4.888681)
+collision_layer = 33
+script = ExtResource("2_gag4w")
+maze_generator = NodePath("../MazeWallGenerator")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HankBody" unique_id=1548921838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("CapsuleShape3D_j7oc2")
+
+[node name="HankAlpeca" parent="HankBody" unique_id=307689099 instance=ExtResource("3_1213d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="HankBody" unique_id=760305261]
+
+[node name="HankStateMachine" type="Node" parent="HankBody" unique_id=1345710326 node_paths=PackedStringArray("hank_body", "hank_mesh", "initial_state")]
+script = ExtResource("4_bltg3")
+hank_body = NodePath("..")
+hank_mesh = NodePath("../HankAlpeca")
+initial_state = NodePath("LookingState")
+
+[node name="LookingState" type="Node" parent="HankBody/HankStateMachine" unique_id=684302230 node_paths=PackedStringArray("running_state")]
+script = ExtResource("5_4vk6t")
+running_state = NodePath("../RunningState")
+metadata/_custom_type_script = "uid://djnomfm13aoxm"
+
+[node name="RunningState" type="Node" parent="HankBody/HankStateMachine" unique_id=944697042 node_paths=PackedStringArray("looking_state")]
+script = ExtResource("6_uhk2m")
+looking_state = NodePath("../LookingState")
+metadata/_custom_type_script = "uid://byhpn01aq0yc7"
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1132386947]
+collision_layer = 9
+collision_mask = 9
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1587432430]
+shape = SubResource("WorldBoundaryShape3D_pb32r")
+
+[node name="PlayerBody" parent="." unique_id=1869904869 node_paths=PackedStringArray("game_run", "maze_generator") instance=ExtResource("7_ldgum")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.631571)
+game_run = NodePath("..")
+maze_generator = NodePath("../MazeWallGenerator")
+
+[node name="MazeWallGenerator" parent="." unique_id=1371215540 instance=ExtResource("8_kuosh")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2124722459]
+transform = Transform3D(0.23571831, -0.93257666, 0.273382, 0.41871732, 0.3513185, 0.83740735, -0.8769908, -0.082922466, 0.47329813, 0, 9.100929, 0)
+
+[node name="Gourd" type="Node3D" parent="." unique_id=1233425170 node_paths=PackedStringArray("maze_generator")]
+script = ExtResource("9_vvw86")
+maze_generator = NodePath("../MazeWallGenerator")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Gourd" unique_id=1416502469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6979537, 0)
+mesh = SubResource("SphereMesh_272bh")
+
+[node name="InteractableArea" type="Area3D" parent="Gourd" unique_id=604336785]
+script = ExtResource("10_juchs")
+ui_hint = "Take"
+metadata/_custom_type_script = "uid://2kuklnqfavku"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Gourd/InteractableArea" unique_id=961293132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6907213, 0)
+shape = SubResource("SphereShape3D_pb32r")
+
+[node name="Exit" type="Node3D" parent="." unique_id=267469642 node_paths=PackedStringArray("maze_generator")]
+script = ExtResource("11_qem8s")
+maze_generator = NodePath("../MazeWallGenerator")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Exit" unique_id=1251884728]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5449257, -2.902)
+mesh = SubResource("BoxMesh_kek77")
+
+[node name="InteractableArea" type="Area3D" parent="Exit" unique_id=989099746]
+script = ExtResource("10_juchs")
+ui_hint = "Exit"
+interact_disable_duration = 2.0
+metadata/_custom_type_script = "uid://2kuklnqfavku"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit/InteractableArea" unique_id=905067316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.572526, -2.8727775)
+shape = SubResource("BoxShape3D_pb32r")

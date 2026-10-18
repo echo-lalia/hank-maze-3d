@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://d1ynnc2lyyb5y"]
+
+[ext_resource type="Script" uid="uid://yg2ibhlxyt7p" path="res://hankdeathscreen.gd" id="1_ov74a"]
+[ext_resource type="ArrayMesh" uid="uid://b8ufsnw68gxom" path="res://hankhead.obj" id="1_qqvf5"]
+[ext_resource type="Texture2D" uid="uid://cvsdipqf0id15" path="res://HankFull.png" id="2_bwo10"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ov74a"]
+resource_name = "FullHank"
+cull_mode = 2
+albedo_texture = ExtResource("2_bwo10")
+roughness = 0.5
+texture_filter = 2
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="Environment" id="Environment_bwo10"]
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 1.0
+
+[sub_resource type="Animation" id="Animation_ua4s6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hankhead:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:fov")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [120.0]
+}
+
+[sub_resource type="Animation" id="Animation_ov74a"]
+resource_name = "hank_scare"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hankhead:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.43527538, 0.5358868),
+"update": 0,
+"values": [Vector3(0, 0, -4.79), Vector3(0, 0.08, 0.245)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:fov")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.32987705, 1),
+"update": 0,
+"values": [66.6, 120.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ua4s6"]
+_data = {
+&"RESET": SubResource("Animation_ua4s6"),
+&"hank_scare": SubResource("Animation_ov74a")
+}
+
+[node name="HankScare" type="Node3D" unique_id=338717046]
+script = ExtResource("1_ov74a")
+
+[node name="Hankhead" type="MeshInstance3D" parent="." unique_id=1601422115]
+mesh = ExtResource("1_qqvf5")
+surface_material_override/0 = SubResource("StandardMaterial3D_ov74a")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1203298209]
+transform = Transform3D(1, 0, 0, 0, 0.9910163, 0.13374127, 0, -0.13374127, 0.9910163, 0, 0.28563607, 1.9334881)
+environment = SubResource("Environment_bwo10")
+fov = 120.0
+
+[node name="AreaLight3D" type="AreaLight3D" parent="Camera3D" unique_id=2142827456]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, -7.4505806e-08, 0, 7.4505806e-08, 0.99999994, 0, -0.110421, 0.81821454)
+light_color = Color(0.66897917, 0.42550915, 0.25191033, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2145004062]
+libraries/ = SubResource("AnimationLibrary_ua4s6")
