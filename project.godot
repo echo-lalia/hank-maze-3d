@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [audio]
 
 buses/default_bus_layout="uid://c2hriix1p7vup"
-general/3d_panning_strength=0.9
 
 [display]
 

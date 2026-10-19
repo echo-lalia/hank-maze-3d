@@ -212,4 +212,4 @@ func _handle_step_sounds() -> void:
 
 func _process(_delta: float) -> void:
 	_handle_step_sounds()
-	print(Utils.seconds_to_timer(game_run.get_run_time()))
+	#print(Utils.seconds_to_timer(game_run.get_run_time()))

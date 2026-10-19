@@ -60,6 +60,9 @@ var _lowpass_max_safe_cutoff: float = LOWPASS_MAX_HZ
 var _is_enabled: bool = false
 
 
+var interaural_delay_effect: AudioEffectDelay
+
+
 func _enter_tree() -> void:
 	add_to_group(GROUP_NAME)
 	bus = ProjectSettings.get_setting("raytraced_audio/reverb_bus") # Fallback
@@ -124,6 +127,17 @@ func _create_bus() -> int:
 	AudioServer.set_bus_name(i, generate_bus_name())
 	AudioServer.set_bus_send(i, ProjectSettings.get_setting("raytraced_audio/reverb_bus"))
 	AudioServer.add_bus_effect(i, AudioEffectLowPassFilter.new())
+	interaural_delay_effect = AudioEffectDelay.new()
+	AudioServer.add_bus_effect(i, interaural_delay_effect)
+	interaural_delay_effect.dry = 0.0
+	interaural_delay_effect.tap1_active = true
+	interaural_delay_effect.tap2_active = true
+	interaural_delay_effect.tap1_level_db = 0.0
+	interaural_delay_effect.tap2_level_db = 0.0
+	interaural_delay_effect.tap1_pan = -1
+	interaural_delay_effect.tap2_pan = 1
+	interaural_delay_effect.tap1_delay_ms = 0.0
+	interaural_delay_effect.tap2_delay_ms = 0.0
 	return i
 
 ## Returns a name for the audio bus created for this node
@@ -134,6 +148,8 @@ func generate_bus_name() -> String:
 func is_enabled() -> bool:
 	return _is_enabled
 
+
+
 ## Updates this [RaytracedAudioPlayer3D]
 ## [br]This method will adjust the muffle of the played stream, as well as enable or disable it
 ## based on whether it's audible from the given [RaytracedAudioListener]
@@ -141,6 +157,7 @@ func is_enabled() -> bool:
 func update(listener: RaytracedAudioListener, delta: float) -> void:
 	if _is_enabled:
 		_update(listener.rays_count, listener.muffle_interpolation, delta)
+		_update_interaural(listener)
 
 	_lowpass_rays_count = 0
 	
@@ -150,6 +167,29 @@ func update(listener: RaytracedAudioListener, delta: float) -> void:
 		disable()
 	else:
 		enable()
+	
+	
+
+
+func _update_interaural(listener: RaytracedAudioListener) -> void:
+	const SPEED_OF_SOUND: float = 340.29
+	const SOUND_SECONDS_PER_METER: float = 1.0 / SPEED_OF_SOUND
+	const SOUND_MS_PER_METER: float = SOUND_SECONDS_PER_METER * 1000
+	
+	var relative_sound_pos: Vector3 = listener.to_local(global_position)
+	var left_ear_travel_time: float = Vector3(-0.1075, 0, 0).distance_to(relative_sound_pos) * SOUND_MS_PER_METER
+	var right_ear_travel_time: float = Vector3(0.1075, 0, 0).distance_to(relative_sound_pos) * SOUND_MS_PER_METER
+	
+	if left_ear_travel_time < right_ear_travel_time:
+		 # Right ear delay is longer, remove left delay, add delay to right.
+		interaural_delay_effect.tap1_delay_ms = 0.0
+		interaural_delay_effect.tap2_delay_ms = right_ear_travel_time - left_ear_travel_time
+	else:
+		# Left ear delay is longer, remove right delay, add delay to left.
+		interaural_delay_effect.tap2_delay_ms = 0.0
+		interaural_delay_effect.tap1_delay_ms = left_ear_travel_time - right_ear_travel_time
+	
+	prints("Travel times: ", left_ear_travel_time, right_ear_travel_time)
 
 
 func _update(rays_count: int, interpolation: float, delta: float):
