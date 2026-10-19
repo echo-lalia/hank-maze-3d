@@ -39,72 +39,73 @@ stream_5/stream = SubResource("AudioStreamMP3_k8slt")
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
 script = ExtResource("2_ikp2g")
 
-[node name="Armature" parent="." index="0" unique_id=1352513279]
+[node name="Armature" parent="." index="0" unique_id=1831976288]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312, 0)
 
-[node name="Skeleton3D" parent="Armature" index="0" unique_id=329245427]
-bones/0/position = Vector3(0.08504657, -0.2402994, -0.039770074)
-bones/0/rotation = Quaternion(-0.5443845, 6.017536e-11, -3.9524335e-11, 0.83883584)
-bones/1/position = Vector3(-0.08014608, -0.22485027, -0.04359224)
-bones/1/rotation = Quaternion(-0.54384357, -0.037117824, 0.024673086, 0.8380023)
-bones/2/position = Vector3(4.622937e-17, 0.024099285, 0.007898086)
-bones/2/rotation = Quaternion(-0.02719905, 1.19165186e-07, -3.2423786e-09, 0.99963003)
-bones/3/position = Vector3(0.11081884, -0.12911187, 0.22541459)
-bones/4/position = Vector3(-0.09944392, -0.12741742, 0.22550681)
-bones/5/position = Vector3(0.0646523, -0.004727173, -0.031947296)
-bones/5/rotation = Quaternion(0.9206882, 0.15524632, 0.005113415, 0.3580583)
-bones/6/rotation = Quaternion(0.5973705, -0.030863212, 0.13522713, 0.78987956)
-bones/7/rotation = Quaternion(-0.5613721, 0.0043588635, -0.02739764, 0.8270984)
-bones/8/position = Vector3(-0.06465231, -0.004727171, -0.031947315)
-bones/8/rotation = Quaternion(0.90068334, -0.15388386, -0.02120499, 0.40575817)
-bones/9/rotation = Quaternion(0.6603148, 0.028734593, -0.14947572, 0.7354018)
-bones/10/rotation = Quaternion(-0.5567252, 0.023021184, -0.01645242, 0.83021474)
-bones/11/rotation = Quaternion(-0.046517022, 0.00023003675, -0.0022712364, 0.99891496)
-bones/12/rotation = Quaternion(0.13422608, -0.00013486453, 0.010508733, 0.99089503)
-bones/13/position = Vector3(0.001472115, 0.11113064, -0.011771303)
-bones/13/rotation = Quaternion(-0.13663769, 0.00012316807, -0.008224086, 0.99058694)
-bones/14/position = Vector3(0.016039204, 0.07188197, -0.0013175088)
-bones/14/rotation = Quaternion(-0.4520754, -0.48228177, -0.47475344, 0.58106905)
-bones/15/rotation = Quaternion(-0.3300739, -0.1521288, 0.015228186, 0.93149143)
-bones/16/rotation = Quaternion(-0.17992952, -0.03749747, 0.007614368, 0.9829351)
-bones/17/rotation = Quaternion(-0.034186, 0.16156982, 0.044577282, 0.98526114)
-bones/18/position = Vector3(-0.016039204, 0.07188196, -0.0013175177)
-bones/18/rotation = Quaternion(-0.4868419, 0.44644988, 0.5069572, 0.5537706)
-bones/19/rotation = Quaternion(-0.22038451, 0.16156818, 0.008005732, 0.9619056)
-bones/20/rotation = Quaternion(-0.24199277, 0.042469826, -0.034307458, 0.9687409)
-bones/21/rotation = Quaternion(-0.032166008, -0.161805, -0.044063903, 0.98531365)
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=1921503641]
+bones/0/position = Vector3(0.076560184, -0.2936643, -0.03425586)
+bones/0/rotation = Quaternion(-0.70325845, 5.090812e-11, -5.0907948e-11, 0.71093434)
+bones/1/position = Vector3(-0.076560184, -0.2936643, -0.03425586)
+bones/1/rotation = Quaternion(-0.70325845, 5.090812e-11, -5.0907948e-11, 0.71093434)
+bones/2/position = Vector3(-6.7309673e-12, 0.024054488, 0.007872251)
+bones/2/rotation = Quaternion(-0.027131747, 1.1916495e-07, -3.2504008e-09, 0.9996319)
+bones/3/position = Vector3(0.09558255, -0.12826541, 0.22546071)
+bones/4/position = Vector3(-0.0960396, -0.12826541, 0.22546066)
+bones/5/position = Vector3(0.064652294, -0.004727173, -0.0319473)
+bones/5/rotation = Quaternion(0.99287534, 0.058471046, 0.0037775724, 0.103756785)
+bones/6/rotation = Quaternion(0.22768106, -0.037964765, 0.05154032, 0.9716294)
+bones/7/rotation = Quaternion(-0.71628886, -0.006431677, 0.0002497368, 0.6977743)
+bones/8/position = Vector3(-0.0646523, -0.004727174, -0.03194732)
+bones/8/rotation = Quaternion(0.9928704, -0.058632337, -0.0029483289, 0.103740074)
+bones/9/rotation = Quaternion(0.22768241, 0.037964765, -0.051540583, 0.97162914)
+bones/10/rotation = Quaternion(-0.71628946, 0.006426193, -0.00024245068, 0.69777364)
+bones/11/rotation = Quaternion(-0.04651715, -3.694826e-15, -1.10905525e-08, 0.9989175)
+bones/12/rotation = Quaternion(0.08172412, -3.6166337e-05, -2.1310893e-07, 0.996655)
+bones/13/rotation = Quaternion(-0.08421402, 3.367155e-05, 1.9833826e-06, 0.9964477)
+bones/14/position = Vector3(0.016039204, 0.071881965, -0.0013175096)
+bones/14/rotation = Quaternion(-0.49171084, -0.44109517, -0.5114464, 0.54961634)
+bones/15/rotation = Quaternion(-0.41181841, -0.14349942, 0.033010054, 0.8992908)
+bones/16/rotation = Quaternion(-0.15896875, -0.035792913, -0.0013264884, 0.9866338)
+bones/17/rotation = Quaternion(-0.03418597, 0.16156979, 0.044577263, 0.9852611)
+bones/18/position = Vector3(-0.016039204, 0.07188197, -0.0013175134)
+bones/18/rotation = Quaternion(-0.4917128, 0.44109297, 0.5114484, 0.5496145)
+bones/19/rotation = Quaternion(-0.3995599, 0.14490516, -0.030308604, 0.90467435)
+bones/20/rotation = Quaternion(-0.1915223, 0.03843427, -0.012574864, 0.9806549)
+bones/21/rotation = Quaternion(-0.032166053, -0.16180499, -0.044063915, 0.9853136)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=863464019]
-transform = Transform3D(1, -2.9289617e-06, -5.0150998e-06, 3.656068e-06, 0.9884191, 0.15174656, 4.512563e-06, -0.15174654, 0.98841923, -6.090668e-07, 0.30895504, -0.0072510755)
+transform = Transform3D(1, -2.9289668e-06, -5.015092e-06, 3.6560682e-06, 0.9884192, 0.15174653, 4.5125635e-06, -0.15174654, 0.9884193, -6.090668e-07, 0.30895504, -0.0072510755)
 bone_name = "Head"
 bone_idx = 13
-override_pose = true
 
 [node name="PlayerDetectionRaycast" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=1375929066]
-transform = Transform3D(0.99452204, -0.017252186, -0.10309498, -5.5879354e-09, 0.9862866, -0.16504781, 0.10452851, 0.16414368, 0.9808835, -0.073178776, 0.15201211, 0.023337908)
+transform = Transform3D(0.9963938, 0.01941818, -0.08259841, -0.031517543, 0.98851484, -0.1478087, 0.07877944, 0.14987896, 0.98556226, -0.06988272, 0.1719619, 0.026064985)
 target_position = Vector3(0, 0, 20)
 collision_mask = 5
 collide_with_areas = true
 
-[node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="1" unique_id=1237189481]
-transform = Transform3D(0.99452186, 0.01725218, 0.103094995, 5.5879354e-09, 0.98628664, -0.16504784, -0.104528494, 0.16414365, 0.98088366, 0.09109456, 0.15201163, 0.023337096)
+[node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="1" unique_id=1161230707]
+transform = Transform3D(0.9956126, 0.043662917, 0.08275885, -0.031065743, 0.98852915, -0.14780964, -0.08826308, 0.14459015, 0.98554885, 0.067332774, 0.1719616, 0.026064306)
 target_position = Vector3(0, 0, 20)
 collision_mask = 5
 collide_with_areas = true
 
-[node name="PlayerDetectionRaycast3" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="2" unique_id=2007125334]
-transform = Transform3D(1, -1.1825041e-07, 9.5880296e-08, 1.3044115e-07, 0.990274, -0.13914019, -7.849212e-08, 0.1391402, 0.990274, 0, 0.094, 0.018)
-target_position = Vector3(0, 0, 20)
-collision_mask = 5
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="3" unique_id=1424047178]
-transform = Transform3D(0.99999994, -3.0055958e-12, 2.2737368e-12, -1.4210855e-12, 0.98628664, -0.16504781, 7.275958e-12, 0.1650478, 0.9862867, -2.2737368e-13, 0.15200001, 0.023000002)
+[node name="PlayerDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="2" unique_id=1424047178]
+transform = Transform3D(0.99999994, 2.0071672e-13, -7.410728e-12, -1.4210855e-12, 0.9862867, -0.1650478, 7.2759585e-12, 0.1650478, 0.9862867, -2.2737368e-13, 0.15200001, 0.023000002)
 target_position = Vector3(0, 0, 1)
 collision_mask = 4
 hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
+debug_shape_custom_color = Color(0.34402263, 0.49155134, 0.9175409, 1)
+
+[node name="WallDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="3" unique_id=865879631]
+transform = Transform3D(0.99999994, -3.0055958e-12, 2.2737368e-12, -1.4210855e-12, 0.98628664, -0.16504781, 7.275958e-12, 0.1650478, 0.9862867, 0, 0.182, 0.013)
+target_position = Vector3(0, 0, 0.5)
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.7273735, 0.30263817, 0.8373477, 1)
 
 [node name="FloorDetectionRaycast" type="RayCast3D" parent="." index="2" unique_id=89854284]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

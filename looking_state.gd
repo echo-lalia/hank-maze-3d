@@ -8,7 +8,7 @@ extends HankState
 ## Called when entering this state
 func enter() -> void:
 	auto_animation = false
-	playing_animation = HANK_ANIMATION.looking
+	playing_animation = HANK_ANIMATION.looking_frantic if hank_mesh.saw_player_recently else HANK_ANIMATION.looking
 	await get_tree().physics_frame
 	
 	if not hank_mesh.animation_player.animation_finished.is_connected(_looking_finished):
@@ -33,7 +33,7 @@ func _on_player_sound(sound_position: Vector3, travel_distance: float) -> void:
 const PATROL_DISTANCE: float = 10.0
 const PATROL_MAX_PATH: float = 15.0
 func _looking_finished(anim_name: StringName) -> void:
-	if not is_active_state() or anim_name != "LookingAction":
+	if not is_active_state() or not (anim_name == "LookingAction" or anim_name == "LookingFranticAction"):
 		return
 	# Select a random nearby point to patrol to.
 	var direction: Vector3 = Vector3(PATROL_DISTANCE, 0, 0).rotated(Vector3(0, 1, 0), randf_range(0, deg_to_rad(360)))

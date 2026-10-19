@@ -7,15 +7,19 @@ const RUN_ANIMATION_DURATION: float = 0.1667
 const RUN_ANIMATION_VELOCITY: float = RUN_ANIMATION_TRAVEL / RUN_ANIMATION_DURATION
 const DIST_PER_STEP_SFX: float = 1
 
+const CONE_VISION_ANGLE: float = deg_to_rad(60)
+const CONE_VISION_DISTANCE: float = 15
+
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var armature: Node3D = $Armature
 @onready var floor_detection_raycast: RayCast3D = $FloorDetectionRaycast
 @onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast
 @onready var player_detection_raycast_2: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast2
-@onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
+
 @onready var player_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycastShort
 @onready var organ_sting_player: AudioStreamPlayer = $OrganStingPlayer
+@onready var wall_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/WallDetectionRaycastShort
 
 @onready var bone_attachment_3d: BoneAttachment3D = $Armature/Skeleton3D/BoneAttachment3D
 
@@ -50,6 +54,7 @@ enum HANK_ANIMATION {
 	running,
 	falling,
 	looking,
+	looking_frantic,
 }
 
 
@@ -95,6 +100,8 @@ func _update_playing_animation() -> void:
 			animation_player.play("RunAction")
 		HANK_ANIMATION.looking:
 			animation_player.play("LookingAction")
+		HANK_ANIMATION.looking_frantic:
+			animation_player.play("LookingFranticAction")
 	
 	animation_player.speed_scale = 1.0
 
@@ -122,8 +129,20 @@ var _step_sfx_current_distance: float = 0.0
 
 func _raycast_sees_player(raycast: RayCast3D) -> bool:
 	if raycast.is_colliding() and player_detection_raycast.get_collider() is HankSightArea:
+		print("RAYCAST SEES PLAYER")
 		return true
 	return false
+
+func _player_in_vision_cone() -> bool:
+	var player_direction_vector: Vector3 = player_detection_raycast.global_position.direction_to(PlayerBody.current_player_instance.global_position)
+	var player_angle: float = (player_detection_raycast.global_basis.z).angle_to(player_direction_vector)
+	return (
+		player_angle < CONE_VISION_ANGLE
+		and player_detection_raycast.global_position.distance_to(PlayerBody.current_player_instance.global_position) < CONE_VISION_DISTANCE
+	)
+
+
+
 
 
 func _handle_hank_lookat() -> void:
@@ -162,10 +181,11 @@ func _process(delta: float) -> void:
 	if auto_speed_direction:
 		update_animation_speed_direction()
 	
+	
 	if player_detection_raycast_short.is_colliding() \
-	or _raycast_sees_player(player_detection_raycast_3) \
 	or _raycast_sees_player(player_detection_raycast_2) \
-	or _raycast_sees_player(player_detection_raycast):
+	or _raycast_sees_player(player_detection_raycast) \
+	or (_player_in_vision_cone() and PlayerBody.current_player_instance.has_hank_line_of_sight):
 		sees_player = true
 		last_time_seeing_player = Time.get_ticks_msec()
 		if not saw_player_recently:
@@ -180,6 +200,8 @@ func _process(delta: float) -> void:
 		saw_player_recently = false
 	
 	_handle_hank_lookat()
+	
+	
 	
 
 
