@@ -2,7 +2,7 @@ extends Node
 class_name Main
 
 
-
+const SAVE_PATH = "user://hankattackdata"
 
 const MAIN_MENU = preload("uid://crs3ct2mo8vgb")
 const GAME_RUN = preload("uid://c3xba446ythyp")
@@ -44,4 +44,48 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	load_stats()
 	start_main_menu()
+
+
+
+static var game_stats: Dictionary[String, Variant] = {
+	"best_time": 100_000_000_000.0,
+	"last_time": 0.0,
+	"pb_last_time": false,
+	"won_last_game": false,
+	"has_finished_ever": false,
+	"has_won_ever": false,
+}
+
+
+
+
+static func load_stats() -> void:
+	print("Loading game data...")
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if not file:
+		print("Couldn't load stored game data; got '%'.\nStarting new save." % error_string(FileAccess.get_open_error()))
+		return
+	
+	var loaded = file.get_var()
+	if loaded is Dictionary:
+		game_stats.merge(loaded, true)
+		print("Loaded game data!")
+	else:
+		print("Loaded data wasn't the expected format. Loaded: ", loaded)
+
+
+static func save_stats() -> void:
+	print("Saving stats...")
+	print(game_stats)
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if not file:
+		push_error("Couldn't create save data; got '%'." % error_string(FileAccess.get_open_error()))
+		return
+	
+	var is_ok: bool = file.store_var(game_stats)
+	
+	if not is_ok:
+		push_error("Couldn't save game data; got '%'." % error_string(FileAccess.get_open_error()))
+	

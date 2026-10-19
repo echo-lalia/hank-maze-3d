@@ -9,13 +9,18 @@ signal lost
 
 
 
-var run_start_time_us: int
+var run_start_time: float
+
+func get_engine_time() -> float:
+	return Time.get_ticks_usec() / 1e+6
+
+
 func _ready() -> void:
-	run_start_time_us = Time.get_ticks_usec()
+	run_start_time = get_engine_time()
 
 
-func get_run_time_us() -> float:
-	return Time.get_ticks_usec() - run_start_time_us
+func get_run_time() -> float:
+	return get_engine_time() - run_start_time
 
 
 

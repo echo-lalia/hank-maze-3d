@@ -169,7 +169,26 @@ func _physics_process(delta: float) -> void:
 ## Win the game.
 func win() -> void:
 	## TODO: Store run information!!
+	Main.game_stats["last_time"] = game_run.get_run_time()
+	Main.game_stats["won_last_game"] = true
+	if Main.game_stats["last_time"] < Main.game_stats["best_time"]:
+		Main.game_stats["best_time"] = Main.game_stats["last_time"]
+		Main.game_stats["pb_last_time"] = true
+	else:
+		Main.game_stats["pb_last_time"] = false
+	Main.game_stats["has_finished_ever"] = true
+	Main.game_stats["has_won_ever"] = true
+	Main.save_stats()
 	Main.start_main_menu()
+
+
+func lose() -> void:
+	Main.game_stats["last_time"] = game_run.get_run_time()
+	Main.game_stats["won_last_game"] = false
+	Main.game_stats["pb_last_time"] = false
+	Main.game_stats["has_finished_ever"] = true
+	Main.save_stats()
+	Main.start_hank_death_screen()
 
 
 ## Travel distance per step sound
@@ -193,3 +212,4 @@ func _handle_step_sounds() -> void:
 
 func _process(_delta: float) -> void:
 	_handle_step_sounds()
+	print(Utils.seconds_to_timer(game_run.get_run_time()))

@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	(player_damage_effect.material as ShaderMaterial).set_shader_parameter("amount", 1.0 - health)
 	
 	if is_zero_approx(health):
-		Main.start_hank_death_screen()
+		player.lose()
 	
 
 
