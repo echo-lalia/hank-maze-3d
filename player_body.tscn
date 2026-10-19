@@ -30,6 +30,9 @@ sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
 [sub_resource type="Environment" id="Environment_ig7tw"]
 background_mode = 2
 sky = SubResource("Sky_pb32r")
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.0666
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ly6kn"]
 shader = ExtResource("4_ct3yx")
@@ -37,7 +40,7 @@ shader_parameter/amount = 1.0
 
 [sub_resource type="Gradient" id="Gradient_ly6kn"]
 interpolation_mode = 2
-offsets = PackedFloat32Array(0.13755459, 0.709607, 1)
+offsets = PackedFloat32Array(0.13755459, 0.6694915, 0.91646487)
 colors = PackedColorArray(1, 1, 1, 1, 0.32781747, 0.30882472, 2.4065375e-07, 1, 0.122599356, 0.04449465, 6.016344e-09, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ly6kn"]
@@ -64,6 +67,8 @@ height = 3.0
 radius = 1.8
 
 [node name="PlayerBody" type="CharacterBody3D" unique_id=1869904869 node_paths=PackedStringArray("player_head")]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_bvaq7")
 player_head = NodePath("PlayerHead")
 

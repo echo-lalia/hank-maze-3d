@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://de54k6p86uv8r"]
+
+[ext_resource type="Texture2D" uid="uid://doq36jc4fer2i" path="res://textures/floor.png" id="1_k3ajy"]
+
+[resource]
+albedo_texture = ExtResource("1_k3ajy")
+albedo_texture_force_srgb = true
+metallic = 0.36
+clearcoat_enabled = true
+clearcoat_roughness = 0.45
+uv1_scale = Vector3(11, 20, 1)
+texture_filter = 0
+stencil_flags = 2

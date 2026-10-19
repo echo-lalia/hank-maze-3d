@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [audio]
 
 buses/default_bus_layout="uid://c2hriix1p7vup"
+general/3d_panning_strength=0.9
 
 [display]
 
@@ -87,6 +88,7 @@ interact={
 [layer_names]
 
 3d_physics/layer_1="Standard"
+3d_physics/layer_2="PlayerOnly"
 3d_physics/layer_3="HankSight"
 3d_physics/layer_4="AudioRaycast"
 3d_physics/layer_5="InteractableArea"

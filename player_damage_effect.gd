@@ -4,7 +4,7 @@ extends Area3D
 
 @export var player_damage_effect: TextureRect
 
-const HURT_AMOUNT: float = 2.0
+const HURT_AMOUNT: float = 1.5
 const HEAL_AMOUNT: float = 0.1
 
 

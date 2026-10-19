@@ -10,6 +10,8 @@ script = ExtResource("1_7q5dr")
 
 [node name="StartRoomPosition" type="Node3D" parent="." unique_id=1367781821]
 
+[node name="HankRoomPosition" type="Node3D" parent="." unique_id=1298778283]
+
 [node name="EndRoomPosition" type="Node3D" parent="." unique_id=1228451765]
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1219648099]

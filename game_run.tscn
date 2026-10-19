@@ -78,9 +78,6 @@ maze_generator = NodePath("../MazeWallGenerator")
 
 [node name="MazeWallGenerator" parent="." unique_id=1371215540 instance=ExtResource("8_kuosh")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2124722459]
-transform = Transform3D(0.23571831, -0.93257666, 0.273382, 0.41871732, 0.3513185, 0.83740735, -0.8769908, -0.082922466, 0.47329813, 0, 9.100929, 0)
-
 [node name="Gourd" type="Node3D" parent="." unique_id=1233425170 node_paths=PackedStringArray("maze_generator")]
 script = ExtResource("9_vvw86")
 maze_generator = NodePath("../MazeWallGenerator")

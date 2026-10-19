@@ -34,7 +34,7 @@ func _ready() -> void:
 	if maze_generator:
 		if not maze_generator.is_node_ready():
 			await maze_generator.ready
-		global_position = maze_generator.end_room_position.global_position
+		global_position = maze_generator.hank_room_position.global_position
 	
 
 func _physics_process(delta: float) -> void:

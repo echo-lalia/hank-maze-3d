@@ -3,11 +3,16 @@ class_name MazeWallGenerator
 
 const VAULTABLE_WALL = preload("uid://xrikcftunle")
 const WALL_SHADER = preload("uid://ctxrr6hfuxpr")
+const FLOOR_MATERIAL = preload("uid://de54k6p86uv8r")
 
 const BIG_ROOM_CHANCE = 0.25
 const VAULT_CHANCE_THRESHOLD = 0.1
 const CHANCE_TO_DELETE_WALL_ENDS = 0.5
 
+const BANANATHING = preload("uid://detsxsphpkx4q")
+const CEILINGLIGHT = preload("uid://23hbjy7d64p4")
+
+const CEILING_LIGHT_CHANCE: float = 0.02
 
 const MAZE_LENGTH = 20
 const MAZE_RADIUS = 5
@@ -32,6 +37,7 @@ const WEST: int = 0b1000
 
 @onready var start_room_position: Node3D = $StartRoomPosition
 @onready var end_room_position: Node3D = $EndRoomPosition
+@onready var hank_room_position: Node3D = $HankRoomPosition
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -43,15 +49,32 @@ func _ready() -> void:
 	floor_shape.orientation = PlaneMesh.FACE_Y
 	floor_instance.mesh = floor_shape
 	floor_instance.position = Vector3(0, 0, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	floor_shape.material = FLOOR_MATERIAL
 	add_child(floor_instance)
 	
 	start_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, 0)
 	end_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH - 1)
+	@warning_ignore("integer_division")
+	hank_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH/2)
 	
 	# Not sure if this is needed, but I want to be sure the CSG meshes have been generated.
 	await get_tree().process_frame
 	bake_navigation_mesh()
 	await bake_finished
+	
+	#var probe := create_reflection_probe(Vector3((MAZE_WIDTH + 2) * ROOM_SIZE, ROOM_HEIGHT * 3, ROOM_SIZE * (MAZE_LENGTH + 2)))
+	#probe.global_position = hank_room_position.global_position
+	#add_child(probe)
+
+
+
+func create_reflection_probe(size: Vector3) -> ReflectionProbe:
+	var reflection_probe: ReflectionProbe = ReflectionProbe.new()
+	reflection_probe.size = size
+	reflection_probe.box_projection = true
+	reflection_probe.interior = true
+	reflection_probe.enable_shadows = true
+	return reflection_probe
 
 
 func _make_single_wall(allow_special: bool = true) -> Node3D:
@@ -177,6 +200,38 @@ func room_coord_to_relative_position(x: int, y: int) -> Vector3:
 	return Vector3(x * ROOM_SIZE - MAZE_X_OFFSET, 0, y * ROOM_SIZE)
 
 
+
+func _random_room_position(margin: float = 1.0) -> Vector3:
+	return Vector3(
+		randf_range(-ROOM_SIZE_HALF + margin, ROOM_SIZE_HALF - margin),
+		0,
+		randf_range(-ROOM_SIZE_HALF + margin, ROOM_SIZE_HALF - margin),
+	)
+
+func add_objects_to_room(room_position: Vector3) -> void:
+	var objects_to_add: int = randi_range(0, 1)
+	var rand_objects: Array[PackedScene] = [BANANATHING, CEILINGLIGHT]
+	for i in objects_to_add:
+		var rand_obj: PackedScene = rand_objects.pick_random()
+		var item: Node3D
+		match rand_obj:
+			BANANATHING:
+				item = BANANATHING.instantiate()
+				# Add to a random position with a random rotation.
+				item.position = room_position + _random_room_position(0.8)
+				item.rotation.y = randf_range(0, deg_to_rad(360))
+				add_child(item)
+	
+	if randf() < CEILING_LIGHT_CHANCE \
+	or room_coord_to_relative_position(MAZE_RADIUS, 0).is_equal_approx(room_position) \
+	or room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH/2).is_equal_approx(room_position):
+			var item: Node3D = CEILINGLIGHT.instantiate()
+			item.position = room_position
+			add_child(item)
+
+
+
+
 func generate_maze() -> void:
 	var maze: MazeSquare.Shape = MazeSquare.Shape.new(MAZE_WIDTH, MAZE_LENGTH)
 	
@@ -204,6 +259,9 @@ func generate_maze() -> void:
 		for x in MAZE_WIDTH:
 			var room_position: Vector3 = room_coord_to_relative_position(x, y)
 			var room: MazeSquare.Room = maze.room(x, y)
+			
+			add_objects_to_room(room_position)
+			
 			var wall_bits: int = room.walls_id()
 			
 			# In order to only make one wall per wall, only create N/W walls
@@ -235,3 +293,4 @@ func generate_maze() -> void:
 				wall.rotation_degrees.y = 90
 				wall.position += room_position + Vector3(ROOM_SIZE_HALF, 0, 0)
 				csg_combiner_3d.add_child(wall)
+			
