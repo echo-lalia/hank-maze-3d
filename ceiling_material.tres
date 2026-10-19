@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cpmqma4scpyea"]
+
+[ext_resource type="Texture2D" uid="uid://ptuv2xwdqcmo" path="res://textures/ceiling.png" id="1_01sas"]
+
+[resource]
+albedo_texture = ExtResource("1_01sas")
+albedo_texture_force_srgb = true
+clearcoat_roughness = 0.45
+uv1_scale = Vector3(11, 20, 1)
+texture_filter = 0
+stencil_flags = 2

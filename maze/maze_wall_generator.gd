@@ -4,6 +4,7 @@ class_name MazeWallGenerator
 const VAULTABLE_WALL = preload("uid://xrikcftunle")
 const WALL_SHADER = preload("uid://ctxrr6hfuxpr")
 const FLOOR_MATERIAL = preload("uid://de54k6p86uv8r")
+const CEILING_MATERIAL = preload("uid://cpmqma4scpyea")
 
 const BIG_ROOM_CHANCE = 0.25
 const VAULT_CHANCE_THRESHOLD = 0.1
@@ -51,6 +52,13 @@ func _ready() -> void:
 	floor_instance.position = Vector3(0, 0, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
 	floor_shape.material = FLOOR_MATERIAL
 	add_child(floor_instance)
+	
+	var ceiling_instance: MeshInstance3D = MeshInstance3D.new()
+	ceiling_instance.mesh = floor_shape.duplicate_deep()
+	ceiling_instance.mesh.material = CEILING_MATERIAL
+	ceiling_instance.mesh.flip_faces = true
+	ceiling_instance.position = Vector3(0, 6.1, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	add_child(ceiling_instance)
 	
 	start_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, 0)
 	end_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH - 1)
