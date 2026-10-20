@@ -5,8 +5,10 @@
 [ext_resource type="Script" uid="uid://2kuklnqfavku" path="res://interactable_area.gd" id="2_74gcs"]
 [ext_resource type="Material" uid="uid://ctxrr6hfuxpr" path="res://wall_shader.tres" id="2_l5xgk"]
 [ext_resource type="Texture2D" uid="uid://cgu2j6cfrxhut" path="res://textures/FruitBin.png" id="3_m6kwv"]
+[ext_resource type="AudioStream" uid="uid://631btkde5njc" path="res://vaulting_audio_stream_randomizer.tres" id="6_jgfqr"]
+[ext_resource type="Script" uid="uid://c5d0rwkq0q1fc" path="res://player_audio_player.gd" id="7_vi3pv"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_m6kwv"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_fnn8j"]
 size = Vector3(4.71, 4, 0.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_03hi3"]
@@ -65,7 +67,7 @@ width = 4.71
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1188635198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 instance_shader_parameters/color = Color(0.29150382, 0.11622145, 0.027328497, 1)
-size = Vector3(4.71, 4, 0.4)
+size = Vector3(4.71, 4, 0.45)
 material = ExtResource("2_l5xgk")
 
 [node name="CSGBoxCutout" type="CSGBox3D" parent="CSGBox3D" unique_id=159918802]
@@ -78,7 +80,7 @@ material = ExtResource("2_03hi3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=814984501]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-shape = SubResource("BoxShape3D_m6kwv")
+shape = SubResource("BoxShape3D_fnn8j")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" unique_id=66956996]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71101564, 0)
@@ -107,5 +109,11 @@ debug_color = Color(0.83253187, 0.2652425, 0.72309506, 0.41960785)
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=229562402]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.55131155, 0)
 mesh = SubResource("ArrayMesh_l5xgk")
+
+[node name="PlayerAudioPlayer" type="AudioStreamPlayer3D" parent="." unique_id=567131583]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1942492, 0)
+stream = ExtResource("6_jgfqr")
+script = ExtResource("7_vi3pv")
+metadata/_custom_type_script = "uid://c5d0rwkq0q1fc"
 
 [connection signal="interacted" from="InteractableArea" to="." method="_on_interactable_area_interacted"]

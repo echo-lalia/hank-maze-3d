@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://yg2ibhlxyt7p" path="res://hankdeathscreen.gd" id="1_ov74a"]
 [ext_resource type="ArrayMesh" uid="uid://b8ufsnw68gxom" path="res://hankhead.obj" id="1_qqvf5"]
 [ext_resource type="Texture2D" uid="uid://cvsdipqf0id15" path="res://HankFull.png" id="2_bwo10"]
+[ext_resource type="AudioStream" uid="uid://ce5xyjgvvf3sm" path="res://sfx/babylaugh.mp3" id="4_ua4s6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ov74a"]
 resource_name = "FullHank"
@@ -93,5 +94,18 @@ fov = 120.0
 transform = Transform3D(1, 0, 0, 0, 0.99999994, -7.4505806e-08, 0, 7.4505806e-08, 0.99999994, 0, -0.110421, 0.81821454)
 light_color = Color(0.66897917, 0.42550915, 0.25191033, 1)
 
+[node name="ColorRect" type="ColorRect" parent="Camera3D" unique_id=593393469]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2145004062]
 libraries/ = SubResource("AnimationLibrary_ua4s6")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1955071041]
+stream = ExtResource("4_ua4s6")
+autoplay = true

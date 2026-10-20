@@ -16,4 +16,5 @@ func _ready() -> void:
 
 func _on_interacted(player: PlayerBody) -> void:
 	player.has_gourd = true
+	GameRun.current_game_run.start_phase_two()
 	queue_free()

@@ -74,7 +74,7 @@ func physics_update(_delta: float) -> void:
 		# We saw the player. Pause and see if they're really there.
 		hank_mesh.animation_player.pause()
 
-		await get_tree().create_timer(0.4).timeout
+		await get_tree().create_timer(0.2 if GameRun.current_game_run.phase_two else 0.4).timeout
 
 		if is_active_state() and hank_mesh.sees_player:
 			target_position = PlayerBody.current_player_instance.global_position

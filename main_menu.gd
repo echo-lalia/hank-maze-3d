@@ -9,6 +9,8 @@ extends Panel
 
 @onready var best_run_root: MarginContainer = $BestRunRoot
 
+const INIT_SCREEN_WAIT = preload("uid://nos2o78p06x2")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,4 +35,7 @@ func _ready() -> void:
 
 
 func _on_play_button_pressed() -> void:
+	add_child(INIT_SCREEN_WAIT.instantiate())
+	await get_tree().process_frame
+	await get_tree().physics_frame
 	Main.start_game_run()

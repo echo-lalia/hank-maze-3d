@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://nos2o78p06x2"]
+
+[ext_resource type="Script" uid="uid://buw5h1xcuvcx5" path="res://init_screen_wait.gd" id="1_honsg"]
+
+[node name="InitScreenWait" type="Control" unique_id=927424114]
+z_index = 666
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_honsg")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1350562261]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03202605, 0.013511243, 0.0011395481, 1)
+
+[node name="Label" type="Label" parent="." unique_id=121283031]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Waiting..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DetailLabel" type="Label" parent="." unique_id=1286366985]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 419.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 11
+text = "The game is generating the level and performing setup.
+This can take a while the first time (especially in the web export), but should be faster after that."
+horizontal_alignment = 1
+vertical_alignment = 1

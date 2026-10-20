@@ -126,3 +126,7 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 [node name="OrganStingPlayer" type="AudioStreamPlayer" parent="." index="4" unique_id=361379016]
 stream = ExtResource("4_utmuo")
 bus = &"RaytracedAmbient"
+
+[node name="OrganStingPlayer2" type="AudioStreamPlayer" parent="." index="5" unique_id=76170419]
+stream = ExtResource("4_utmuo")
+bus = &"RaytracedAmbient"

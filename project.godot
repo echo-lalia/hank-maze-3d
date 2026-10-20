@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [audio]
 
 buses/default_bus_layout="uid://c2hriix1p7vup"
+general/default_playback_type.web=0
 
 [display]
 
@@ -114,3 +115,8 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+limits/time/time_rollover_secs=1024.0
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+limits/opengl/max_renderable_elements=8192
+limits/opengl/max_renderable_lights=8
+limits/opengl/max_lights_per_object=4

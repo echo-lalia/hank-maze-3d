@@ -189,7 +189,7 @@ func _update_interaural(listener: RaytracedAudioListener) -> void:
 		interaural_delay_effect.tap2_delay_ms = 0.0
 		interaural_delay_effect.tap1_delay_ms = left_ear_travel_time - right_ear_travel_time
 	
-	prints("Travel times: ", left_ear_travel_time, right_ear_travel_time)
+	#prints("Travel times: ", left_ear_travel_time, right_ear_travel_time)
 
 
 func _update(rays_count: int, interpolation: float, delta: float):

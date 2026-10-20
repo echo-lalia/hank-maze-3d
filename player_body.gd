@@ -23,6 +23,7 @@ enum MOVEMENT_STATES {
 	midair,
 }
 
+
 ## True if the player has taken the gourd.
 var has_gourd: bool = false
 
@@ -89,6 +90,13 @@ func _ready() -> void:
 		if not maze_generator.is_node_ready():
 			await maze_generator.ready
 		global_position = maze_generator.start_room_position.global_position
+
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if (event as InputEventKey).get_keycode_with_modifiers() == 268435543:
+			get_viewport().set_input_as_handled()
 
 
 ## Handle main player movement

@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://ihnvbpmse4bb" path="res://textures/Gourd.png" id="12_gag4w"]
 [ext_resource type="AudioStream" uid="uid://bdv40k70xh4dg" path="res://sfx/ambience0.mp3" id="15_4vk6t"]
 [ext_resource type="AudioStream" uid="uid://cetfrog3e1cts" path="res://sfx/compressor_hum.mp3" id="15_uhk2m"]
+[ext_resource type="AudioStream" uid="uid://ck5wjub6mnj24" path="res://sfx/bumpinjingle.mp3" id="17_ldgum"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
 radius = 0.16
@@ -250,3 +251,8 @@ stream = ExtResource("15_4vk6t")
 volume_db = -30.0
 autoplay = true
 bus = &"RaytracedAmbient"
+
+[node name="BumpinJingleStream" type="AudioStreamPlayer" parent="." unique_id=1570450469]
+stream = ExtResource("17_ldgum")
+volume_db = -14.0
+bus = &"RaytracedReverb"

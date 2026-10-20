@@ -5,7 +5,9 @@ class_name VaultableWall
 
 @onready var csg_box_3d: CSGBox3D = $CSGBox3D
 @onready var collision_shape_3d: CollisionShape3D = $StaticBody3D/CollisionShape3D
+@onready var player_audio_player: PlayerAudioPlayer = $PlayerAudioPlayer
 
+const VAULTING_AUDIO_STREAM_RANDOMIZER = preload("uid://631btkde5njc")
 
 
 @export var width: float = 4.0:
@@ -48,10 +50,19 @@ func _on_interactable_area_interacted(player: PlayerBody) -> void:
 		point_start = point_end
 		point_end = temp
 	
+	var player_sneaking: bool = PlayerBody.current_player_instance.movement_state == PlayerBody.MOVEMENT_STATES.sneak
+	var player_running: bool = PlayerBody.current_player_instance.movement_state == PlayerBody.MOVEMENT_STATES.sprint
+
+	player_audio_player.play_player_sound_from_position(
+		point_end, VAULTING_AUDIO_STREAM_RANDOMIZER,
+		10.0 if player_sneaking else 40.0 if player_running else 20.0,
+		0.06 if player_sneaking else 0.15 if player_running else 0.1,
+	)
+	
 	player.locked_for_animation = true
 	var tween: Tween = create_tween()
-	if player.global_position.distance_to(point_start) > 2:
-		tween.tween_property(player, "global_position", point_start, 0.1)
-	tween.tween_property(player, "global_position", mid_point, 0.2)
-	tween.tween_property(player, "global_position", point_end, 0.1)
+	if player.global_position.distance_to(point_start) > 2 or player_sneaking:
+		tween.tween_property(player, "global_position", point_start, 0.12 if player_sneaking else 0.09)
+	tween.tween_property(player, "global_position", mid_point, 0.15 if player_running else 0.2)
+	tween.tween_property(player, "global_position", point_end, 0.2 if player_sneaking else 0.1)
 	tween.tween_property(player, "locked_for_animation", false, 0)
