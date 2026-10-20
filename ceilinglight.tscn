@@ -2,8 +2,8 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3b0hh"]
 emission_enabled = true
-emission = Color(0.84134257, 0.6564245, 0.13999951, 1)
-emission_energy_multiplier = 0.96
+emission = Color(0.84, 0.74592, 0.48720002, 1)
+emission_energy_multiplier = 0.5
 
 [sub_resource type="QuadMesh" id="QuadMesh_pb32r"]
 material = SubResource("StandardMaterial3D_3b0hh")
@@ -25,6 +25,5 @@ light_bake_mode = 1
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 6.0
-distance_fade_shadow = 12.0
-distance_fade_length = 6.0
-omni_range = 8.0
+distance_fade_length = 12.0
+omni_range = 12.0

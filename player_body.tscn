@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://c5d0rwkq0q1fc" path="res://player_audio_player.gd" id="5_0slni"]
 [ext_resource type="Script" uid="uid://bx7kd82dyoi2g" path="res://player_damage_effect.gd" id="5_xs03g"]
 [ext_resource type="AudioStream" uid="uid://b4f4mdt8nxoxp" path="res://sfx/big_stop_random_stream.tres" id="7_xs03g"]
+[ext_resource type="AudioStream" uid="uid://k6ybm3bcew2o" path="res://sfx/tension_drone.mp3" id="10_xcy0b"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
 
@@ -16,8 +17,8 @@
 height = 1.2
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pp1bs"]
-sky_top_color = Color(0.30806684, 0.45837635, 0.6743981, 1)
-sky_horizon_color = Color(0.5647011, 0.54016536, 0.39796352, 1)
+sky_top_color = Color(0.05110886, 0.21383432, 0.2167939, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
 sky_curve = 0.044595264
 ground_bottom_color = Color(0.12330372, 0.101218246, 0.07636473, 1)
 ground_horizon_color = Color(0.38231626, 0.38973343, 0.4045803, 1)
@@ -30,8 +31,8 @@ sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
 [sub_resource type="Environment" id="Environment_ig7tw"]
 background_mode = 2
 sky = SubResource("Sky_pb32r")
-ambient_light_color = Color(0.5801854, 0.43205264, 0.07745952, 1)
-ambient_light_sky_contribution = 0.02
+ambient_light_color = Color(0.75150657, 0.5621725, 0.1129692, 1)
+ambient_light_sky_contribution = 0.1
 ambient_light_energy = 0.08
 fog_enabled = true
 fog_light_color = Color(0, 0, 0, 1)
@@ -39,12 +40,11 @@ fog_density = 0.0666
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ly6kn"]
 shader = ExtResource("4_ct3yx")
-shader_parameter/amount = 1.0
+shader_parameter/amount = 0.0
 
 [sub_resource type="Gradient" id="Gradient_ly6kn"]
-interpolation_mode = 2
-offsets = PackedFloat32Array(0.13755459, 0.6694915, 0.91646487)
-colors = PackedColorArray(1, 1, 1, 1, 0.32781747, 0.30882472, 2.4065375e-07, 1, 0.122599356, 0.04449465, 6.016344e-09, 1)
+offsets = PackedFloat32Array(0, 0.16970387, 0.30637813, 0.4544419, 0.57289296, 0.6480638, 0.71867883, 0.79384965, 0.8940774, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.96891445, 0.96767586, 0.9468724, 1, 0.7424123, 0.9498178, 0.560538, 1, 0.53333336, 0.93333334, 0.20392157, 1, 0.5350575, 0.8060057, 0.15118323, 1, 0.53729707, 0.6406126, 0.08267838, 1, 0.54, 0.441, 0, 1, 0.4490909, 0.28433332, 0, 1, 0.34, 0.096333325, 0, 1, 0.049616262, 0.0026577862, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ly6kn"]
 gradient = SubResource("Gradient_ly6kn")
@@ -145,7 +145,7 @@ texture = SubResource("GradientTexture2D_ly6kn")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="PlayerHead/PlayerCamera" unique_id=491387583]
 light_color = Color(0.9291567, 0.8155546, 0.64378744, 1)
-light_energy = 0.5
+light_energy = 0.6
 light_specular = 0.0
 spot_range = 6.0
 spot_angle = 70.0
@@ -204,5 +204,9 @@ debug_color = Color(0.9950301, 0, 0.22954392, 0.41960785)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_xcy0b")
 debug_color = Color(0.9950301, 0, 0.22954392, 0.41960785)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerHurtArea" unique_id=1935630539]
+stream = ExtResource("10_xcy0b")
+bus = &"RaytracedReverb"
 
 [connection signal="body_entered" from="PlayerHurtArea" to="PlayerHurtArea" method="_on_body_entered"]

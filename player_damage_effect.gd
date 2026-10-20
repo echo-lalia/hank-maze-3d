@@ -6,10 +6,11 @@ extends Area3D
 
 const HURT_AMOUNT: float = 1.5
 const HEAL_AMOUNT: float = 0.1
-
+const MAX_TENSE_VOLUME: float = 0.4
 
 @onready var collision_shape_3d_small: CollisionShape3D = $CollisionShape3DSmall
 @onready var collision_shape_3d_big: CollisionShape3D = $CollisionShape3DBig
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 var use_big_collider: bool = false:
@@ -24,6 +25,8 @@ var health: float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	audio_stream_player.volume_linear = 0
+	audio_stream_player.play()
 	use_big_collider = false
 
 
@@ -42,7 +45,9 @@ func _physics_process(delta: float) -> void:
 	
 	health = clampf(health, 0, 1)
 	
-	(player_damage_effect.material as ShaderMaterial).set_shader_parameter("amount", 1.0 - health)
+	(player_damage_effect.material as ShaderMaterial).set_shader_parameter("amount", pow(1.0 - health, 0.5))
+	
+	audio_stream_player.volume_linear = (1.0 - health) * MAX_TENSE_VOLUME
 	
 	if is_zero_approx(health):
 		player.lose()

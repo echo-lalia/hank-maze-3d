@@ -230,6 +230,7 @@ func add_objects_to_room(room_position: Vector3) -> void:
 				item.rotation.y = randf_range(0, deg_to_rad(360))
 				add_child(item)
 	
+	@warning_ignore("integer_division")
 	if randf() < CEILING_LIGHT_CHANCE \
 	or room_coord_to_relative_position(MAZE_RADIUS, 0).is_equal_approx(room_position) \
 	or room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH/2).is_equal_approx(room_position):
