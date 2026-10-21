@@ -14,10 +14,12 @@
 [ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="12_1213d"]
 [ext_resource type="AudioStream" uid="uid://cqen45wupcsuk" path="res://sfx/gourdshimmer.mp3" id="12_bltg3"]
 [ext_resource type="Texture2D" uid="uid://ihnvbpmse4bb" path="res://textures/Gourd.png" id="12_gag4w"]
-[ext_resource type="AudioStream" uid="uid://bdv40k70xh4dg" path="res://sfx/ambience0.mp3" id="15_4vk6t"]
 [ext_resource type="AudioStream" uid="uid://cetfrog3e1cts" path="res://sfx/compressor_hum.mp3" id="15_uhk2m"]
+[ext_resource type="PackedScene" uid="uid://dtyqi7x7atmdo" path="res://rich_text_3d.tscn" id="16_qem8s"]
+[ext_resource type="Shader" uid="uid://dbhtveg1jfnli" path="res://rich_text_3d.gdshader" id="17_af7r6"]
 [ext_resource type="AudioStream" uid="uid://ck5wjub6mnj24" path="res://sfx/bumpinjingle.mp3" id="17_ldgum"]
 [ext_resource type="PackedScene" uid="uid://dr6m0q720io7v" path="res://settings_menu.tscn" id="18_kuosh"]
+[ext_resource type="AudioStream" uid="uid://bs4f46yb8fqeb" path="res://sfx/ambience1.mp3" id="18_qem8s"]
 [ext_resource type="Script" uid="uid://dkkov0qw6v6xx" path="res://pause_menu.gd" id="18_vvw86"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
@@ -136,11 +138,29 @@ _data = {
 &"float": SubResource("Animation_gag4w")
 }
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_qem8s"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_af7r6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("17_af7r6")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_qem8s")
+
 [sub_resource type="BoxMesh" id="BoxMesh_kek77"]
 size = Vector3(1.8, 3.09, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
 size = Vector3(1.9, 3.087, 0.208)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nsu7w"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kyoou"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("17_af7r6")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_nsu7w")
 
 [node name="GameRun" type="Node3D" unique_id=2100628311]
 script = ExtResource("1_3b0hh")
@@ -195,7 +215,7 @@ script = ExtResource("9_vvw86")
 maze_generator = NodePath("../MazeWallGenerator")
 
 [node name="InteractableArea" type="Area3D" parent="Gourd" unique_id=604336785]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5139773, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0185531, 0)
 script = ExtResource("10_juchs")
 ui_hint = "Accept"
 metadata/_custom_type_script = "uid://2kuklnqfavku"
@@ -220,6 +240,14 @@ volume_db = -3.103
 autoplay = true
 script = ExtResource("12_1213d")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="RichText3D" parent="Gourd" unique_id=1165830346 instance=ExtResource("16_qem8s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.739, 0)
+material_override = SubResource("ShaderMaterial_af7r6")
+billboard = 1
+texture = SubResource("ViewportTexture_qem8s")
+size = Vector2i(144, 144)
+text = "Hes coming..."
 
 [node name="Exit" type="Node3D" parent="." unique_id=267469642 node_paths=PackedStringArray("maze_generator")]
 script = ExtResource("11_qem8s")
@@ -248,15 +276,21 @@ autoplay = true
 script = ExtResource("12_1213d")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1460895642]
-stream = ExtResource("15_4vk6t")
-volume_db = -30.0
+[node name="RichText3D" parent="Exit" unique_id=816680510 instance=ExtResource("16_qem8s")]
+transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7216415)
+material_override = SubResource("ShaderMaterial_kyoou")
+texture = SubResource("ViewportTexture_nsu7w")
+size = Vector2i(144, 144)
+text = "Find it"
+
+[node name="AmbiencePlayer" type="AudioStreamPlayer" parent="." unique_id=1460895642]
+stream = ExtResource("18_qem8s")
+volume_db = -12.0
 autoplay = true
-bus = &"RaytracedAmbient"
 
 [node name="BumpinJingleStream" type="AudioStreamPlayer" parent="." unique_id=1570450469]
 stream = ExtResource("17_ldgum")
-volume_db = -14.0
+volume_db = -20.0
 bus = &"RaytracedReverb"
 
 [node name="PauseMenu" type="PanelContainer" parent="." unique_id=1719766157]

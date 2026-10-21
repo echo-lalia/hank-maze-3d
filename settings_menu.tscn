@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b41w0wn848uav" path="res://settings_menu.gd" id="1_0cmel"]
 [ext_resource type="Script" uid="uid://cpvuoyprj64id" path="res://remap_action_button.gd" id="1_ufg0w"]
+[ext_resource type="Script" uid="uid://ccbm5hqsfici" path="res://fullscreen_button.gd" id="3_mlw3h"]
 
 [node name="SettingsMenu" type="VBoxContainer" unique_id=664041274]
 anchors_preset = 15
@@ -210,9 +211,17 @@ text = "CTRL"
 script = ExtResource("1_ufg0w")
 game_save_event_name = &"sprint_button"
 
+[node name="FullscreenButton" type="Button" parent="FlowContainer2" unique_id=1752136140]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+text = "Toggle Fullscreen"
+script = ExtResource("3_mlw3h")
+
 [connection signal="drag_ended" from="FlowContainer/PanelContainer/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/FOVHSlider" to="." method="_slider_drag_ended"]
 [connection signal="value_changed" from="FlowContainer/PanelContainer/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/FOVHSlider" to="." method="_on_fovh_slider_value_changed"]
 [connection signal="drag_ended" from="FlowContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/BrightnessHSlider" to="." method="_slider_drag_ended"]
 [connection signal="value_changed" from="FlowContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/BrightnessHSlider" to="." method="_on_brightness_h_slider_value_changed"]
 [connection signal="drag_ended" from="FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/VolumeHSlider" to="." method="_slider_drag_ended"]
 [connection signal="value_changed" from="FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/VolumeHSlider" to="." method="_on_volume_h_slider_value_changed"]
+[connection signal="pressed" from="FlowContainer2/FullscreenButton" to="FlowContainer2/FullscreenButton" method="_on_pressed"]

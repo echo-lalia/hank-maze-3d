@@ -48,3 +48,36 @@ static func simple_format_number(number: float) -> String:
 	if is_equal_approx(number, int(number)):
 		return str(int(number))
 	return "%.1f" % number
+
+
+## Create a timer for the specified duration, scaled by animation scale, and return its timout signal.
+static func timer_timeout(duration: float) -> Signal:
+	return Main.current_main_instance.get_tree().create_timer(duration).timeout
+
+
+## Easily call a function after a delay
+static func call_delayed(callable: Callable, delay: float) -> void:
+	await timer_timeout(delay)
+	callable.call()
+
+
+## Quickly create a tween and animate a property from start to end
+static func animate(
+	node: Node, property: NodePath, start: Variant, end: Variant, time: float,
+	_ease: Tween.EaseType = Tween.EASE_IN_OUT, trans: Tween.TransitionType = Tween.TRANS_LINEAR) -> Tween:
+	var tween: Tween = node.create_tween()
+	tween.set_ease(_ease).set_trans(trans)
+	
+	tween.tween_property(node, property, start, 0.0)
+	tween.tween_property(node, property, end, time)
+	return tween
+
+
+## Quickly create a tween and animate a callable from start to end
+static func animate_method(
+	node: Node, callable: Callable, start: Variant, end: Variant, time: float,
+	_ease: Tween.EaseType = Tween.EASE_IN_OUT, trans: Tween.TransitionType = Tween.TRANS_LINEAR) -> void:
+	var tween: Tween = node.create_tween()
+	tween.set_ease(_ease).set_trans(trans)
+	
+	tween.tween_method(callable, start, end, time)

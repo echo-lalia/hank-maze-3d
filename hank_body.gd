@@ -1,8 +1,13 @@
 extends CharacterBody3D
 class_name HankBody
 
+const HANK_SPEED_PATROL_1: float = 15.0
+const HANK_SPEED_PATROL_2: float = 18.0
 
-const SPEED = 20.0
+const HANK_SPEED_CHASE_1: float = 20.0
+const HANK_SPEED_CHASE_2: float = 25.0
+
+var hank_speed: float = 19.0
 const ACCEL = 100.0
 
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
@@ -12,6 +17,8 @@ const ACCEL = 100.0
 
 
 static var current_hank_body_instance: HankBody
+
+
 
 
 ## The target position for the navigation agent.
@@ -35,7 +42,7 @@ func _ready() -> void:
 		if not maze_generator.is_node_ready():
 			await maze_generator.ready
 		global_position = maze_generator.hank_room_position.global_position
-	
+
 
 func _physics_process(delta: float) -> void:
 	#if PlayerBody.current_player_instance.movement_state != PlayerBody.MOVEMENT_STATES.sneak:
@@ -55,7 +62,7 @@ func _physics_process(delta: float) -> void:
 	else:
 	
 		var direction_2d: Vector2 = Vector2(current_target_position.x - global_position.x, current_target_position.z - global_position.z).normalized()
-		var target_velocity_2d: Vector2 = direction_2d * SPEED
+		var target_velocity_2d: Vector2 = direction_2d * hank_speed
 		var velocity_2d: Vector2 = Vector2(velocity.x, velocity.z).move_toward(target_velocity_2d, delta * ACCEL)
 		velocity.x = velocity_2d.x
 		velocity.z = velocity_2d.y

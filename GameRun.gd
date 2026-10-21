@@ -3,8 +3,8 @@ class_name GameRun
 
 
 
-signal won
-signal lost
+#signal won
+#signal lost
 
 
 @onready var bumpin_jingle_stream: AudioStreamPlayer = $BumpinJingleStream
@@ -78,13 +78,21 @@ func get_run_time() -> float:
 func start_phase_two() -> void:
 	phase_two = true
 	await get_tree().create_timer(0.666).timeout
+	# Quick fade in and slow fade out
+	var tween: = Utils.animate(bumpin_jingle_stream, "volume_db", -100, -8, 0.02)
+	tween.tween_property(bumpin_jingle_stream, "volume_db", -12, 20)
+	tween.tween_property(bumpin_jingle_stream, "volume_db", -20, 60)
 	bumpin_jingle_stream.play()
 
 
 
-func win_game() -> void:
-	won.emit()
+static func phase2_switchf(phase1f: float, phase2f: float) -> float:
+	return phase2f if current_game_run.phase_two else phase1f
 
 
-func lose_game() -> void:
-	lost.emit()
+#func win_game() -> void:
+	#won.emit()
+#
+#
+#func lose_game() -> void:
+	#lost.emit()

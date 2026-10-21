@@ -43,6 +43,7 @@ func exit() -> void:
 ## Called every physics frame while this state is active
 func physics_update(_delta: float) -> void:
 	if hank_mesh.sees_player:
+		hank_body.hank_speed = GameRun.phase2_switchf(HankBody.HANK_SPEED_CHASE_1, HankBody.HANK_SPEED_CHASE_2)
 		hank_body.target_position = PlayerBody.current_player_instance.global_position
 		override_head_look_at = PlayerBody.current_player_instance.global_position
 	

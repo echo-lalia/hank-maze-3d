@@ -5,6 +5,13 @@ extends HankState
 
 
 
+const PATROL_DISTANCE: float = 10.0
+const PATROL_DISTANCE_PHASE2: float = 15.0
+const PATROL_MAX_PATH: float = 15.0
+const PATROL_MAX_PHASE2: float = 20.0
+
+
+
 ## Called when entering this state
 func enter() -> void:
 	auto_animation = false
@@ -30,17 +37,28 @@ func _on_player_sound(sound_position: Vector3, travel_distance: float) -> void:
 		state_machine.current_state = running_state
 
 
-const PATROL_DISTANCE: float = 10.0
-const PATROL_MAX_PATH: float = 15.0
+
+
 func _looking_finished(anim_name: StringName) -> void:
 	if not is_active_state() or not (anim_name == "LookingAction" or anim_name == "LookingFranticAction"):
 		return
+	
+	# Set hank to a slightly lower speed while patrolling.
+	hank_body.hank_speed = GameRun.phase2_switchf(HankBody.HANK_SPEED_PATROL_1, HankBody.HANK_SPEED_PATROL_2)
+	if hank_mesh.saw_player_recently:
+		hank_body.hank_speed += 2
+	
 	# Select a random nearby point to patrol to.
-	var direction: Vector3 = Vector3(PATROL_DISTANCE, 0, 0).rotated(Vector3(0, 1, 0), randf_range(0, deg_to_rad(360)))
+	var direction: Vector3 = Vector3(
+		GameRun.phase2_switchf(PATROL_DISTANCE, PATROL_DISTANCE_PHASE2),
+		0,
+		0,
+	).rotated(Vector3(0, 1, 0), randf_range(0, deg_to_rad(360)))
+
 	target_position = global_position + direction
 	hank_body.navigation_agent_3d.get_next_path_position()
 	
-	if hank_body.navigation_agent_3d.get_path_length() > PATROL_MAX_PATH:
+	if hank_body.navigation_agent_3d.get_path_length() > GameRun.phase2_switchf(PATROL_MAX_PATH, PATROL_MAX_PHASE2):
 		# The path is too long and we need to sample a point closer to us along the navigation path.
 		# We should be able to pick a point along the path that's one before the first one outside of our max range.
 		var navigation_path := hank_body.navigation_agent_3d.get_current_navigation_path()
@@ -74,12 +92,14 @@ func physics_update(_delta: float) -> void:
 		# We saw the player. Pause and see if they're really there.
 		hank_mesh.animation_player.pause()
 
-		await get_tree().create_timer(0.2 if GameRun.current_game_run.phase_two else 0.4).timeout
+		await get_tree().create_timer(GameRun.phase2_switchf(0.4, 0.2)).timeout
 
 		if is_active_state() and hank_mesh.sees_player:
+			hank_body.hank_speed = GameRun.phase2_switchf(HankBody.HANK_SPEED_CHASE_1, HankBody.HANK_SPEED_CHASE_2)
 			target_position = PlayerBody.current_player_instance.global_position
 			state_machine.current_state = running_state
 		else:
+			GameRun.phase2_switchf(HankBody.HANK_SPEED_PATROL_1, HankBody.HANK_SPEED_PATROL_2)
 			if not hank_mesh.animation_player.is_playing():
 				hank_mesh.animation_player.play()
 			override_head_look_at = Vector3.ZERO

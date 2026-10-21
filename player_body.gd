@@ -210,11 +210,11 @@ func _handle_step_sounds() -> void:
 		_current_step_travel -= STEP_SOUND_DISTANCE
 		#print(MOVEMENT_STATES.find_key(movement_state))
 		if movement_state == MOVEMENT_STATES.sneak:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 8.0, 0.2)
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 10.0, 0.2)
 		elif movement_state == MOVEMENT_STATES.sprint:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 40.0, 1.0)
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(45, 60), 1.0)
 		elif movement_state == MOVEMENT_STATES.normal:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 20.0, 0.4)
+			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(30, 40), 0.4)
 
 
 func _process(_delta: float) -> void:
