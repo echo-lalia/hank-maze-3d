@@ -45,6 +45,8 @@ func _init() -> void:
 func _ready() -> void:
 	load_game()
 	start_main_menu()
+	settings_changed.connect(_on_settings_changed)
+	_on_settings_changed()
 
 
 
@@ -55,6 +57,10 @@ static var game_save: GameSave
 
 signal settings_changed
 
+
+
+func _on_settings_changed() -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), game_save.volume)
 
 
 static func notify_settings_changed() -> void:

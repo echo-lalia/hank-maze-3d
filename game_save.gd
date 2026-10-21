@@ -14,7 +14,7 @@ const SAVE_PATH = "user://savedata.tres"
 
 @export var fov: float = 75
 @export var brightness: float = 100
-@export var volume: float = 0.0
+@export var volume: float = -5
 
 
 @export var sneak_button: InputEvent

@@ -216,7 +216,7 @@ func _process(delta: float) -> void:
 	
 	_handle_hank_lookat()
 	
-	print("sees_player = ", sees_player)
+	#print("sees_player = ", sees_player)
 	
 	
 	

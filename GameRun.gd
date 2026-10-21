@@ -35,6 +35,7 @@ func _exit_tree() -> void:
 	_disable_close_warning()
 
 
+
 ## Ctrl+W closes the current browser tab, and is also unfortunately a common key-combo in this type of game.
 ## Injecting this into the browser's javascript stops the window from unexpectly closing while playing.
 ## (I genuinely thought there was something silently crashing my entire web browser for a day and was losing my mind).

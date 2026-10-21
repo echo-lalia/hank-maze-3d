@@ -33,12 +33,13 @@ sky_material = SubResource("ProceduralSkyMaterial_pp1bs")
 [sub_resource type="Environment" id="Environment_ig7tw"]
 background_mode = 2
 sky = SubResource("Sky_pb32r")
-ambient_light_color = Color(0.75150657, 0.5621725, 0.1129692, 1)
+ambient_light_color = Color(0.75, 0.69375, 0.5625, 1)
 ambient_light_sky_contribution = 0.1
-ambient_light_energy = 0.08
+ambient_light_energy = 0.15
 fog_enabled = true
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 0.0666
+adjustment_enabled = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ly6kn"]
 shader = ExtResource("4_ct3yx")
@@ -148,7 +149,7 @@ texture = SubResource("GradientTexture2D_ly6kn")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="PlayerHead/PlayerCamera" unique_id=491387583]
 light_color = Color(0.9291567, 0.8155546, 0.64378744, 1)
-light_energy = 0.6
+light_energy = 0.666
 light_specular = 0.0
 spot_range = 6.0
 spot_angle = 70.0
@@ -161,6 +162,7 @@ text = "sees_player = "
 script = ExtResource("5_f57or")
 
 [node name="RaytracedAudioListener" type="AudioListener3D" parent="PlayerHead" unique_id=678790517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14049816)
 doppler_tracking = 2
 script = ExtResource("3_2lce7")
 rayCollisionLayers = 8
@@ -190,7 +192,6 @@ debug_color = Color(0.27300003, 0.63, 0, 0.91764706)
 [node name="PlayerStepSoundPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1552827038]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72366047, 0)
 stream = ExtResource("7_xs03g")
-attenuation_model = 3
 max_polyphony = 3
 script = ExtResource("5_0slni")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"

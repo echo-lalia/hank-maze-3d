@@ -5,17 +5,24 @@ extends VBoxContainer
 @onready var volume_value_label: Label = $FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/VolumeValueLabel
 @onready var fov_value_label: Label = $FlowContainer/PanelContainer/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/FOVValueLabel
 
+@onready var fovh_slider: HSlider = $FlowContainer/PanelContainer/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/FOVHSlider
+@onready var brightness_h_slider: HSlider = $FlowContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/BrightnessHSlider
+@onready var volume_h_slider: HSlider = $FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/VolumeHSlider
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	fovh_slider.value = Main.game_save.fov
+	brightness_h_slider.value = Main.game_save.brightness
+	volume_h_slider.value = Main.game_save.volume
 	update_labels()
 
 
 
 func update_labels() -> void:
-	fov_value_label.text = str(Main.game_save.fov)
-	brightness_value_label.text = ("%+d" % Main.game_save.brightness)
+	fov_value_label.text = Utils.simple_format_number(Main.game_save.fov)
+	brightness_value_label.text = Utils.simple_format_number(Main.game_save.brightness) + "%"
 	volume_value_label.text = ("%+d" % Main.game_save.volume) + " dB"
 
 
