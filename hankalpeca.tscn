@@ -79,18 +79,24 @@ bone_name = "Head"
 bone_idx = 13
 
 [node name="PlayerDetectionRaycast" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=1375929066]
-transform = Transform3D(0.9963938, 0.01941818, -0.08259841, -0.031517543, 0.98851484, -0.1478087, 0.07877944, 0.14987896, 0.98556226, -0.06988272, 0.1719619, 0.026064985)
+transform = Transform3D(0.99635714, 0.019340122, -0.08305721, -0.033456996, 0.98451126, -0.17210576, 0.07844198, 0.1742576, 0.9815719, -0.08829798, 0.12841445, 0.0193756)
 target_position = Vector3(0, 0, 20)
 collision_mask = 5
 collide_with_areas = true
 
 [node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="1" unique_id=1161230707]
-transform = Transform3D(0.9956126, 0.043662917, 0.08275885, -0.031065743, 0.98852915, -0.14780964, -0.08826308, 0.14459015, 0.98554885, 0.067332774, 0.1719616, 0.026064306)
+transform = Transform3D(0.9956539, 0.04358733, 0.08230011, -0.028879557, 0.98465616, -0.17210688, -0.088538714, 0.16898216, 0.9816358, 0.08567233, 0.12771934, 0.019442625)
 target_position = Vector3(0, 0, 20)
 collision_mask = 5
 collide_with_areas = true
 
-[node name="PlayerDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="2" unique_id=1424047178]
+[node name="PlayerDetectionRaycast3" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="2" unique_id=1205954134]
+transform = Transform3D(0.9996101, 0.02792167, 0, -0.02774763, 0.99338156, -0.11146903, -0.003112395, 0.1114256, 0.9937688, 0.00011839252, 0.21127027, 0.031951055)
+target_position = Vector3(0, 0, 20)
+collision_mask = 5
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="3" unique_id=1424047178]
 transform = Transform3D(0.99999994, 2.0071672e-13, -7.410728e-12, -1.4210855e-12, 0.9862867, -0.1650478, 7.2759585e-12, 0.1650478, 0.9862867, -2.2737368e-13, 0.15200001, 0.023000002)
 target_position = Vector3(0, 0, 1)
 collision_mask = 4
@@ -99,7 +105,7 @@ collide_with_areas = true
 collide_with_bodies = false
 debug_shape_custom_color = Color(0.34402263, 0.49155134, 0.9175409, 1)
 
-[node name="WallDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="3" unique_id=865879631]
+[node name="WallDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="4" unique_id=865879631]
 transform = Transform3D(0.99999994, -3.0055958e-12, 2.2737368e-12, -1.4210855e-12, 0.98628664, -0.16504781, 7.275958e-12, 0.1650478, 0.9862867, 0, 0.182, 0.013)
 target_position = Vector3(0, 0, 0.5)
 hit_from_inside = true
@@ -124,9 +130,5 @@ script = ExtResource("9_bkn7k")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="OrganStingPlayer" type="AudioStreamPlayer" parent="." index="4" unique_id=361379016]
-stream = ExtResource("4_utmuo")
-bus = &"RaytracedAmbient"
-
-[node name="OrganStingPlayer2" type="AudioStreamPlayer" parent="." index="5" unique_id=76170419]
 stream = ExtResource("4_utmuo")
 bus = &"RaytracedAmbient"

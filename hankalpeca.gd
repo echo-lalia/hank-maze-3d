@@ -16,6 +16,7 @@ const CONE_VISION_DISTANCE: float = 15
 @onready var floor_detection_raycast: RayCast3D = $FloorDetectionRaycast
 @onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast
 @onready var player_detection_raycast_2: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast2
+@onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
 
 @onready var player_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycastShort
 @onready var organ_sting_player: AudioStreamPlayer = $OrganStingPlayer
@@ -183,6 +184,7 @@ func _process(delta: float) -> void:
 	
 	
 	if player_detection_raycast_short.is_colliding() \
+	or _raycast_sees_player(player_detection_raycast_3) \
 	or _raycast_sees_player(player_detection_raycast_2) \
 	or _raycast_sees_player(player_detection_raycast) \
 	or (_player_in_vision_cone() and PlayerBody.current_player_instance.has_hank_line_of_sight):
