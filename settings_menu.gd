@@ -1,0 +1,45 @@
+extends VBoxContainer
+
+
+@onready var brightness_value_label: Label = $FlowContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/BrightnessValueLabel
+@onready var volume_value_label: Label = $FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/VolumeValueLabel
+@onready var fov_value_label: Label = $FlowContainer/PanelContainer/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/FOVValueLabel
+
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	update_labels()
+
+
+
+func update_labels() -> void:
+	fov_value_label.text = str(Main.game_save.fov)
+	brightness_value_label.text = ("%+d" % Main.game_save.brightness)
+	volume_value_label.text = ("%+d" % Main.game_save.volume) + " dB"
+
+
+
+func _on_brightness_h_slider_value_changed(value: float) -> void:
+	Main.game_save.brightness = value
+	Main.notify_settings_changed()
+	update_labels()
+
+
+
+func _on_volume_h_slider_value_changed(value: float) -> void:
+	Main.game_save.volume = value
+	Main.notify_settings_changed()
+	update_labels()
+
+
+
+func _on_fovh_slider_value_changed(value: float) -> void:
+	Main.game_save.fov = value
+	Main.notify_settings_changed()
+	update_labels()
+
+
+func _slider_drag_ended(value_changed: bool) -> void:
+	if value_changed:
+		Main.save_game()

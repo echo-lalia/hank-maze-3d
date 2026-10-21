@@ -17,8 +17,8 @@ const CONE_VISION_DISTANCE: float = 15
 @onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast
 @onready var player_detection_raycast_2: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast2
 @onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
+@onready var player_detection_raycast_4: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast4
 
-@onready var player_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycastShort
 @onready var organ_sting_player: AudioStreamPlayer = $OrganStingPlayer
 @onready var wall_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/WallDetectionRaycastShort
 
@@ -34,8 +34,13 @@ const CONE_VISION_DISTANCE: float = 15
 const SAW_PLAYER_RECENTLY_THRESHOLD = 20000
 var last_time_seeing_player: int = 0
 var saw_player_recently: bool = false
+
+var saw_player_last_frame: bool = false
+var saw_player_this_frame: bool = false
+
 var sees_player: bool = false
 
+static var current_hank_mesh_instance: HankAlpeca
 
 
 @export_flags_3d_physics var floor_detection_collision_mask: int = 1:
@@ -74,6 +79,7 @@ var velocity: Vector3 = Vector3.ZERO
 
 
 func _ready() -> void:
+	current_hank_mesh_instance = self
 	if not Engine.is_editor_hint():
 		_update_playing_animation()
 	if OS.is_debug_build():
@@ -130,8 +136,9 @@ var _step_sfx_current_distance: float = 0.0
 
 func _raycast_sees_player(raycast: RayCast3D) -> bool:
 	if raycast.is_colliding() and player_detection_raycast.get_collider() is HankSightArea:
-		print("RAYCAST SEES PLAYER")
+		#print("RAYCAST SEES PLAYER")
 		return true
+	#print("RAYCAST SEES ", player_detection_raycast.get_collider())
 	return false
 
 func _player_in_vision_cone() -> bool:
@@ -183,25 +190,33 @@ func _process(delta: float) -> void:
 		update_animation_speed_direction()
 	
 	
-	if player_detection_raycast_short.is_colliding() \
-	or _raycast_sees_player(player_detection_raycast_3) \
+	# Handle player sight
+	saw_player_last_frame = saw_player_this_frame
+	
+	if _raycast_sees_player(player_detection_raycast) \
 	or _raycast_sees_player(player_detection_raycast_2) \
-	or _raycast_sees_player(player_detection_raycast) \
+	or _raycast_sees_player(player_detection_raycast_3) \
+	or _raycast_sees_player(player_detection_raycast_4) \
 	or (_player_in_vision_cone() and PlayerBody.current_player_instance.has_hank_line_of_sight):
-		sees_player = true
+		saw_player_this_frame = true
 		last_time_seeing_player = Time.get_ticks_msec()
 		if not saw_player_recently:
 			organ_sting_player.play()
-			
 	else:
-		sees_player = false
+		saw_player_this_frame = false
+	
+	sees_player = saw_player_this_frame or saw_player_last_frame
 	
 	if Time.get_ticks_msec() - last_time_seeing_player < SAW_PLAYER_RECENTLY_THRESHOLD:
 		saw_player_recently = true
 	else:
 		saw_player_recently = false
 	
+	
+	
 	_handle_hank_lookat()
+	
+	print("sees_player = ", sees_player)
 	
 	
 	

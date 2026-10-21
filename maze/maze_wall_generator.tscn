@@ -7,6 +7,7 @@
 [node name="MazeWallGenerator" type="NavigationRegion3D" unique_id=1371215540]
 navigation_mesh = SubResource("NavigationMesh_7q5dr")
 script = ExtResource("1_7q5dr")
+wall_collision = 13
 
 [node name="StartRoomPosition" type="Node3D" parent="." unique_id=1367781821]
 

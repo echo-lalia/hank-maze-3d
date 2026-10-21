@@ -2,7 +2,6 @@ extends Node
 class_name Main
 
 
-const SAVE_PATH = "user://hankattackdata"
 
 const MAIN_MENU = preload("uid://crs3ct2mo8vgb")
 const GAME_RUN = preload("uid://c3xba446ythyp")
@@ -44,48 +43,57 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	load_stats()
+	load_game()
 	start_main_menu()
 
 
 
-static var game_stats: Dictionary[String, Variant] = {
-	"best_time": 100_000_000_000.0,
-	"last_time": 0.0,
-	"pb_last_time": false,
-	"won_last_game": false,
-	"has_finished_ever": false,
-	"has_won_ever": false,
-}
 
 
 
+static var game_save: GameSave
 
-static func load_stats() -> void:
-	print("Loading game data...")
-	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if not file:
-		print("Couldn't load stored game data; got '%'.\nStarting new save." % error_string(FileAccess.get_open_error()))
-		return
-	
-	var loaded = file.get_var()
-	if loaded is Dictionary:
-		game_stats.merge(loaded, true)
-		print("Loaded game data!")
+signal settings_changed
+
+
+
+static func notify_settings_changed() -> void:
+	current_main_instance.settings_changed.emit()
+
+
+static func setup_saved_input_events() -> void:
+	if game_save.sneak_button:
+		InputMap.action_erase_events("sneak")
+		InputMap.action_add_event("sneak", game_save.sneak_button)
 	else:
-		print("Loaded data wasn't the expected format. Loaded: ", loaded)
+		var events: Array[InputEvent] = InputMap.action_get_events("sneak")
+		if events:
+			game_save.sneak_button = events[0]
+	if game_save.sprint_button:
+		InputMap.action_erase_events("sprint")
+		InputMap.action_add_event("sprint", game_save.sprint_button)
+	else:
+		var events: Array[InputEvent] = InputMap.action_get_events("sprint")
+		if events:
+			game_save.sprint_button = events[0]
+	notify_settings_changed()
 
 
-static func save_stats() -> void:
-	print("Saving stats...")
-	print(game_stats)
-	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if not file:
-		push_error("Couldn't create save data; got '%'." % error_string(FileAccess.get_open_error()))
-		return
-	
-	var is_ok: bool = file.store_var(game_stats)
-	
-	if not is_ok:
-		push_error("Couldn't save game data; got '%'." % error_string(FileAccess.get_open_error()))
+
+static func load_game() -> void:
+	print("Loading game data...")
+	game_save = GameSave.load_save()
+	setup_saved_input_events()
+	print("Loaded: ")
+	print(game_save)
+
+
+static func save_game() -> void:
+	print("Saving game data...")
+	print(game_save)
+	var err: Error = game_save.save()
+	if err == OK:
+		print("Saved!")
+	else:
+		push_error("Couldn't save game data: " + error_string(err))
 	

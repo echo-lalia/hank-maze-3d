@@ -79,31 +79,32 @@ bone_name = "Head"
 bone_idx = 13
 
 [node name="PlayerDetectionRaycast" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=1375929066]
-transform = Transform3D(0.99635714, 0.019340122, -0.08305721, -0.033456996, 0.98451126, -0.17210576, 0.07844198, 0.1742576, 0.9815719, -0.08829798, 0.12841445, 0.0193756)
+transform = Transform3D(0.98740786, 0.024836881, -0.15623428, -0.033112723, 0.9981712, -0.05059299, 0.15469171, 0.05512925, 0.98642445, -0.0876161, 0.1645276, 0.024853215)
 target_position = Vector3(0, 0, 20)
-collision_mask = 5
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="1" unique_id=1161230707]
-transform = Transform3D(0.9956539, 0.04358733, 0.08230011, -0.028879557, 0.98465616, -0.17210688, -0.088538714, 0.16898216, 0.9816358, 0.08567233, 0.12771934, 0.019442625)
-target_position = Vector3(0, 0, 20)
-collision_mask = 5
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycast3" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="2" unique_id=1205954134]
-transform = Transform3D(0.9996101, 0.02792167, 0, -0.02774763, 0.99338156, -0.11146903, -0.003112395, 0.1114256, 0.9937688, 0.00011839252, 0.21127027, 0.031951055)
-target_position = Vector3(0, 0, 20)
-collision_mask = 5
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="3" unique_id=1424047178]
-transform = Transform3D(0.99999994, 2.0071672e-13, -7.410728e-12, -1.4210855e-12, 0.9862867, -0.1650478, 7.2759585e-12, 0.1650478, 0.9862867, -2.2737368e-13, 0.15200001, 0.023000002)
-target_position = Vector3(0, 0, 1)
 collision_mask = 4
 hit_from_inside = true
 collide_with_areas = true
-collide_with_bodies = false
-debug_shape_custom_color = Color(0.34402263, 0.49155134, 0.9175409, 1)
+
+[node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="1" unique_id=1161230707]
+transform = Transform3D(0.9870189, 0.037212044, 0.15623435, -0.029628253, 0.99828094, -0.05059301, -0.15784806, 0.04530729, 0.9864249, 0.086354226, 0.1638326, 0.024920255)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast3" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="2" unique_id=816530086]
+transform = Transform3D(0.99834305, 0.025197739, -0.05173382, -0.032773696, 0.98795134, -0.15126097, 0.047298986, 0.15270583, 0.9871401, -0.088748306, 0.104563594, 0.015757978)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast4" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="3" unique_id=873412605]
+transform = Transform3D(0.99795526, 0.03753853, 0.05173384, -0.029324904, 0.98806, -0.15126102, -0.05679412, 0.1494346, 0.9871405, 0.08522202, 0.1038686, 0.015825018)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
 
 [node name="WallDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="4" unique_id=865879631]
 transform = Transform3D(0.99999994, -3.0055958e-12, 2.2737368e-12, -1.4210855e-12, 0.98628664, -0.16504781, 7.275958e-12, 0.1650478, 0.9862867, 0, 0.182, 0.013)

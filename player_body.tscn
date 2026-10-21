@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://bcd54nj8m7jmx"]
 
 [ext_resource type="Script" uid="uid://batgh444m6nni" path="res://player_body.gd" id="1_bvaq7"]
-[ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_camera.gd" id="2_2lce7"]
+[ext_resource type="Script" uid="uid://pwy8085mrnbo" path="res://player_head.gd" id="2_2lce7"]
 [ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="3_2lce7"]
+[ext_resource type="Script" uid="uid://rfh733eejpka" path="res://player_camera.gd" id="3_4eoj2"]
 [ext_resource type="PackedScene" uid="uid://c1u8hu2m8mme7" path="res://compass.tscn" id="3_ly6kn"]
 [ext_resource type="Shader" uid="uid://c3oa6jds0ihpw" path="res://damage_filter_shader.gdshader" id="4_ct3yx"]
 [ext_resource type="Script" uid="uid://cvg4fnyip5rv5" path="res://hank_sight_area.gd" id="4_io3rj"]
 [ext_resource type="Script" uid="uid://c5d0rwkq0q1fc" path="res://player_audio_player.gd" id="5_0slni"]
+[ext_resource type="Script" uid="uid://yncvwthoym06" path="res://dbg_label.gd" id="5_f57or"]
 [ext_resource type="Script" uid="uid://bx7kd82dyoi2g" path="res://player_damage_effect.gd" id="5_xs03g"]
 [ext_resource type="AudioStream" uid="uid://b4f4mdt8nxoxp" path="res://sfx/big_stop_random_stream.tres" id="7_xs03g"]
 [ext_resource type="AudioStream" uid="uid://k6ybm3bcew2o" path="res://sfx/tension_drone.mp3" id="10_xcy0b"]
@@ -52,11 +54,12 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pb32r"]
+height = 2.1247559
 radius = 0.6
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2lce7"]
-height = 1.3226318
-radius = 0.4
+height = 1.5518494
+radius = 0.4453125
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_io3rj"]
 height = 2.4052734
@@ -92,7 +95,7 @@ player_body = NodePath("..")
 [node name="PlayerCamera" type="Camera3D" parent="PlayerHead" unique_id=169823099]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.13800001)
 environment = SubResource("Environment_ig7tw")
-fov = 90.0
+script = ExtResource("3_4eoj2")
 
 [node name="InteractionRaycast" type="RayCast3D" parent="PlayerHead/PlayerCamera" unique_id=158961686]
 target_position = Vector3(0, 0, -2)
@@ -151,6 +154,12 @@ spot_range = 6.0
 spot_angle = 70.0
 spot_angle_attenuation = 2.9281733
 
+[node name="Label" type="Label" parent="PlayerHead/PlayerCamera" unique_id=858453846]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "sees_player = "
+script = ExtResource("5_f57or")
+
 [node name="RaytracedAudioListener" type="AudioListener3D" parent="PlayerHead" unique_id=678790517]
 doppler_tracking = 2
 script = ExtResource("3_2lce7")
@@ -164,19 +173,19 @@ script = ExtResource("4_io3rj")
 player_body = NodePath("..")
 
 [node name="NormalShape" type="CollisionShape3D" parent="HankSightArea" unique_id=1456617418]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0623779, 0)
 shape = SubResource("CylinderShape3D_pb32r")
-debug_color = Color(0.75136834, 0.4569714, 0.11682358, 0.41960785)
+debug_color = Color(0.27450982, 0.6313726, 0, 0.91764706)
 
 [node name="SneakShape" type="CollisionShape3D" parent="HankSightArea" unique_id=1655448387]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6613159, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8196111, 0)
 shape = SubResource("CylinderShape3D_2lce7")
-debug_color = Color(0.75136834, 0.4569714, 0.11682358, 0.41960785)
+debug_color = Color(0.27450982, 0.6313726, 0, 0.91764706)
 
 [node name="RunShape" type="CollisionShape3D" parent="HankSightArea" unique_id=271037845]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2026367, 0)
 shape = SubResource("CylinderShape3D_io3rj")
-debug_color = Color(0.75136834, 0.4569714, 0.11682358, 0.41960785)
+debug_color = Color(0.27300003, 0.63, 0, 0.91764706)
 
 [node name="PlayerStepSoundPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1552827038]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72366047, 0)

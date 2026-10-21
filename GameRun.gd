@@ -46,10 +46,10 @@ func _setup_browser_close_warning() -> void:
 	if not _browser_close_is_setup:
 		print("Injecting browser close warning to prevent accidental quits.")
 		JavaScriptBridge.eval("""
-			window.addEventListener('beforeunload', function (e) {
+			window.addEventListener('beforeunload', function (event) {
 				if (window.enable_close_warning) {
-					e.preventDefault();
-					e.returnValue = '';
+					event.preventDefault();
+					event.returnValue = '';
 				}
 			});
 		""")

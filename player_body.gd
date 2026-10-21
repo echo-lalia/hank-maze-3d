@@ -177,25 +177,25 @@ func _physics_process(delta: float) -> void:
 ## Win the game.
 func win() -> void:
 	## TODO: Store run information!!
-	Main.game_stats["last_time"] = game_run.get_run_time()
-	Main.game_stats["won_last_game"] = true
-	if Main.game_stats["last_time"] < Main.game_stats["best_time"]:
-		Main.game_stats["best_time"] = Main.game_stats["last_time"]
-		Main.game_stats["pb_last_time"] = true
+	Main.game_save.last_run_time = game_run.get_run_time()
+	Main.game_save.won_last_run = true
+	if Main.game_save.last_run_time < Main.game_save.best_run_time:
+		Main.game_save.best_run_time = Main.game_save.last_run_time
+		Main.game_save.pb_last_run = true
 	else:
-		Main.game_stats["pb_last_time"] = false
-	Main.game_stats["has_finished_ever"] = true
-	Main.game_stats["has_won_ever"] = true
-	Main.save_stats()
+		Main.game_save.pb_last_run = false
+	Main.game_save.has_finished_run_ever = true
+	Main.game_save.has_won_run_ever = true
+	Main.save_game()
 	Main.start_main_menu()
 
 
 func lose() -> void:
-	Main.game_stats["last_time"] = game_run.get_run_time()
-	Main.game_stats["won_last_game"] = false
-	Main.game_stats["pb_last_time"] = false
-	Main.game_stats["has_finished_ever"] = true
-	Main.save_stats()
+	Main.game_save.last_run_time = game_run.get_run_time()
+	Main.game_save.won_last_run = false
+	Main.game_save.pb_last_run = false
+	Main.game_save.has_finished_run_ever = true
+	Main.save_game()
 	Main.start_hank_death_screen()
 
 

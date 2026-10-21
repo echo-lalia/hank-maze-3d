@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://crs3ct2mo8vgb"]
 
 [ext_resource type="Script" uid="uid://8v082wurip71" path="res://main_menu.gd" id="1_06t4h"]
+[ext_resource type="PackedScene" uid="uid://dr6m0q720io7v" path="res://settings_menu.tscn" id="2_7vrkn"]
 
 [node name="MainMenu" type="Panel" unique_id=1676622235 node_paths=PackedStringArray("success_label", "last_run_time_label", "best_run_time_label")]
 anchors_preset = 15
@@ -16,9 +17,9 @@ best_run_time_label = NodePath("BestRunRoot/PanelContainer/VBoxContainer/HBoxCon
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=832138857]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.58179015
+anchor_top = 0.55
 anchor_right = 1.0
-anchor_bottom = 0.83641976
+anchor_bottom = 0.75
 size_flags_vertical = 4
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
@@ -140,5 +141,14 @@ text = "Time:"
 [node name="TimeLabel" type="Label" parent="BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1172085892]
 layout_mode = 2
 text = "123"
+
+[node name="SettingsMenu" parent="." unique_id=664041274 instance=ExtResource("2_7vrkn")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.75
+anchor_right = 0.95
+anchor_bottom = 0.95
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

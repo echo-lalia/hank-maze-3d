@@ -17,6 +17,8 @@
 [ext_resource type="AudioStream" uid="uid://bdv40k70xh4dg" path="res://sfx/ambience0.mp3" id="15_4vk6t"]
 [ext_resource type="AudioStream" uid="uid://cetfrog3e1cts" path="res://sfx/compressor_hum.mp3" id="15_uhk2m"]
 [ext_resource type="AudioStream" uid="uid://ck5wjub6mnj24" path="res://sfx/bumpinjingle.mp3" id="17_ldgum"]
+[ext_resource type="PackedScene" uid="uid://dr6m0q720io7v" path="res://settings_menu.tscn" id="18_kuosh"]
+[ext_resource type="Script" uid="uid://dkkov0qw6v6xx" path="res://pause_menu.gd" id="18_vvw86"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
 radius = 0.16
@@ -175,8 +177,8 @@ looking_state = NodePath("../LookingState")
 metadata/_custom_type_script = "uid://byhpn01aq0yc7"
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=1132386947]
-collision_layer = 9
-collision_mask = 9
+collision_layer = 13
+collision_mask = 13
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1587432430]
 shape = SubResource("WorldBoundaryShape3D_pb32r")
@@ -256,3 +258,48 @@ bus = &"RaytracedAmbient"
 stream = ExtResource("17_ldgum")
 volume_db = -14.0
 bus = &"RaytracedReverb"
+
+[node name="PauseMenu" type="PanelContainer" parent="." unique_id=1719766157]
+process_mode = 3
+z_index = 10
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("18_vvw86")
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseMenu" unique_id=704826543]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu/MarginContainer" unique_id=1956236817]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/MarginContainer/HBoxContainer" unique_id=670681203]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=733080728]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=991196791]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 10
+text = "Quit"
+
+[node name="SettingsMenu" parent="PauseMenu/MarginContainer/HBoxContainer" unique_id=664041274 instance=ExtResource("18_kuosh")]
+layout_mode = 2
+
+[connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/QuitButton" to="PauseMenu" method="_on_quit_button_pressed"]
