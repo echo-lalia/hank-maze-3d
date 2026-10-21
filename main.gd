@@ -6,6 +6,7 @@ class_name Main
 const MAIN_MENU = preload("uid://crs3ct2mo8vgb")
 const GAME_RUN = preload("uid://c3xba446ythyp")
 const HANKDEATHSCREEN = preload("uid://d1ynnc2lyyb5y")
+const WIN_SCREEN = preload("uid://cxct4crj3ig0c")
 
 
 
@@ -36,6 +37,9 @@ static func start_main_menu() -> void:
 static func start_hank_death_screen() -> void:
 	start_scene(HANKDEATHSCREEN)
 
+
+static func start_win_screen() -> void:
+	start_scene(WIN_SCREEN)
 
 
 func _init() -> void:

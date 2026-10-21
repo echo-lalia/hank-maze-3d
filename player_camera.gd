@@ -10,4 +10,4 @@ func _ready() -> void:
 func _on_settings_changed() -> void:
 	fov = Main.game_save.fov
 	environment.adjustment_brightness = Main.game_save.brightness / 100.0
-	environment.ambient_light_energy = Utils.map_range(Main.game_save.brightness, 50, 200, 0.08, 0.3)
+	environment.ambient_light_energy = Utils.map_range(Main.game_save.brightness, 50, 200, 0.1, 0.3)

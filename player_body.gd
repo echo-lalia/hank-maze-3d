@@ -176,7 +176,6 @@ func _physics_process(delta: float) -> void:
 
 ## Win the game.
 func win() -> void:
-	## TODO: Store run information!!
 	Main.game_save.last_run_time = game_run.get_run_time()
 	Main.game_save.won_last_run = true
 	if Main.game_save.last_run_time < Main.game_save.best_run_time:
@@ -187,7 +186,7 @@ func win() -> void:
 	Main.game_save.has_finished_run_ever = true
 	Main.game_save.has_won_run_ever = true
 	Main.save_game()
-	Main.start_main_menu()
+	Main.start_win_screen()
 
 
 func lose() -> void:
