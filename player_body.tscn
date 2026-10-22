@@ -48,6 +48,8 @@ adjustment_enabled = true
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ly6kn"]
 shader = ExtResource("4_ct3yx")
 shader_parameter/amount = 0.0
+shader_parameter/hint_angle = 0.0
+shader_parameter/hint_color = Color(0.14650148, 0.0069846776, 0.001800075, 1)
 
 [sub_resource type="Gradient" id="Gradient_ly6kn"]
 offsets = PackedFloat32Array(0, 0.16970387, 0.30637813, 0.4544419, 0.57289296, 0.6480638, 0.71867883, 0.79384965, 0.8940774, 1)
@@ -127,7 +129,8 @@ text = "Interact"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerHead/PlayerCamera" unique_id=1362781914]
+[node name="CompassSubViewportContainer" type="SubViewportContainer" parent="PlayerHead/PlayerCamera" unique_id=1362781914]
+visible = false
 anchors_preset = -1
 anchor_left = 0.8480903
 anchor_top = 0.75771606
@@ -137,9 +140,9 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Compass" parent="PlayerHead/PlayerCamera/SubViewportContainer" unique_id=446895720 node_paths=PackedStringArray("player") instance=ExtResource("3_ly6kn")]
+[node name="Compass" parent="PlayerHead/PlayerCamera/CompassSubViewportContainer" unique_id=446895720 node_paths=PackedStringArray("player") instance=ExtResource("3_ly6kn")]
 handle_input_locally = false
-render_target_update_mode = 4
+render_target_update_mode = 0
 player = NodePath("../../../..")
 
 [node name="PlayerDamageEffect" type="TextureRect" parent="PlayerHead/PlayerCamera" unique_id=1821691951]
@@ -193,12 +196,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2026367, 0)
 shape = SubResource("CylinderShape3D_io3rj")
 debug_color = Color(0.27300003, 0.63, 0, 0.91764706)
 
-[node name="PlayerStepSoundPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1552827038]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72366047, 0)
+[node name="PlayerStepSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=882066462]
 stream = ExtResource("7_xs03g")
 max_polyphony = 3
 script = ExtResource("5_0slni")
-metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="PlayerHurtArea" type="Area3D" parent="." unique_id=693048740 node_paths=PackedStringArray("player", "player_damage_effect")]
 collision_layer = 32

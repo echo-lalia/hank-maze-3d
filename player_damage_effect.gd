@@ -4,7 +4,7 @@ extends Area3D
 
 @export var player_damage_effect: TextureRect
 
-const HURT_AMOUNT: float = 1.5
+const HURT_AMOUNT: float = 1.0
 const HEAL_AMOUNT: float = 0.1
 const MAX_TENSE_VOLUME: float = 0.4
 
@@ -46,6 +46,7 @@ func _physics_process(delta: float) -> void:
 	health = clampf(health, 0, 1)
 	
 	(player_damage_effect.material as ShaderMaterial).set_shader_parameter("amount", pow(1.0 - health, 0.5))
+	(player_damage_effect.material as ShaderMaterial).set_shader_parameter("hint_angle", -Utils.get_relative_direction(player.player_head, HankBody.current_hank_body_instance))
 	
 	audio_stream_player.volume_linear = (1.0 - health) * MAX_TENSE_VOLUME
 	

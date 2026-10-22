@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://cqen45wupcsuk" path="res://sfx/gourdshimmer.mp3" id="12_bltg3"]
 [ext_resource type="Texture2D" uid="uid://ihnvbpmse4bb" path="res://textures/Gourd.png" id="12_gag4w"]
 [ext_resource type="AudioStream" uid="uid://cetfrog3e1cts" path="res://sfx/compressor_hum.mp3" id="15_uhk2m"]
+[ext_resource type="AudioStream" uid="uid://b6qm84v30lj8l" path="res://sfx/gourd_grab.mp3" id="16_af7r6"]
 [ext_resource type="PackedScene" uid="uid://dtyqi7x7atmdo" path="res://rich_text_3d.tscn" id="16_qem8s"]
 [ext_resource type="Shader" uid="uid://dbhtveg1jfnli" path="res://rich_text_3d.gdshader" id="17_af7r6"]
 [ext_resource type="AudioStream" uid="uid://ck5wjub6mnj24" path="res://sfx/bumpinjingle.mp3" id="17_ldgum"]
@@ -24,7 +25,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
 radius = 0.16
-height = 0.6
+height = 0.59101564
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_pb32r"]
 
@@ -172,7 +173,7 @@ script = ExtResource("2_gag4w")
 maze_generator = NodePath("../MazeWallGenerator")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HankBody" unique_id=1548921838]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29550782, 0)
 shape = SubResource("CapsuleShape3D_j7oc2")
 
 [node name="HankAlpeca" parent="HankBody" unique_id=307689099 instance=ExtResource("3_1213d")]
@@ -248,6 +249,9 @@ billboard = 1
 texture = SubResource("ViewportTexture_qem8s")
 size = Vector2i(144, 144)
 text = "Hes coming..."
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Gourd" unique_id=250049188]
+stream = ExtResource("16_af7r6")
 
 [node name="Exit" type="Node3D" parent="." unique_id=267469642 node_paths=PackedStringArray("maze_generator")]
 script = ExtResource("11_qem8s")

@@ -8,6 +8,7 @@ const RUN_ANIMATION_VELOCITY: float = RUN_ANIMATION_TRAVEL / RUN_ANIMATION_DURAT
 const DIST_PER_STEP_SFX: float = 1
 
 const CONE_VISION_ANGLE: float = deg_to_rad(60)
+const STARE_PLAYER_MAX_ANGLE: float = deg_to_rad(75)
 const CONE_VISION_DISTANCE: float = 15
 
 
@@ -150,11 +151,16 @@ func _player_in_vision_cone() -> bool:
 	)
 
 
+func _can_look_at_point(point: Vector3) -> bool:
+	var direction_vector: Vector3 = player_detection_raycast.global_position.direction_to(point)
+	var angle: float = (global_basis.z).angle_to(direction_vector)
+	return (angle < STARE_PLAYER_MAX_ANGLE)
+
 
 
 
 func _handle_hank_lookat() -> void:
-	if override_head_look_at:
+	if override_head_look_at and _can_look_at_point(override_head_look_at):
 		bone_attachment_3d.override_pose = true
 		var new_transform := (
 			bone_attachment_3d.global_transform

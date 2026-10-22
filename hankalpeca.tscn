@@ -114,6 +114,9 @@ collide_with_areas = true
 collide_with_bodies = false
 debug_shape_custom_color = Color(0.7273735, 0.30263817, 0.8373477, 1)
 
+[node name="AnimationPlayer" parent="." index="1" unique_id=936143054]
+playback_default_blend_time = 0.1
+
 [node name="FloorDetectionRaycast" type="RayCast3D" parent="." index="2" unique_id=89854284]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 exclude_parent = false

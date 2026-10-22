@@ -14,6 +14,7 @@ const BANANATHING = preload("uid://detsxsphpkx4q")
 const CEILINGLIGHT = preload("uid://23hbjy7d64p4")
 const BARREL = preload("uid://bnptm6smf1frh")
 const CEILING_SPEAKER = preload("uid://318qjienj8by")
+const COMPASS_ITEM = preload("uid://bj8eiy7kqdsw")
 
 const CEILING_LIGHT_CHANCE: float = 0.02
 
@@ -71,6 +72,11 @@ func _ready() -> void:
 	await get_tree().process_frame
 	bake_navigation_mesh()
 	await bake_finished
+	
+	# Add compass item to maze
+	var compass_item: Node3D = COMPASS_ITEM.instantiate()
+	compass_item.position = room_coord_to_relative_position(randi_range(0, MAZE_WIDTH), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	add_child(compass_item)
 	
 	#var probe := create_reflection_probe(Vector3((MAZE_WIDTH + 2) * ROOM_SIZE, ROOM_HEIGHT * 3, ROOM_SIZE * (MAZE_LENGTH + 2)))
 	#probe.global_position = hank_room_position.global_position

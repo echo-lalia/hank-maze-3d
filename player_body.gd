@@ -33,6 +33,7 @@ var has_gourd: bool = false
 @onready var interaction_raycast: RayCast3D = $PlayerHead/PlayerCamera/InteractionRaycast
 @onready var interaction_label: Label = $PlayerHead/PlayerCamera/InteractionLabel
 @onready var player_step_sound_player: PlayerAudioPlayer = $PlayerStepSoundPlayer
+@onready var compass_sub_viewport_container: SubViewportContainer = $PlayerHead/PlayerCamera/CompassSubViewportContainer
 
 @export var player_head: PlayerHead
 
@@ -44,7 +45,13 @@ var has_gourd: bool = false
 ## Emitted by PlayerAudioPlayer nodes when a hank audible sound is played.
 signal played_sound(sound_position: Vector3, travel_distance: float)
 
+
 var has_hank_line_of_sight: bool = false
+
+var has_compass: bool = false:
+	set(val):
+		has_compass = val
+		compass_sub_viewport_container.visible = has_compass
 
 
 var locked_for_animation: bool = false
@@ -66,7 +73,7 @@ var movement_state: MOVEMENT_STATES = MOVEMENT_STATES.normal:
 		if movement_state != val:
 			# Play a loud step when finishing a jump
 			if movement_state == MOVEMENT_STATES.midair:
-				player_step_sound_player.play_player_sound(BIG_STOP_RANDOM_STREAM, 60.0, 1.0)
+				player_step_sound_player.play_player_sound_from_position(global_position, BIG_STOP_RANDOM_STREAM, GameRun.phase2_switchf(60, 75), -3.0)
 			movement_state = val
 			_switch_movement_state()
 
@@ -85,11 +92,13 @@ static var current_player_instance: PlayerBody
 
 func _ready() -> void:
 	current_player_instance = self
-	
+	set_physics_process(false)
 	if maze_generator:
 		if not maze_generator.is_node_ready():
 			await maze_generator.ready
 		global_position = maze_generator.start_room_position.global_position
+	
+	set_physics_process(true)
 
 
 
@@ -166,7 +175,8 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle the line of sight check.
 	var space := get_world_3d().direct_space_state
-	var params := PhysicsRayQueryParameters3D.create(HankBody.current_hank_body_instance.global_position, player_head.global_position, 1)
+	var params := PhysicsRayQueryParameters3D.create(HankAlpeca.current_hank_mesh_instance.bone_attachment_3d.global_position, player_head.global_position, 1)
+	params.hit_from_inside = true
 	var result: Dictionary = space.intersect_ray(params)
 	if "collider" in result and result["collider"] and result["collider"] is PlayerBody:
 		has_hank_line_of_sight = true
@@ -210,11 +220,11 @@ func _handle_step_sounds() -> void:
 		_current_step_travel -= STEP_SOUND_DISTANCE
 		#print(MOVEMENT_STATES.find_key(movement_state))
 		if movement_state == MOVEMENT_STATES.sneak:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 10.0, 0.2)
+			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 10.0, -15.0)
 		elif movement_state == MOVEMENT_STATES.sprint:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(45, 60), 1.0)
+			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(45, 60), -3.0)
 		elif movement_state == MOVEMENT_STATES.normal:
-			player_step_sound_player.play_player_sound(PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(30, 40), 0.4)
+			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(30, 40), -9.0)
 
 
 func _process(_delta: float) -> void:

@@ -52,11 +52,12 @@ func _on_interactable_area_interacted(player: PlayerBody) -> void:
 	
 	var player_sneaking: bool = PlayerBody.current_player_instance.movement_state == PlayerBody.MOVEMENT_STATES.sneak
 	var player_running: bool = PlayerBody.current_player_instance.movement_state == PlayerBody.MOVEMENT_STATES.sprint
-
+	
+	player_audio_player.pitch_scale = 0.9 if player_sneaking else 1.1 if player_running else 1.0
 	player_audio_player.play_player_sound_from_position(
 		point_end, VAULTING_AUDIO_STREAM_RANDOMIZER,
-		10.0 if player_sneaking else 40.0 if player_running else 20.0,
-		0.06 if player_sneaking else 0.15 if player_running else 0.1,
+		GameRun.phase2_switchf(10, 20) if player_sneaking else GameRun.phase2_switchf(50, 60) if player_running else GameRun.phase2_switchf(20, 30),
+		-8 if player_sneaking else -1 if player_running else -5,
 	)
 	
 	player.locked_for_animation = true
