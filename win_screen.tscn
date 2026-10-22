@@ -359,4 +359,4 @@ autoplay = &"win"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1955071041]
 stream = ExtResource("3_l5t5q")
-volume_db = -4.0
+volume_db = -8.0

@@ -12,6 +12,8 @@ const CHANCE_TO_DELETE_WALL_ENDS = 0.5
 
 const BANANATHING = preload("uid://detsxsphpkx4q")
 const CEILINGLIGHT = preload("uid://23hbjy7d64p4")
+const BARREL = preload("uid://bnptm6smf1frh")
+const CEILING_SPEAKER = preload("uid://318qjienj8by")
 
 const CEILING_LIGHT_CHANCE: float = 0.02
 
@@ -218,7 +220,7 @@ func _random_room_position(margin: float = 1.0) -> Vector3:
 
 func add_objects_to_room(room_position: Vector3) -> void:
 	var objects_to_add: int = randi_range(0, 1)
-	var rand_objects: Array[PackedScene] = [BANANATHING, CEILINGLIGHT]
+	var rand_objects: Array[PackedScene] = [BANANATHING, BARREL, CEILING_SPEAKER]
 	for i in objects_to_add:
 		var rand_obj: PackedScene = rand_objects.pick_random()
 		var item: Node3D
@@ -228,6 +230,17 @@ func add_objects_to_room(room_position: Vector3) -> void:
 				# Add to a random position with a random rotation.
 				item.position = room_position + _random_room_position(0.8)
 				item.rotation.y = randf_range(0, deg_to_rad(360))
+				add_child(item)
+			BARREL:
+				item = BARREL.instantiate()
+				# Add to a random position with a random rotation.
+				item.position = room_position + _random_room_position(0.8)
+				item.rotation.y = randf_range(0, deg_to_rad(360))
+				add_child(item)
+			CEILING_SPEAKER:
+				item = CEILING_SPEAKER.instantiate()
+				# Add to a random position with a random rotation.
+				item.position = room_position + _random_room_position(0.8)
 				add_child(item)
 	
 	@warning_ignore("integer_division")
