@@ -23,9 +23,12 @@
 [ext_resource type="AudioStream" uid="uid://gnr87fvd0pw" path="res://sfx/hankz1.mp3" id="13_j0lvp"]
 [ext_resource type="AudioStream" uid="uid://cw84h501p1fmp" path="res://sfx/hankz2.mp3" id="14_4b6ee"]
 [ext_resource type="AudioStream" uid="uid://cetfrog3e1cts" path="res://sfx/compressor_hum.mp3" id="15_uhk2m"]
+[ext_resource type="AudioStream" uid="uid://b1enioalxkd6p" path="res://sfx/hankh5.mp3" id="15_x4c0s"]
 [ext_resource type="AudioStream" uid="uid://b6qm84v30lj8l" path="res://sfx/gourd_grab.mp3" id="16_af7r6"]
+[ext_resource type="AudioStream" uid="uid://xkmo2nofbtie" path="res://sfx/hankh6.mp3" id="16_bsayt"]
 [ext_resource type="PackedScene" uid="uid://dtyqi7x7atmdo" path="res://rich_text_3d.tscn" id="16_qem8s"]
 [ext_resource type="Shader" uid="uid://dbhtveg1jfnli" path="res://rich_text_3d.gdshader" id="17_af7r6"]
+[ext_resource type="Script" uid="uid://b5v7oqff6ndhg" path="res://hank_voice_player.gd" id="17_bsayt"]
 [ext_resource type="AudioStream" uid="uid://ck5wjub6mnj24" path="res://sfx/bumpinjingle.mp3" id="17_ldgum"]
 [ext_resource type="PackedScene" uid="uid://dr6m0q720io7v" path="res://settings_menu.tscn" id="18_kuosh"]
 [ext_resource type="AudioStream" uid="uid://bs4f46yb8fqeb" path="res://sfx/ambience1.mp3" id="18_qem8s"]
@@ -37,21 +40,30 @@ height = 0.59101564
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pb32r"]
 random_pitch = 1.0594631
-streams_count = 8
+streams_count = 10
 stream_0/stream = ExtResource("7_3xb4a")
+stream_0/weight = 0.5
 stream_1/stream = ExtResource("8_mt1u2")
-stream_1/weight = 0.5
+stream_1/weight = 0.25
 stream_2/stream = ExtResource("9_x4c0s")
-stream_2/weight = 0.5
+stream_2/weight = 0.25
 stream_3/stream = ExtResource("10_bsayt")
-stream_3/weight = 2.0
+stream_3/weight = 3.0
 stream_4/stream = ExtResource("11_85shy")
-stream_4/weight = 2.0
+stream_4/weight = 3.0
 stream_5/stream = ExtResource("12_swfsk")
-stream_5/weight = 0.5
+stream_5/weight = 0.25
 stream_6/stream = ExtResource("13_j0lvp")
-stream_6/weight = 0.5
+stream_6/weight = 0.25
 stream_7/stream = ExtResource("14_4b6ee")
+stream_7/weight = 0.25
+stream_8/stream = ExtResource("15_x4c0s")
+stream_8/weight = 0.5
+stream_9/stream = ExtResource("16_bsayt")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bsayt"]
+height = 1.0440674
+radius = 0.18798828
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_pb32r"]
 
@@ -165,14 +177,14 @@ _data = {
 &"float": SubResource("Animation_gag4w")
 }
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_g7dxb"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_bsayt"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojlm1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85shy"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_af7r6")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_g7dxb")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_bsayt")
 
 [sub_resource type="BoxMesh" id="BoxMesh_kek77"]
 size = Vector3(1.8, 3.09, 0.1)
@@ -180,14 +192,14 @@ size = Vector3(1.8, 3.09, 0.1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
 size = Vector3(1.9, 3.087, 0.208)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rcq0h"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_swfsk"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fx1tk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j0lvp"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_af7r6")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_rcq0h")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_swfsk")
 
 [node name="GameRun" type="Node3D" unique_id=2100628311]
 script = ExtResource("1_3b0hh")
@@ -225,8 +237,19 @@ metadata/_custom_type_script = "uid://byhpn01aq0yc7"
 
 [node name="HankVoicePlayer" type="AudioStreamPlayer3D" parent="HankBody" unique_id=1314254466]
 stream = SubResource("AudioStreamRandomizer_pb32r")
-script = ExtResource("12_1213d")
+script = ExtResource("17_bsayt")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="PlayerToHankVisionArea" type="Area3D" parent="HankBody" unique_id=240327546 groups=["player_to_hank_vision"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65732014, 0)
+collision_layer = 64
+collision_mask = 64
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HankBody/PlayerToHankVisionArea" unique_id=1540525611]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14290768, 0)
+shape = SubResource("CylinderShape3D_bsayt")
+debug_color = Color(0.31879398, 0.49078637, 1, 0.41960785)
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=1132386947]
 collision_layer = 13
@@ -275,9 +298,9 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="RichText3D" parent="Gourd" unique_id=1165830346 instance=ExtResource("16_qem8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.739, 0)
-material_override = SubResource("ShaderMaterial_ojlm1")
+material_override = SubResource("ShaderMaterial_85shy")
 billboard = 1
-texture = SubResource("ViewportTexture_g7dxb")
+texture = SubResource("ViewportTexture_bsayt")
 size = Vector2i(144, 144)
 text = "Hes coming..."
 
@@ -313,8 +336,8 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="RichText3D" parent="Exit" unique_id=816680510 instance=ExtResource("16_qem8s")]
 transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7216415)
-material_override = SubResource("ShaderMaterial_fx1tk")
-texture = SubResource("ViewportTexture_rcq0h")
+material_override = SubResource("ShaderMaterial_j0lvp")
+texture = SubResource("ViewportTexture_swfsk")
 size = Vector2i(144, 144)
 text = "Find it"
 

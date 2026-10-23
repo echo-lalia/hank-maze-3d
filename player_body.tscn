@@ -47,9 +47,9 @@ adjustment_enabled = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ly6kn"]
 shader = ExtResource("4_ct3yx")
-shader_parameter/amount = 0.0
-shader_parameter/hint_angle = 0.0
-shader_parameter/hint_color = Color(0.14650148, 0.0069846776, 0.001800075, 1)
+shader_parameter/amount = 1.0
+shader_parameter/hint_angle = 4.15999990701568
+shader_parameter/hint_color = Color(0.29234532, 0.02946704, 7.219613e-08, 1)
 
 [sub_resource type="Gradient" id="Gradient_ly6kn"]
 offsets = PackedFloat32Array(0, 0.16970387, 0.30637813, 0.4544419, 0.57289296, 0.6480638, 0.71867883, 0.79384965, 0.8940774, 1)
@@ -73,10 +73,11 @@ height = 2.4052734
 radius = 0.9667969
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xs03g"]
+height = 2.0905762
 radius = 0.9
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xcy0b"]
-height = 3.0
+height = 3.5
 radius = 1.8
 
 [node name="PlayerBody" type="CharacterBody3D" unique_id=1869904869 node_paths=PackedStringArray("player_head")]
@@ -210,14 +211,14 @@ player = NodePath("..")
 player_damage_effect = NodePath("../PlayerHead/PlayerCamera/PlayerDamageEffect")
 
 [node name="CollisionShape3DSmall" type="CollisionShape3D" parent="PlayerHurtArea" unique_id=134721138]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9547119, 0)
 shape = SubResource("CylinderShape3D_xs03g")
-debug_color = Color(0.9950301, 0, 0.22954392, 0.41960785)
+debug_color = Color(1, 0, 0.23333311, 0.91764706)
 
 [node name="CollisionShape3DBig" type="CollisionShape3D" parent="PlayerHurtArea" unique_id=1470627730]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_xcy0b")
-debug_color = Color(0.9950301, 0, 0.22954392, 0.41960785)
+debug_color = Color(1, 0, 0.23333311, 0.8235294)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerHurtArea" unique_id=1935630539]
 stream = ExtResource("10_xcy0b")

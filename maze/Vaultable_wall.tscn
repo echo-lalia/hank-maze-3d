@@ -90,8 +90,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71101564, 0)
 shape = SubResource("BoxShape3D_03hi3")
 
 [node name="AudioVisionCollider" type="StaticBody3D" parent="." unique_id=1566166601]
-collision_layer = 12
-collision_mask = 12
+collision_layer = 76
+collision_mask = 76
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AudioVisionCollider" unique_id=1530333101]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.761, 0)

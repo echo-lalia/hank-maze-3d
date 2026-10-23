@@ -29,6 +29,10 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/raytraced_audio/plugin.cfg")
 
+[global_group]
+
+player_to_hank_vision="Used to detect when we see hank's vision area3d."
+
 [input]
 
 move_forward={
@@ -104,6 +108,7 @@ dbg_label={
 3d_physics/layer_4="AudioRaycast"
 3d_physics/layer_5="InteractableArea"
 3d_physics/layer_6="HankDetect"
+3d_physics/layer_7="PlayerToHankVision"
 
 [navigation]
 

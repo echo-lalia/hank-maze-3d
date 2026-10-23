@@ -11,6 +11,7 @@ var hank_speed: float = 19.0
 const ACCEL = 100.0
 
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
+@onready var player_to_hank_vision_area: Area3D = $PlayerToHankVisionArea
 
 
 @export var maze_generator: MazeWallGenerator
