@@ -62,6 +62,8 @@ func _physics_process(delta: float) -> void:
 	if is_zero_approx(health):
 		player.lose()
 	
+	player_damage_effect.visible = not is_zero_approx(health)
+	
 	#use_big_collider = falsea
 	#assert(not (collision_shape_3d_small.disabled and collision_shape_3d_big.disabled))
 	

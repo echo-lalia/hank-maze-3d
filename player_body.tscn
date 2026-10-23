@@ -143,6 +143,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Compass" parent="PlayerHead/PlayerCamera/CompassSubViewportContainer" unique_id=446895720 node_paths=PackedStringArray("player") instance=ExtResource("3_ly6kn")]
 handle_input_locally = false
+scaling_3d_mode = 5
+scaling_3d_scale = 0.25
+fsr_sharpness = 1.0
 render_target_update_mode = 0
 player = NodePath("../../../..")
 
