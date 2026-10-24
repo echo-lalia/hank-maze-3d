@@ -16,7 +16,7 @@ func _ready() -> void:
 	var gourd_spin_tween: Tween = create_tween()
 	gourd_spin_tween.set_loops()
 	gourd_spin_tween.tween_property(gourd_mesh, "rotation:y", deg_to_rad(0), 0)
-	gourd_spin_tween.tween_property(gourd_mesh, "rotation:y", deg_to_rad(360), 6.66)
+	gourd_spin_tween.tween_property(gourd_mesh, "rotation:y", deg_to_rad(360), 6.66 * 3)
 	
 	audio_stream_player.finished.connect(_return_to_menu)
 	

@@ -35,6 +35,10 @@ const EAST: int = 0b0010
 const SOUTH: int = 0b0100
 const WEST: int = 0b1000
 
+## Room coordinates that can't generate objects
+const BANNED_OBJECT_ROOMS: Array[Array] = [[MAZE_RADIUS, 0], [MAZE_RADIUS, MAZE_LENGTH-1]]
+
+
 @onready var csg_combiner_3d: CSGCombiner3D = $CSGCombiner3D
 
 @export_flags_3d_physics var wall_collision: int = 0b1001
@@ -288,7 +292,8 @@ func generate_maze() -> void:
 			var room_position: Vector3 = room_coord_to_relative_position(x, y)
 			var room: MazeSquare.Room = maze.room(x, y)
 			
-			add_objects_to_room(room_position)
+			if [x, y] not in BANNED_OBJECT_ROOMS:
+				add_objects_to_room(room_position)
 			
 			var wall_bits: int = room.walls_id()
 			

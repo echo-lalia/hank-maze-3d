@@ -1,6 +1,5 @@
 shader_type spatial;
-render_mode diffuse_burley;
-
+render_mode diffuse_burley, world_vertex_coords;
 
 uniform sampler2D texture_albedo : source_color, filter_nearest_mipmap, repeat_enable;
 global uniform float vertex_quant;

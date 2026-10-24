@@ -1,13 +1,14 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://de54k6p86uv8r"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://de54k6p86uv8r"]
 
+[ext_resource type="Shader" uid="uid://dp5row50bp8ck" path="res://floor_shader.gdshader" id="1_3bsq4"]
 [ext_resource type="Texture2D" uid="uid://doq36jc4fer2i" path="res://textures/floor.png" id="1_k3ajy"]
 
 [resource]
-albedo_texture = ExtResource("1_k3ajy")
-albedo_texture_force_srgb = true
-metallic = 0.36
-clearcoat_enabled = true
-clearcoat_roughness = 0.45
-uv1_scale = Vector3(11, 20, 1)
-texture_filter = 0
-stencil_flags = 2
+render_priority = 0
+shader = ExtResource("1_3bsq4")
+shader_parameter/texture_albedo = ExtResource("1_k3ajy")
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.36
+shader_parameter/uv1_scale = Vector3(11, 20, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)

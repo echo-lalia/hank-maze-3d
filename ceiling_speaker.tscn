@@ -1,13 +1,12 @@
 [gd_scene format=4 uid="uid://318qjienj8by"]
 
+[ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="1_1nbc8"]
 [ext_resource type="Texture2D" uid="uid://bbdcdpahifbg0" path="res://textures/speakers.png" id="1_e00ho"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q17na"]
-resource_name = "speaker"
-cull_mode = 2
-albedo_texture = ExtResource("1_e00ho")
-texture_filter = 2
-metadata/_gltf_primary_texture_coord = 0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fcdle"]
+render_priority = 0
+shader = ExtResource("1_1nbc8")
+shader_parameter/texture_albedo = ExtResource("1_e00ho")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ihrdg"]
 _surfaces = [{
@@ -31,7 +30,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 84,
 "index_data": PackedByteArray("AAABAAIAAgABAAMABAAFAAYABgAFAAcACAAJAAoACAAKAAsADAANAA4ADAAOAA8AEAARABIAEAASABMAFAAVABYAFAAWABcAGAAZABoAGQAYABsAGgAcABgAGwAdABkAHAAaAB4AHQAbAB8AHgAfABwAHwAeAB0AIAAhACIAIQAgACMAJAAlACYAJQAkACcAKAApACoAKQAoACsALAAtAC4ALQAsAC8A"),
-"material": SubResource("StandardMaterial3D_q17na"),
+"material": SubResource("ShaderMaterial_fcdle"),
 "name": "speaker",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),

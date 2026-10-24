@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://jmypsarx38dc" path="res://hankmodelgodot.blend" id="1_7v3u7"]
 [ext_resource type="Script" uid="uid://dmq0s77ijkuxr" path="res://hankalpeca.gd" id="2_ikp2g"]
-[ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://hank_shader.gdshader" id="3_2vd70"]
+[ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="3_2vd70"]
 [ext_resource type="Texture2D" uid="uid://cvsdipqf0id15" path="res://HankFull.png" id="3_mra0b"]
 [ext_resource type="AudioStream" uid="uid://csttkax1whkpk" path="res://sfx/organ_sting.mp3" id="4_utmuo"]
 [ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="9_bkn7k"]

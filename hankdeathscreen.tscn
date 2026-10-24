@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://yg2ibhlxyt7p" path="res://hankdeathscreen.gd" id="1_ov74a"]
 [ext_resource type="ArrayMesh" uid="uid://b8ufsnw68gxom" path="res://hankhead.obj" id="1_qqvf5"]
 [ext_resource type="Texture2D" uid="uid://cvsdipqf0id15" path="res://HankFull.png" id="2_bwo10"]
-[ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://hank_shader.gdshader" id="3_uk4yi"]
+[ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="3_uk4yi"]
 [ext_resource type="AudioStream" uid="uid://ce5xyjgvvf3sm" path="res://sfx/babylaugh.mp3" id="4_ua4s6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2vd70"]
@@ -92,6 +92,7 @@ fov = 120.0
 [node name="AreaLight3D" type="AreaLight3D" parent="Camera3D" unique_id=2142827456]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, -7.4505806e-08, 0, 7.4505806e-08, 0.99999994, 0, -0.110421, 0.81821454)
 light_color = Color(0.66897917, 0.42550915, 0.25191033, 1)
+area_size = Vector2(6, 6)
 
 [node name="ColorRect" type="ColorRect" parent="Camera3D" unique_id=593393469]
 visible = false
