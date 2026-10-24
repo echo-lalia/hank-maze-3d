@@ -46,6 +46,8 @@ func _init() -> void:
 	current_main_instance = self
 
 
+
+
 func _ready() -> void:
 	load_game()
 	start_main_menu()
