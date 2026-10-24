@@ -53,7 +53,15 @@ func _ready() -> void:
 	start_main_menu()
 	settings_changed.connect(_on_settings_changed)
 	_on_settings_changed()
+	get_viewport().size_changed.connect(_viewport_size_changed)
+	_viewport_size_changed()
 
+
+
+func _viewport_size_changed() -> void:
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	RenderingServer.global_shader_parameter_set("viewport_width_beyer", viewport_size.x / 8)
+	RenderingServer.global_shader_parameter_set("viewport_height_beyer", viewport_size.y / 8)
 
 
 

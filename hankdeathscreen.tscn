@@ -3,15 +3,14 @@
 [ext_resource type="Script" uid="uid://yg2ibhlxyt7p" path="res://hankdeathscreen.gd" id="1_ov74a"]
 [ext_resource type="ArrayMesh" uid="uid://b8ufsnw68gxom" path="res://hankhead.obj" id="1_qqvf5"]
 [ext_resource type="Texture2D" uid="uid://cvsdipqf0id15" path="res://HankFull.png" id="2_bwo10"]
+[ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://hank_shader.gdshader" id="3_uk4yi"]
 [ext_resource type="AudioStream" uid="uid://ce5xyjgvvf3sm" path="res://sfx/babylaugh.mp3" id="4_ua4s6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ov74a"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vd70"]
 resource_name = "FullHank"
-cull_mode = 2
-albedo_texture = ExtResource("2_bwo10")
-roughness = 0.5
-texture_filter = 2
-metadata/_gltf_primary_texture_coord = 0
+render_priority = 0
+shader = ExtResource("3_uk4yi")
+shader_parameter/texture_albedo = ExtResource("2_bwo10")
 
 [sub_resource type="Environment" id="Environment_bwo10"]
 fog_enabled = true
@@ -83,7 +82,7 @@ script = ExtResource("1_ov74a")
 
 [node name="Hankhead" type="MeshInstance3D" parent="." unique_id=1601422115]
 mesh = ExtResource("1_qqvf5")
-surface_material_override/0 = SubResource("StandardMaterial3D_ov74a")
+surface_material_override/0 = SubResource("ShaderMaterial_2vd70")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1203298209]
 transform = Transform3D(1, 0, 0, 0, 0.9910163, 0.13374127, 0, -0.13374127, 0.9910163, 0, 0.28563607, 1.9334881)
