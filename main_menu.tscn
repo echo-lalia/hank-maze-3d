@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://crs3ct2mo8vgb"]
 
 [ext_resource type="Script" uid="uid://8v082wurip71" path="res://main_menu.gd" id="1_06t4h"]
+[ext_resource type="Theme" uid="uid://bm2xy8x82f5ud" path="res://main_theme.tres" id="1_fu7sn"]
 [ext_resource type="PackedScene" uid="uid://dr6m0q720io7v" path="res://settings_menu.tscn" id="2_7vrkn"]
 
 [node name="MainMenu" type="Panel" unique_id=1676622235 node_paths=PackedStringArray("success_label", "last_run_time_label", "best_run_time_label")]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_fu7sn")
 script = ExtResource("1_06t4h")
 success_label = NodePath("LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/SuccessLabel")
 last_run_time_label = NodePath("LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")

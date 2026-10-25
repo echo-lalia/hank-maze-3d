@@ -414,6 +414,9 @@ anti_aliasing/screen_space_roughness_limiter/enabled=false
 textures/decals/filter=0
 textures/light_projectors/filter=0
 environment/glow/upscale_mode=0
+limits/opengl/max_renderable_elements=32768
+limits/opengl/max_decals=32
+limits/opengl/max_renderable_lights=16
 occlusion_culling/use_occlusion_culling=true
 
 [shader_globals]

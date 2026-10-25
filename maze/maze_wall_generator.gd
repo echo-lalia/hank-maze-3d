@@ -18,11 +18,12 @@ const BARREL = preload("uid://bnptm6smf1frh")
 const CEILING_SPEAKER = preload("uid://318qjienj8by")
 const COMPASS_ITEM = preload("uid://bj8eiy7kqdsw")
 const BONE_ITEM = preload("uid://dflqceyomgk4s")
+const CEILINGLIGHTWEB = preload("uid://e3mthtw4inlb")
 
 const CEILING_LIGHT_CHANCE: float = 0.02
 
-const MAZE_LENGTH = 20
-const MAZE_RADIUS = 5
+const MAZE_LENGTH = 30
+const MAZE_RADIUS = 6
 const MAZE_WIDTH = MAZE_RADIUS*2 + 1
 
 
@@ -58,7 +59,7 @@ func _ready() -> void:
 	
 	var floor_instance: MeshInstance3D = MeshInstance3D.new()
 	var floor_shape: QuadMesh = QuadMesh.new()
-	floor_shape.size = Vector2(MAZE_WIDTH * ROOM_SIZE, ROOM_SIZE * MAZE_LENGTH)
+	floor_shape.size = Vector2(MAZE_WIDTH * ROOM_SIZE + 1, ROOM_SIZE * MAZE_LENGTH + 1)
 	floor_shape.orientation = PlaneMesh.FACE_Y
 	floor_instance.mesh = floor_shape
 	floor_instance.position = Vector3(0, 0, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
@@ -76,7 +77,7 @@ func _ready() -> void:
 	# Rear wall
 	var wall: MeshInstance3D = MeshInstance3D.new()
 	wall.mesh = QuadMesh.new()
-	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE, ROOF_HEIGHT)
+	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE + 1, ROOF_HEIGHT + 1)
 	wall.position = Vector3(0, ROOF_HEIGHT / 2, - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
 	add_child(wall)
@@ -84,7 +85,7 @@ func _ready() -> void:
 	wall = MeshInstance3D.new()
 	wall.mesh = QuadMesh.new()
 	wall.mesh.orientation = PlaneMesh.FACE_X
-	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH, ROOF_HEIGHT)
+	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH + 1, ROOF_HEIGHT + 1)
 	wall.position = Vector3(MAZE_WIDTH * ROOM_SIZE * -0.5, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
 	add_child(wall)
@@ -93,14 +94,14 @@ func _ready() -> void:
 	wall.mesh = QuadMesh.new()
 	wall.mesh.orientation = PlaneMesh.FACE_X
 	wall.mesh.flip_faces = true
-	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH, ROOF_HEIGHT)
+	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH + 1, ROOF_HEIGHT + 1)
 	wall.position = Vector3(MAZE_WIDTH * ROOM_SIZE * 0.5, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
 	add_child(wall)
 	# Far wall
 	wall = MeshInstance3D.new()
 	wall.mesh = QuadMesh.new()
-	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE, ROOF_HEIGHT)
+	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE + 1, ROOF_HEIGHT + 1)
 	wall.mesh.flip_faces = true
 	wall.position = Vector3(0, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
@@ -138,9 +139,7 @@ func _ready() -> void:
 	add_child(bone_item)
 	
 	# Add light to start room
-	var light: Node3D = CEILINGLIGHT.instantiate()
-	light.position = room_coord_to_relative_position(MAZE_RADIUS, 0)
-	add_child(light)
+	add_ceiling_light_to_position(room_coord_to_relative_position(MAZE_RADIUS, 0))
 	
 	
 	#var probe := create_reflection_probe(Vector3((MAZE_WIDTH + 2) * ROOM_SIZE, ROOM_HEIGHT * 3, ROOM_SIZE * (MAZE_LENGTH + 2)))
@@ -296,6 +295,17 @@ func _random_room_position(margin: float = 1.0) -> Vector3:
 		randf_range(-ROOM_SIZE_HALF + margin, ROOM_SIZE_HALF - margin),
 	)
 
+
+func add_ceiling_light_to_position(pos: Vector3) -> void:
+	var item: Node3D
+	if OS.has_feature("web"):
+		item = CEILINGLIGHTWEB.instantiate()
+	else:
+		item = CEILINGLIGHT.instantiate()
+	item.position = pos
+	add_child(item)
+
+
 func add_objects_to_room(room_position: Vector3) -> void:
 	var objects_to_add: int = randi_range(0, 1)
 	var rand_objects: Array[PackedScene] = [BANANATHING, BARREL, CEILING_SPEAKER]
@@ -323,9 +333,7 @@ func add_objects_to_room(room_position: Vector3) -> void:
 	
 	
 	if randf() < CEILING_LIGHT_CHANCE:
-		var item: Node3D = CEILINGLIGHT.instantiate()
-		item.position = room_position
-		add_child(item)
+		add_ceiling_light_to_position(room_position)
 
 
 

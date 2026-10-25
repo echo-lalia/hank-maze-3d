@@ -1,5 +1,7 @@
 shader_type spatial;
-render_mode diffuse_burley, cull_disabled, depth_prepass_alpha;
+render_mode cull_disabled;
+render_mode depth_prepass_alpha;
+//render_mode diffuse_burley, cull_disabled, depth_prepass_alpha;
 
 
 

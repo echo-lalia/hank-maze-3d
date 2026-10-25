@@ -8,14 +8,14 @@ global uniform float viewport_width_beyer;
 global uniform float viewport_height_beyer;
 
 
-vec3 quantize_vert(vec3 vert) {
-	return round(vert * vertex_quant) / vertex_quant;
-}
-
-
-void vertex() {
-	VERTEX = quantize_vert(VERTEX);
-}
+//vec3 quantize_vert(vec3 vert) {
+//	return round(vert * vertex_quant) / vertex_quant;
+//}
+//
+//
+//void vertex() {
+//	VERTEX = quantize_vert(VERTEX);
+//}
 
 
 void fragment() {

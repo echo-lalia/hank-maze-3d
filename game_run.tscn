@@ -22,6 +22,7 @@
 [ext_resource type="AudioStream" uid="uid://c8ecyj17oyoig" path="res://sfx/hankz0.mp3" id="12_swfsk"]
 [ext_resource type="AudioStream" uid="uid://gnr87fvd0pw" path="res://sfx/hankz1.mp3" id="13_j0lvp"]
 [ext_resource type="AudioStream" uid="uid://cw84h501p1fmp" path="res://sfx/hankz2.mp3" id="14_4b6ee"]
+[ext_resource type="Script" uid="uid://dw35qfj4bvngm" path="res://hank_on_screen_voice.gd" id="15_4b6ee"]
 [ext_resource type="AudioStream" uid="uid://cetfrog3e1cts" path="res://sfx/compressor_hum.mp3" id="15_uhk2m"]
 [ext_resource type="AudioStream" uid="uid://b1enioalxkd6p" path="res://sfx/hankh5.mp3" id="15_x4c0s"]
 [ext_resource type="AudioStream" uid="uid://b6qm84v30lj8l" path="res://sfx/gourd_grab.mp3" id="16_af7r6"]
@@ -43,7 +44,7 @@ height = 0.59101564
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pb32r"]
 random_pitch = 1.0594631
-streams_count = 10
+streams_count = 7
 stream_0/stream = ExtResource("7_3xb4a")
 stream_0/weight = 0.5
 stream_1/stream = ExtResource("8_mt1u2")
@@ -54,15 +55,9 @@ stream_3/stream = ExtResource("10_bsayt")
 stream_3/weight = 3.0
 stream_4/stream = ExtResource("11_85shy")
 stream_4/weight = 3.0
-stream_5/stream = ExtResource("12_swfsk")
-stream_5/weight = 0.25
-stream_6/stream = ExtResource("13_j0lvp")
-stream_6/weight = 0.25
-stream_7/stream = ExtResource("14_4b6ee")
-stream_7/weight = 0.25
-stream_8/stream = ExtResource("15_x4c0s")
-stream_8/weight = 0.5
-stream_9/stream = ExtResource("16_bsayt")
+stream_5/stream = ExtResource("15_x4c0s")
+stream_5/weight = 0.5
+stream_6/stream = ExtResource("16_bsayt")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_bsayt"]
 height = 1.0327759
@@ -292,10 +287,11 @@ debug_color = Color(0.16862746, 0.32156864, 1, 0.81960785)
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="HankBody" unique_id=828693843]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5132522, 0.015792847)
 aabb = AABB(-0.19080245, -0.47447044, -0.2228546, 0.3816049, 0.9489409, 0.4457092)
+script = ExtResource("15_4b6ee")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="HankBody/VisibleOnScreenNotifier3D" unique_id=200528135]
 stream = SubResource("AudioStreamRandomizer_j0lvp")
-volume_db = -6.0
+volume_db = -12.0
 bus = &"RaytracedReverb"
 
 [node name="PlayerBody" parent="." unique_id=1869904869 node_paths=PackedStringArray("game_run", "maze_generator") instance=ExtResource("7_ldgum")]
@@ -444,6 +440,5 @@ text = "Quit"
 [node name="SettingsMenu" parent="PauseMenu/MarginContainer/HBoxContainer" unique_id=664041274 instance=ExtResource("18_kuosh")]
 layout_mode = 2
 
-[connection signal="screen_entered" from="HankBody/VisibleOnScreenNotifier3D" to="HankBody/VisibleOnScreenNotifier3D/AudioStreamPlayer" method="play"]
 [connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/QuitButton" to="PauseMenu" method="_on_quit_button_pressed"]
