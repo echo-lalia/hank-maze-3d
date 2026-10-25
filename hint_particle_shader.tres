@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://t6ec68w8lstc"]
+
+[ext_resource type="Shader" uid="uid://d7ve3yqyjxd1" path="res://light_particles.gdshader" id="1_3j32g"]
+[ext_resource type="CompressedTexture2DArray" uid="uid://c18vqlnv2fau0" path="res://textures/hint_particles.png" id="2_fosw2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3j32g")
+shader_parameter/texture_albedo = ExtResource("2_fosw2")

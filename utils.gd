@@ -2,12 +2,21 @@ extends RefCounted
 class_name Utils
 
 
+
+static func action_as_key_string(action: StringName, default: String = "") -> String:
+	var events := InputMap.action_get_events(action)
+	if events:
+		return event_as_key_string(events[0])
+	return default
+
+
 static func event_as_key_string(event: InputEvent) -> String:
 	return (
 		event.as_text().to_upper()
 		.trim_suffix(" (PHYSICAL)")
 		.trim_suffix(" - PHYSICAL")
 	)
+
 
 
 static func seconds_to_timer(time: float) -> String:

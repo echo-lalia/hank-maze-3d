@@ -4,13 +4,13 @@ class_name PathHint
 
 
 const HINT_LENGTH = 10.0
-const HINT_POINT_DISTANCE = 0.05
+const HINT_POINT_DISTANCE = 0.1
+const NORMAL_RANDOM_STRENGTH = 0.2
+const POSITION_RANDOM_STRENGTH = 0.3
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 @onready var cpu_particles_3d: CPUParticles3D = $CPUParticles3D
 
 @export var maze_generator: MazeWallGenerator
-
-var reverse_path_flow: bool = false
 
 
 var final_hint_points: Array[Vector3]
@@ -25,16 +25,16 @@ func _ready() -> void:
 		if PlayerBody.current_player_instance.has_gourd else
 		maze_generator.end_room_position.global_position
 	)
-	if PlayerBody.current_player_instance.has_gourd:
-		reverse_path_flow = true
 	navigation_agent_3d.get_next_path_position() # Might be required to update pathing. Try with and without maybe?
 	await get_tree().physics_frame
 	print(rotation)
 	
-	cpu_particles_3d.flatness = 0.95
-	
-	cpu_particles_3d.spread = 45
+	# Cpu particle spread is just not working at all at runtime???
+	#cpu_particles_3d.flatness = 0.95
+	#cpu_particles_3d.spread = 45
 	_setup_path()
+	print(len(final_hint_points))
+	navigation_agent_3d.queue_free()
 	_animate_adding_hint_points()
 
 
@@ -93,6 +93,11 @@ func _setup_path() -> void:
 	if point_normals:
 		point_normals.append(point_normals[-1])
 	
+	
+	# Add randomness to both arrays
+	for i in len(resampled_points):
+		resampled_points[i] = resampled_points[i] + Vector3(randfn(0, POSITION_RANDOM_STRENGTH), 0, randfn(0, POSITION_RANDOM_STRENGTH))
+		point_normals[i] = point_normals[i] + Vector3(randfn(0, NORMAL_RANDOM_STRENGTH), 0, randfn(0, NORMAL_RANDOM_STRENGTH))
 	
 	#cpu_particles_3d.emission_points = PackedVector3Array(resampled_points)
 	final_hint_points = resampled_points

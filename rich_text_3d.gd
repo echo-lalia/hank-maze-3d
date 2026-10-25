@@ -19,7 +19,7 @@ const PX_DENSITY: float = 2 / 512.0
 		sub_viewport.size = size
 
 
-@export var text: String = "":
+@export_multiline() var text: String = "":
 	set(val):
 		text = val
 		if not is_node_ready():

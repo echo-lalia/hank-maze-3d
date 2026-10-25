@@ -15,6 +15,7 @@ const CEILINGLIGHT = preload("uid://23hbjy7d64p4")
 const BARREL = preload("uid://bnptm6smf1frh")
 const CEILING_SPEAKER = preload("uid://318qjienj8by")
 const COMPASS_ITEM = preload("uid://bj8eiy7kqdsw")
+const BONE_ITEM = preload("uid://dflqceyomgk4s")
 
 const CEILING_LIGHT_CHANCE: float = 0.02
 
@@ -36,7 +37,7 @@ const SOUTH: int = 0b0100
 const WEST: int = 0b1000
 
 ## Room coordinates that can't generate objects
-const BANNED_OBJECT_ROOMS: Array[Array] = [[MAZE_RADIUS, 0], [MAZE_RADIUS, MAZE_LENGTH-1]]
+var banned_object_rooms: Array[Vector2i] = [Vector2i(MAZE_RADIUS, 0), Vector2i(MAZE_RADIUS, MAZE_LENGTH-1)]
 
 
 @onready var csg_combiner_3d: CSGCombiner3D = $CSGCombiner3D
@@ -79,8 +80,21 @@ func _ready() -> void:
 	
 	# Add compass item to maze
 	var compass_item: Node3D = COMPASS_ITEM.instantiate()
-	compass_item.position = room_coord_to_relative_position(randi_range(0, MAZE_WIDTH), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	var rand_room: Vector2i = Vector2i(randi_range(0, MAZE_WIDTH), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	compass_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
 	add_child(compass_item)
+	banned_object_rooms.append(rand_room)
+	
+	var bone_item: Node3D = BONE_ITEM.instantiate()
+	rand_room = Vector2i(randi_range(0, MAZE_WIDTH), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	bone_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
+	add_child(bone_item)
+	
+	# Add light to start room
+	var light: Node3D = CEILINGLIGHT.instantiate()
+	light.position = room_coord_to_relative_position(MAZE_RADIUS, 0)
+	add_child(light)
+	
 	
 	#var probe := create_reflection_probe(Vector3((MAZE_WIDTH + 2) * ROOM_SIZE, ROOM_HEIGHT * 3, ROOM_SIZE * (MAZE_LENGTH + 2)))
 	#probe.global_position = hank_room_position.global_position
@@ -253,13 +267,11 @@ func add_objects_to_room(room_position: Vector3) -> void:
 				item.position = room_position + _random_room_position(0.8)
 				add_child(item)
 	
-	@warning_ignore("integer_division")
-	if randf() < CEILING_LIGHT_CHANCE \
-	or room_coord_to_relative_position(MAZE_RADIUS, 0).is_equal_approx(room_position) \
-	or room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH/2).is_equal_approx(room_position):
-			var item: Node3D = CEILINGLIGHT.instantiate()
-			item.position = room_position
-			add_child(item)
+	
+	if randf() < CEILING_LIGHT_CHANCE:
+		var item: Node3D = CEILINGLIGHT.instantiate()
+		item.position = room_position
+		add_child(item)
 
 
 
@@ -292,7 +304,7 @@ func generate_maze() -> void:
 			var room_position: Vector3 = room_coord_to_relative_position(x, y)
 			var room: MazeSquare.Room = maze.room(x, y)
 			
-			if [x, y] not in BANNED_OBJECT_ROOMS:
+			if Vector2i(x, y) not in banned_object_rooms:
 				add_objects_to_room(room_position)
 			
 			var wall_bits: int = room.walls_id()
