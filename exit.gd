@@ -3,6 +3,7 @@ extends Node3D
 @onready var interactable_area: InteractableArea = $InteractableArea
 @export var maze_generator: MazeWallGenerator
 @onready var rich_text_3d: RichText3D = $RichText3D
+@onready var door_open_sound_player: AudioStreamPlayer = $DoorOpenSoundPlayer
 
 
 #const RICH_TEXT_3D = preload("uid://dtyqi7x7atmdo")
@@ -26,6 +27,7 @@ func _on_interacted(player: PlayerBody) -> void:
 	if player.has_gourd:
 		player.win()
 	else:
+		door_open_sound_player.play()
 		rich_text_3d.visible = true
 		rich_text_3d.text = "Can't leave without it..."
 		await get_tree().create_timer(2).timeout

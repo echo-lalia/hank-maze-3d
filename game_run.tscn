@@ -34,6 +34,8 @@
 [ext_resource type="AudioStream" uid="uid://bs4f46yb8fqeb" path="res://sfx/ambience1.mp3" id="18_qem8s"]
 [ext_resource type="Script" uid="uid://dkkov0qw6v6xx" path="res://pause_menu.gd" id="18_vvw86"]
 [ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="22_85shy"]
+[ext_resource type="Texture2D" uid="uid://jfkjjfbh0edq" path="res://textures/door.png" id="30_swfsk"]
+[ext_resource type="AudioStream" uid="uid://dtiao8113nne1" path="res://sfx/try_door.mp3" id="32_j0lvp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
 radius = 0.16
@@ -172,21 +174,6 @@ _data = {
 &"float": SubResource("Animation_gag4w")
 }
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_85shy"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_swfsk"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("17_af7r6")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_85shy")
-
-[sub_resource type="BoxMesh" id="BoxMesh_kek77"]
-size = Vector3(1.8, 3.09, 0.1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
-size = Vector3(1.9, 3.087, 0.208)
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_j0lvp"]
 viewport_path = NodePath("SubViewport")
 
@@ -195,6 +182,55 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_af7r6")
 shader_parameter/viewport_texture = SubResource("ViewportTexture_j0lvp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g7dxb"]
+render_priority = 0
+shader = ExtResource("22_85shy")
+shader_parameter/texture_albedo = ExtResource("30_swfsk")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_swfsk"]
+_surfaces = [{
+"aabb": AABB(-1.1111112, -1, 0.6, 2.2222223, 2.064725, 1.1282932),
+"format": 34896613377,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEAAgAEAAAAAwAFAAEABQACAAEAAwAGAAUABgAHAAUABQAHAAIABgAIAAcAAgAJAAQABwAJAAIACQAKAAQACQALAAoABwAMAAkADAALAAkACAAMAAcADAANAAsACAAOAAwADgANAAwADgAPAA0A"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("MvMAAP//AAAy8/j3wVoAADLz+Pf//wAAMvMAAMFaAAD//wAA//8AAMwM+PfBWgAAzAwAAMFaAADMDPj3//8AAMwMAAD//wAA////////AAD//wAAAAAAAP////8AAAAAAAD/////AAAAAP//AAAAAAAAAAD//wAAAAAAAAAAAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4b6ee"]
+resource_name = "ExtraModels_Cube_002"
+_surfaces = [{
+"aabb": AABB(-1.1111112, -1, 0.6, 2.2222223, 2.064725, 1.1282932),
+"attribute_data": PackedByteArray("/+P/+//r/x//4/8f/+v/+/+f//v/A/8D/5//A/8D//v/u//7/7P/H/+7/x//s//7/6//D//7/wP/7/8P/6P/A/+z/xP/6/8b/+v/E/+z/xv/r//7/6P/D/+v/w//o//7/+//D//7//v/7//7//v/D/+//2v/3/+v/7//r//f/2v/v/8f/9//a/+//2v/3/8f/7//r//f//v/v//7/9//rw=="),
+"format": 34896613399,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUA"),
+"material": SubResource("ShaderMaterial_g7dxb"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 40,
+"vertex_data": PackedByteArray("MvMAAP//AAAy8/j3wVoAADLz+Pf//wAAMvMAAMFaAAAy8wAAwVoAgMwM+PfBWgCAMvP498FaAIDMDAAAwVoAgMwMAADBWv+/zAz49////7/MDPj3wVr/v8wMAAD///+/zAz49///AID///////8AgDLz+Pf//wCAAAD/////AIDMDPj3wVr/PzLz+Pf///8/MvP498Fa/z/MDPj3////P8wMAAD//wCAAAD/////fJXMDPj3///ylAAAAAD//7qAMvP49///8pT//wAA//+6gDLzAAD//wCA////////fJUAAP////9U1f////8AAFTV////////VNUAAP//AABU1QAAAAD/////AAD//wAA//8AAP///////wAAAAAAAP///////////7///wAAAAD/v///AAD///+//////wAA/7//P/9//z//f/8//3//P/9//3////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///AAD/fwAA/38AAP9/AAD/f/9/////f/9//3//f/9//3////////////9/////////VNWqKlTVqipU1aoqVNWqKv8//3//P/9//z//f/8//3//fwAA/38AAP9/AAD/fwAA")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_swfsk")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
+size = Vector3(1.9, 3.087, 0.208)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ojlm1"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcq0h"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("17_af7r6")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_ojlm1")
 
 [node name="GameRun" type="Node3D" unique_id=2100628311]
 script = ExtResource("1_3b0hh")
@@ -293,9 +329,9 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="RichText3D" parent="Gourd" unique_id=1165830346 instance=ExtResource("16_qem8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.739, 0)
-material_override = SubResource("ShaderMaterial_swfsk")
+material_override = SubResource("ShaderMaterial_4b6ee")
 billboard = 1
-texture = SubResource("ViewportTexture_85shy")
+texture = SubResource("ViewportTexture_j0lvp")
 size = Vector2i(144, 144)
 text = "Hes coming..."
 
@@ -306,9 +342,9 @@ stream = ExtResource("16_af7r6")
 script = ExtResource("11_qem8s")
 maze_generator = NodePath("../MazeWallGenerator")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Exit" unique_id=1251884728]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5449257, -2.902)
-mesh = SubResource("BoxMesh_kek77")
+[node name="Door" type="MeshInstance3D" parent="Exit" unique_id=1914807065]
+transform = Transform3D(0.9, 0, 0, 0, 1.545, 0, 0, 0, 0.05, 0, 1.5488007, -2.9194145)
+mesh = SubResource("ArrayMesh_4b6ee")
 
 [node name="InteractableArea" type="Area3D" parent="Exit" unique_id=989099746]
 script = ExtResource("10_juchs")
@@ -323,7 +359,7 @@ shape = SubResource("BoxShape3D_pb32r")
 [node name="RaytracedAudioPlayer3D" type="AudioStreamPlayer3D" parent="Exit" unique_id=823877347]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3306403, -3.0184681)
 stream = ExtResource("15_uhk2m")
-volume_db = -31.035
+volume_db = -36.0
 unit_size = 50.0
 autoplay = true
 script = ExtResource("12_1213d")
@@ -331,10 +367,14 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="RichText3D" parent="Exit" unique_id=816680510 instance=ExtResource("16_qem8s")]
 transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7216415)
-material_override = SubResource("ShaderMaterial_4b6ee")
-texture = SubResource("ViewportTexture_j0lvp")
+material_override = SubResource("ShaderMaterial_rcq0h")
+texture = SubResource("ViewportTexture_ojlm1")
 size = Vector2i(144, 144)
 text = "Find it"
+
+[node name="DoorOpenSoundPlayer" type="AudioStreamPlayer" parent="Exit" unique_id=985749034]
+stream = ExtResource("32_j0lvp")
+bus = &"RaytracedReverb"
 
 [node name="AmbiencePlayer" type="AudioStreamPlayer" parent="." unique_id=1460895642]
 stream = ExtResource("18_qem8s")

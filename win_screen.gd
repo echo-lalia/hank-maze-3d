@@ -5,6 +5,7 @@ extends Node3D
 @onready var run_time_label: Label = $Camera3D/RunTimeLabel
 @onready var new_pb_label: Label = $Camera3D/RunTimeLabel/NewPBLabel
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var door_sound_player: AudioStreamPlayer = $DoorSoundPlayer
 
 
 # Called when the node enters the scene tree for the first time.

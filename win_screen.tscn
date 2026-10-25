@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ihnvbpmse4bb" path="res://textures/Gourd.png" id="1_wmwda"]
 [ext_resource type="Shader" uid="uid://vkxg4yhpejvt" path="res://dithered_texture_quantized_with_emission.gdshader" id="2_1txte"]
 [ext_resource type="AudioStream" uid="uid://wvpv2354bk28" path="res://sfx/win.mp3" id="3_l5t5q"]
+[ext_resource type="AudioStream" uid="uid://c4rpu2m3g3ck3" path="res://sfx/door_success.mp3" id="5_26557"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_85shy"]
 render_priority = 0
@@ -170,6 +171,18 @@ tracks/8/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("DoorSoundPlayer:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_wmwda"]
 resource_name = "win"
@@ -181,7 +194,7 @@ tracks/0/path = NodePath("GourdMesh:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 6.5),
+"times": PackedFloat32Array(1.1, 7.6000004),
 "transitions": PackedFloat32Array(0.34151006, 1),
 "update": 0,
 "values": [Vector3(0, -2.64, -1.84), Vector3(0, 0, 0)]
@@ -193,7 +206,7 @@ tracks/1/path = NodePath("Camera3D/AreaLight3D:light_energy")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 6.5),
+"times": PackedFloat32Array(1.1, 7.6000004),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 66.6]
@@ -205,7 +218,7 @@ tracks/2/path = NodePath("Camera3D:environment:fog_light_color")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 6.5),
+"times": PackedFloat32Array(1.1, 7.6000004),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 1), Color(0.058780313, 0.031910587, 0.0012122467, 1)]
@@ -217,7 +230,7 @@ tracks/3/path = NodePath("Camera3D:environment:glow_intensity")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 6.5),
+"times": PackedFloat32Array(1.1, 7.6000004),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 0.9]
@@ -229,7 +242,7 @@ tracks/4/path = NodePath("Camera3D:environment:glow_bloom")
 tracks/4/interp = 2
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 6.5),
+"times": PackedFloat32Array(1.1, 7.6000004),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 0.4]
@@ -241,7 +254,7 @@ tracks/5/path = NodePath("Camera3D/YouWonLabel:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 6.4),
+"times": PackedFloat32Array(1.1, 7.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -253,7 +266,7 @@ tracks/6/path = NodePath("Camera3D/RunTimeLabel:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 6.733333),
+"times": PackedFloat32Array(1.1, 7.833333),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -265,7 +278,7 @@ tracks/7/path = NodePath("Camera3D/RunTimeLabel/NewPBLabel:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 7.066666),
+"times": PackedFloat32Array(1.1, 8.166666),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -277,6 +290,18 @@ tracks/8/path = NodePath("AudioStreamPlayer:playing")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("DoorSoundPlayer:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -355,3 +380,8 @@ autoplay = &"win"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1955071041]
 stream = ExtResource("3_l5t5q")
 volume_db = -8.0
+
+[node name="DoorSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=1295180602]
+stream = ExtResource("5_26557")
+volume_db = -6.0
+bus = &"RaytracedReverb"
