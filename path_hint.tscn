@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://b6qma5cmho1kv"]
+
+[ext_resource type="Script" uid="uid://d0jidet7t235q" path="res://path_hint.gd" id="1_kcx4i"]
+[ext_resource type="Shader" uid="uid://d7ve3yqyjxd1" path="res://light_particles.gdshader" id="1_prrln"]
+[ext_resource type="CompressedTexture2DArray" uid="uid://c18vqlnv2fau0" path="res://textures/hint_particles.png" id="2_kcx4i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3b53b"]
+render_priority = 0
+shader = ExtResource("1_prrln")
+shader_parameter/texture_albedo = ExtResource("2_kcx4i")
+
+[sub_resource type="QuadMesh" id="QuadMesh_8cmji"]
+material = SubResource("ShaderMaterial_3b53b")
+size = Vector2(0.3, 0.3)
+orientation = 1
+
+[sub_resource type="Gradient" id="Gradient_f1v2g"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.101538464, 0.6430769, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_prrln"]
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.9969231)
+colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
+
+[node name="PathHint" type="Node3D" unique_id=1832342565]
+script = ExtResource("1_kcx4i")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1422714392]
+amount = 32
+fixed_fps = 15
+mesh = SubResource("QuadMesh_8cmji")
+emission_shape = 5
+emission_points = PackedVector3Array(0, 0, 0, 0, 0, -0.905, 0, 0, -2.19)
+emission_normals = PackedVector3Array(0, 0, -1, 0, 0, -1, 0, 0, -1)
+particle_flag_rotate_y = true
+direction = Vector3(0, 0, 1)
+gravity = Vector3(0, 0.2, 0)
+initial_velocity_max = 2.0
+angle_max = 360.0
+scale_amount_min = 0.5
+color_ramp = SubResource("Gradient_f1v2g")
+color_initial_ramp = SubResource("Gradient_prrln")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=125323541]

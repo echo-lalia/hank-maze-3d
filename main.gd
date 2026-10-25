@@ -96,6 +96,13 @@ static func setup_saved_input_events() -> void:
 		var events: Array[InputEvent] = InputMap.action_get_events("sprint")
 		if events:
 			game_save.sprint_button = events[0]
+	if game_save.hint_button:
+		InputMap.action_erase_events("hint")
+		InputMap.action_add_event("hint", game_save.hint_button)
+	else:
+		var events: Array[InputEvent] = InputMap.action_get_events("hint")
+		if events:
+			game_save.hint_button = events[0]
 	notify_settings_changed()
 
 

@@ -223,14 +223,14 @@ shadow_mesh = SubResource("ArrayMesh_swfsk")
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
 size = Vector3(1.9, 3.087, 0.208)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ojlm1"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_g7dxb"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcq0h"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojlm1"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_af7r6")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_ojlm1")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_g7dxb")
 
 [node name="GameRun" type="Node3D" unique_id=2100628311]
 script = ExtResource("1_3b0hh")
@@ -367,8 +367,8 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="RichText3D" parent="Exit" unique_id=816680510 instance=ExtResource("16_qem8s")]
 transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7216415)
-material_override = SubResource("ShaderMaterial_rcq0h")
-texture = SubResource("ViewportTexture_ojlm1")
+material_override = SubResource("ShaderMaterial_ojlm1")
+texture = SubResource("ViewportTexture_g7dxb")
 size = Vector2i(144, 144)
 text = "Find it"
 

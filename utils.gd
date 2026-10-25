@@ -2,13 +2,22 @@ extends RefCounted
 class_name Utils
 
 
+static func event_as_key_string(event: InputEvent) -> String:
+	return (
+		event.as_text().to_upper()
+		.trim_suffix(" (PHYSICAL)")
+		.trim_suffix(" - PHYSICAL")
+	)
+
+
 static func seconds_to_timer(time: float) -> String:
 	@warning_ignore("narrowing_conversion")
 	var _seconds: int = time
 	
 	@warning_ignore("integer_division")
 	var _minutes: int = _seconds / 60
-	_seconds -= (_minutes * 60)
+	_seconds -= _minutes * 60
+	time -= _minutes * 60
 	
 	@warning_ignore("narrowing_conversion")
 	var _miliseconds: int = (time - _seconds) * 1000

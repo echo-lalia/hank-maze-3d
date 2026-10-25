@@ -1,0 +1,8 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://blsngu0i4ly3y"]
+
+[ext_resource type="AudioStream" uid="uid://c04usrmoqksdn" path="res://sfx/bone_snap.mp3" id="1_vekef"]
+
+[resource]
+random_pitch = 1.0594631
+streams_count = 1
+stream_0/stream = ExtResource("1_vekef")

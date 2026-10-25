@@ -162,11 +162,12 @@ func update(listener: RaytracedAudioListener, delta: float) -> void:
 	_lowpass_rays_count = 0
 	
 	# Enable based on position
-	var dist_sq: float = global_position.distance_squared_to(listener.global_position)
-	if dist_sq > max_distance*max_distance or !playing:
-		disable()
-	else:
-		enable()
+	#var dist_sq: float = global_position.distance_squared_to(listener.global_position)
+	#if dist_sq > max_distance*max_distance or !playing:
+	#	disable()
+	#else:
+	#	enable()
+	enable()
 	
 	
 

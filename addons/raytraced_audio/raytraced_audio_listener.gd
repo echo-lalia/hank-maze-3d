@@ -75,7 +75,7 @@ var rays: Array[AudioRay] = []
 @export var auto_update: bool = true:
 	set(v):
 		auto_update = v
-		set_process(auto_update)
+		set_physics_process(auto_update)
 
 ## Number of rays to use
 ## [br]More rays and more bounces mean a more accurate model of the environment can be made
@@ -202,7 +202,7 @@ func _ready() -> void:
 		else:
 			setup()
 
-	set_process(auto_update)
+	set_physics_process(auto_update)
 	if is_enabled:
 		make_current()
 
@@ -271,9 +271,9 @@ func clear():
 	rays.clear()
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if !auto_update:
-		set_process(false)
+		set_physics_process(false)
 		return
 	update(delta)
 

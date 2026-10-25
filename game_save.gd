@@ -19,6 +19,7 @@ const SAVE_PATH = "user://savedata.tres"
 
 @export var sneak_button: InputEvent
 @export var sprint_button: InputEvent
+@export var hint_button: InputEvent
 
 
 static func load_save() -> GameSave:
@@ -46,4 +47,5 @@ func _to_string() -> String:
 		+ "\n\thas_won_run_ever=" + str(has_won_run_ever)
 		+ "\n\tsneak_button=" + str(sneak_button)
 		+ "\n\tsprint_button=" + str(sprint_button)
+		+ "\n\thint_button=" + str(hint_button)
 	)

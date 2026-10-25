@@ -1,13 +1,18 @@
 [gd_scene format=4 uid="uid://xrikcftunle"]
 
 [ext_resource type="Script" uid="uid://qamxt83ugmm6" path="res://maze/vaultable_wall.gd" id="1_jy0t4"]
-[ext_resource type="Material" uid="uid://bbf6rjsjxpixw" path="res://simple_color_shader.tres" id="2_03hi3"]
 [ext_resource type="Script" uid="uid://2kuklnqfavku" path="res://interactable_area.gd" id="2_74gcs"]
 [ext_resource type="Material" uid="uid://ctxrr6hfuxpr" path="res://wall_shader.tres" id="2_l5xgk"]
 [ext_resource type="Texture2D" uid="uid://cgu2j6cfrxhut" path="res://textures/FruitBin.png" id="3_m6kwv"]
+[ext_resource type="Shader" uid="uid://bufb35u6p2232" path="res://simple_color_no_dither.gdshader" id="3_vi3pv"]
 [ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="5_vi3pv"]
 [ext_resource type="AudioStream" uid="uid://631btkde5njc" path="res://vaulting_audio_stream_randomizer.tres" id="6_jgfqr"]
 [ext_resource type="Script" uid="uid://c5d0rwkq0q1fc" path="res://player_audio_player.gd" id="7_vi3pv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fnn8j"]
+render_priority = 0
+shader = ExtResource("3_vi3pv")
+shader_parameter/color = Color(0.18233234, 0.062191427, 0.005749573, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vi3pv"]
 size = Vector3(6, 4, 0.4)
@@ -67,7 +72,6 @@ width = 6.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1188635198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-instance_shader_parameters/color = Color(0.29150382, 0.11622145, 0.027328497, 1)
 size = Vector3(6, 4, 0.45)
 material = ExtResource("2_l5xgk")
 
@@ -75,7 +79,7 @@ material = ExtResource("2_l5xgk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.41493368, 0)
 operation = 2
 size = Vector3(2.7, 5.286, 1)
-material = ExtResource("2_03hi3")
+material = SubResource("ShaderMaterial_fnn8j")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1401033442]
 

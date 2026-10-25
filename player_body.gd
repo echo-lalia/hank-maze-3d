@@ -5,7 +5,6 @@ class_name PlayerBody
 const PLAYER_STEP_AUDIO_STREAM_RANDOMIZER = preload("uid://dvscylno686kl")
 const BIG_STOP_RANDOM_STREAM = preload("uid://b4f4mdt8nxoxp")
 
-
 const SNEAK_SPEED: float = 2.0
 const SPEED: float = 5.0
 const SPRINT_SPEED: float = 10.0
@@ -14,6 +13,9 @@ const NORMAL_ACCEL: float = 80.0
 const AIR_ACCEL: float = 10.0
 
 const JUMP_VELOCITY = 4.5
+
+
+var remaining_hints: int = 2
 
 
 enum MOVEMENT_STATES {
@@ -40,6 +42,7 @@ var has_gourd: bool = false
 @export var game_run: GameRun
 
 @export var maze_generator: MazeWallGenerator
+
 
 @warning_ignore("unused_signal")
 ## Emitted by PlayerAudioPlayer nodes when a hank audible sound is played.
@@ -108,6 +111,7 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
+
 ## Handle main player movement
 func _handle_player_movement(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
@@ -165,7 +169,7 @@ func _handle_interactable_area() -> void:
 		interaction_label.visible = false
 	else:
 		interaction_label.visible = true
-		interaction_label.text = interactable_area.ui_hint
+		interaction_label.text = interactable_area.ui_hint + " (E)"
 
 
 func _physics_process(delta: float) -> void:

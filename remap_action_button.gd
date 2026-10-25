@@ -22,7 +22,7 @@ func _ready() -> void:
 
 func set_label() -> void:
 	if current_event:
-		text = current_event.as_text().to_upper().trim_suffix(" (PHYSICAL)").trim_suffix(" - PHYSICAL")
+		text = Utils.event_as_key_string(current_event)
 	else:
 		text = "UNBOUND"
 
