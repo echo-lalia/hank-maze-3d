@@ -4,7 +4,7 @@ class_name PathHint
 
 
 const HINT_LENGTH = 10.0
-const HINT_POINT_DISTANCE = 0.1
+const HINT_POINT_DISTANCE = 0.05
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 @onready var cpu_particles_3d: CPUParticles3D = $CPUParticles3D
 
@@ -12,6 +12,9 @@ const HINT_POINT_DISTANCE = 0.1
 
 var reverse_path_flow: bool = false
 
+
+var final_hint_points: Array[Vector3]
+var final_hint_normals: Array[Vector3]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,7 +29,24 @@ func _ready() -> void:
 		reverse_path_flow = true
 	navigation_agent_3d.get_next_path_position() # Might be required to update pathing. Try with and without maybe?
 	await get_tree().physics_frame
+	print(rotation)
+	
+	cpu_particles_3d.flatness = 0.95
+	
+	cpu_particles_3d.spread = 45
 	_setup_path()
+	_animate_adding_hint_points()
+
+
+func _animate_adding_hint_points() -> void:
+	cpu_particles_3d.emission_points = PackedVector3Array()
+	
+	var i: int = 1
+	while i < len(final_hint_points):
+		cpu_particles_3d.emission_points = PackedVector3Array(final_hint_points.slice(0, i))
+		cpu_particles_3d.emission_normals = PackedVector3Array(final_hint_normals.slice(0, i))
+		await get_tree().create_timer(0.05).timeout
+		i += 1
 
 
 func _setup_path() -> void:
@@ -74,6 +94,8 @@ func _setup_path() -> void:
 		point_normals.append(point_normals[-1])
 	
 	
-	cpu_particles_3d.emission_points = PackedVector3Array(resampled_points)
-	cpu_particles_3d.emission_normals = PackedVector3Array(point_normals)
+	#cpu_particles_3d.emission_points = PackedVector3Array(resampled_points)
+	final_hint_points = resampled_points
+	final_hint_normals = point_normals
+	#cpu_particles_3d.emission_normals = PackedVector3Array(point_normals)
 	

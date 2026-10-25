@@ -29,18 +29,21 @@ colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
 script = ExtResource("1_kcx4i")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1422714392]
-amount = 32
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+amount = 16
+lifetime = 2.0
 fixed_fps = 15
+local_coords = true
 mesh = SubResource("QuadMesh_8cmji")
 emission_shape = 5
 emission_points = PackedVector3Array(0, 0, 0, 0, 0, -0.905, 0, 0, -2.19)
 emission_normals = PackedVector3Array(0, 0, -1, 0, 0, -1, 0, 0, -1)
 particle_flag_rotate_y = true
 direction = Vector3(0, 0, 1)
-gravity = Vector3(0, 0.2, 0)
-initial_velocity_max = 2.0
+flatness = 1.0
+gravity = Vector3(0, 0.05, 0)
+initial_velocity_max = 0.5
 angle_max = 360.0
-scale_amount_min = 0.5
 color_ramp = SubResource("Gradient_f1v2g")
 color_initial_ramp = SubResource("Gradient_prrln")
 
