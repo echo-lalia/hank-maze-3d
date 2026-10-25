@@ -382,7 +382,7 @@ transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7
 material_override = SubResource("ShaderMaterial_fx1tk")
 texture = SubResource("ViewportTexture_rcq0h")
 size = Vector2i(144, 144)
-text = "[font_size=34]Find it"
+text = "[font_size=34]FIND IT"
 
 [node name="DoorOpenSoundPlayer" type="AudioStreamPlayer" parent="Exit" unique_id=985749034]
 stream = ExtResource("32_j0lvp")

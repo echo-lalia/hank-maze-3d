@@ -10,9 +10,12 @@ config_version=5
 
 [application]
 
-config/name="HankAttack"
+config/name="Hank Maze 3D"
 run/main_scene="uid://c4y80yjg2gxku"
 config/features=PackedStringArray("4.8", "GL Compatibility")
+boot_splash/bg_color=Color(0.03797171, 0.035502274, 0.0015411723, 1)
+boot_splash/use_filter=false
+boot_splash/image="uid://bxkfxg2amquup"
 config/icon="res://icon.svg"
 
 [audio]

@@ -5,6 +5,7 @@ extends Node3D
 @onready var rich_text_3d: RichText3D = $RichText3D
 @onready var door_open_sound_player: AudioStreamPlayer = $DoorOpenSoundPlayer
 
+const INITIAL_TEXT = "FIND IT"
 
 #const RICH_TEXT_3D = preload("uid://dtyqi7x7atmdo")
 
@@ -13,14 +14,15 @@ func _ready() -> void:
 	interactable_area.interacted.connect(_on_interacted)
 	
 	rich_text_3d.visible = true
-	rich_text_3d.text = "Find it"
+	rich_text_3d.text = INITIAL_TEXT
 	
 	if not maze_generator.is_node_ready():
 		await maze_generator.ready
 	global_position = maze_generator.start_room_position.global_position
 	
 	await get_tree().create_timer(3.0).timeout
-	rich_text_3d.visible = false
+	if rich_text_3d.text == INITIAL_TEXT:
+		rich_text_3d.visible = false
 
 
 func _on_interacted(player: PlayerBody) -> void:

@@ -8,6 +8,40 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fu7sn"]
 texture = ExtResource("2_jix8l")
 
+[sub_resource type="LabelSettings" id="LabelSettings_jix8l"]
+font_size = 12
+font_color = Color(0.56, 0.53312004, 0.3808, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0.047058824, 0.050980393, 0.003921569, 0.5686275)
+shadow_offset = Vector2(0.3, 0.3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_glbon"]
+font_size = 42
+font_color = Color(0.9233832, 0.87896746, 0.61663896, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0.05628, 0.06, 0.0041999994, 0.6117647)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nlkkf"]
+font_color = Color(0.9233832, 0.87896746, 0.61663896, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0.05628, 0.06, 0.0041999994, 0.6117647)
+shadow_offset = Vector2(0.5, 0.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qe12f"]
+font_size = 22
+font_color = Color(0.942691, 0.9097548, 0.7042115, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0.05628, 0.06, 0.0041999994, 0.6117647)
+shadow_offset = Vector2(0.5, 0.5)
+
 [node name="MainMenu" type="Panel" unique_id=1676622235 node_paths=PackedStringArray("success_label", "last_run_time_label", "best_run_time_label", "last_run_root", "best_run_root")]
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +51,7 @@ grow_vertical = 2
 theme = ExtResource("1_fu7sn")
 theme_override_styles/panel = SubResource("StyleBoxTexture_fu7sn")
 script = ExtResource("1_06t4h")
-success_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/SuccessLabel")
+success_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/SuccessLabel")
 last_run_time_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
 best_run_time_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
 last_run_root = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot")
@@ -63,6 +97,13 @@ alignment = 1
 [node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer" unique_id=338350609]
 layout_mode = 2
 text = "Last run:"
+label_settings = SubResource("LabelSettings_jix8l")
+horizontal_alignment = 1
+
+[node name="SuccessLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer" unique_id=1173389675]
+layout_mode = 2
+text = "You failed!"
+label_settings = SubResource("LabelSettings_glbon")
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer" unique_id=941619863]
@@ -80,20 +121,15 @@ layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
 
-[node name="SuccessLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1173389675]
-layout_mode = 2
-text = "You failed!"
-
-[node name="VSeparator" type="VSeparator" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1423153641]
-layout_mode = 2
-
 [node name="Time" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1108631421]
 layout_mode = 2
-text = "Time:"
+text = "Time: "
+label_settings = SubResource("LabelSettings_nlkkf")
 
 [node name="TimeLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=664257383]
 layout_mode = 2
 text = "123"
+label_settings = SubResource("LabelSettings_qe12f")
 
 [node name="BestRunRoot" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer" unique_id=206242180]
 layout_mode = 2
@@ -110,11 +146,6 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer" unique_id=1984618337]
 layout_mode = 2
 alignment = 1
-
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=1943567776]
-layout_mode = 2
-text = "Best:"
-horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=2140052567]
 layout_mode = 2
@@ -133,11 +164,23 @@ alignment = 1
 
 [node name="Time" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1921334900]
 layout_mode = 2
-text = "Time:"
+text = "Best time: "
+label_settings = SubResource("LabelSettings_nlkkf")
 
 [node name="TimeLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1172085892]
 layout_mode = 2
 text = "123"
+label_settings = SubResource("LabelSettings_qe12f")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=489753171]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 6
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/MarginContainer2" unique_id=1596239919]
+layout_mode = 2
 
 [node name="PlayButtonContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer" unique_id=832138857]
 layout_mode = 2
