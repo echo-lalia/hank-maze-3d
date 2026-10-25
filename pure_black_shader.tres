@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dxlejllpnwoxc"]
+
+[ext_resource type="Shader" uid="uid://br362f7vad3pk" path="res://maze/pure_black.gdshader" id="1_f802i"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_f802i")

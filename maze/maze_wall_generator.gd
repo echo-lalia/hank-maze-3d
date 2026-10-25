@@ -5,10 +5,12 @@ const VAULTABLE_WALL = preload("uid://xrikcftunle")
 const WALL_SHADER = preload("uid://ctxrr6hfuxpr")
 const FLOOR_MATERIAL = preload("uid://de54k6p86uv8r")
 const CEILING_MATERIAL = preload("uid://cpmqma4scpyea")
+const PURE_BLACK_SHADER = preload("uid://dxlejllpnwoxc")
 
 const BIG_ROOM_CHANCE = 0.25
 const VAULT_CHANCE_THRESHOLD = 0.1
 const CHANCE_TO_DELETE_WALL_ENDS = 0.5
+
 
 const BANANATHING = preload("uid://detsxsphpkx4q")
 const CEILINGLIGHT = preload("uid://23hbjy7d64p4")
@@ -29,6 +31,8 @@ const ROOM_HEIGHT: float = 4
 const WALL_THICKNESS: float = 0.2
 const ROOM_SIZE_HALF: float = ROOM_SIZE / 2.0
 const MAZE_X_OFFSET: float = MAZE_WIDTH * ROOM_SIZE * 0.5 - ROOM_SIZE_HALF
+
+const ROOF_HEIGHT: float = 6.1
 
 # WSEN
 const NORTH: int = 0b0001
@@ -65,18 +69,61 @@ func _ready() -> void:
 	ceiling_instance.mesh = floor_shape.duplicate_deep()
 	ceiling_instance.mesh.material = CEILING_MATERIAL
 	ceiling_instance.mesh.flip_faces = true
-	ceiling_instance.position = Vector3(0, 6.1, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	ceiling_instance.position = Vector3(0, ROOF_HEIGHT, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
 	add_child(ceiling_instance)
+	
+	# Add exterior walls
+	# Rear wall
+	var wall: MeshInstance3D = MeshInstance3D.new()
+	wall.mesh = QuadMesh.new()
+	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE, ROOF_HEIGHT)
+	wall.position = Vector3(0, ROOF_HEIGHT / 2, - ROOM_SIZE_HALF)
+	wall.mesh.material = PURE_BLACK_SHADER
+	add_child(wall)
+	# Left wall
+	wall = MeshInstance3D.new()
+	wall.mesh = QuadMesh.new()
+	wall.mesh.orientation = PlaneMesh.FACE_X
+	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH, ROOF_HEIGHT)
+	wall.position = Vector3(MAZE_WIDTH * ROOM_SIZE * -0.5, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	wall.mesh.material = PURE_BLACK_SHADER
+	add_child(wall)
+	# Right wall
+	wall = MeshInstance3D.new()
+	wall.mesh = QuadMesh.new()
+	wall.mesh.orientation = PlaneMesh.FACE_X
+	wall.mesh.flip_faces = true
+	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH, ROOF_HEIGHT)
+	wall.position = Vector3(MAZE_WIDTH * ROOM_SIZE * 0.5, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	wall.mesh.material = PURE_BLACK_SHADER
+	add_child(wall)
+	# Far wall
+	wall = MeshInstance3D.new()
+	wall.mesh = QuadMesh.new()
+	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE, ROOF_HEIGHT)
+	wall.mesh.flip_faces = true
+	wall.position = Vector3(0, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH - ROOM_SIZE_HALF)
+	wall.mesh.material = PURE_BLACK_SHADER
+	add_child(wall)
 	
 	start_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, 0)
 	end_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH - 1)
 	@warning_ignore("integer_division")
 	hank_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH/2)
 	
+	var floor_collider: StaticBody3D = StaticBody3D.new()
+	var floor_collision_shape: CollisionShape3D = CollisionShape3D.new()
+	floor_collision_shape.shape = BoxShape3D.new()
+	(floor_collision_shape.shape as BoxShape3D).size = Vector3(MAZE_WIDTH * ROOM_SIZE, 1, ROOM_SIZE * MAZE_LENGTH)
+	floor_collider.position = Vector3(0, -0.5, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	floor_collider.add_child(floor_collision_shape)
+	add_child(floor_collider)
+	
 	# Not sure if this is needed, but I want to be sure the CSG meshes have been generated.
 	await get_tree().process_frame
 	bake_navigation_mesh()
-	await bake_finished
+	if is_baking():
+		await bake_finished
 	
 	# Add compass item to maze
 	var compass_item: Node3D = COMPASS_ITEM.instantiate()
@@ -129,6 +176,13 @@ func _make_single_wall(allow_special: bool = true) -> Node3D:
 	result.collision_mask = wall_collision
 	result.position.y = ROOM_HEIGHT * 0.5
 	result.material = WALL_SHADER
+	
+	var occluder: OccluderInstance3D = OccluderInstance3D.new()
+	occluder.occluder = BoxOccluder3D.new()
+	(occluder.occluder as BoxOccluder3D).size = result.size
+	#occluder.position = Vector3(0, 1, 0)
+	result.add_child(occluder)
+	
 	return result 
 
 

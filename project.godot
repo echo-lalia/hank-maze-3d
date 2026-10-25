@@ -407,13 +407,14 @@ ambient_bus=&"RaytracedAmbient"
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 limits/time/time_rollover_secs=1024.0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 textures/decals/filter=0
 textures/light_projectors/filter=0
+environment/glow/upscale_mode=0
+occlusion_culling/use_occlusion_culling=true
 
 [shader_globals]
 

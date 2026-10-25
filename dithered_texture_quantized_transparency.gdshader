@@ -2,6 +2,7 @@ shader_type spatial;
 render_mode diffuse_burley, cull_disabled, depth_prepass_alpha;
 
 
+
 uniform sampler2D texture_albedo : source_color, filter_nearest_mipmap, repeat_enable;
 global uniform float vertex_quant;
 global uniform sampler2D beyer_matrix: filter_nearest;

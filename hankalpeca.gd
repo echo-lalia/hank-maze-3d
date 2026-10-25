@@ -20,6 +20,7 @@ const CONE_VISION_DISTANCE: float = 15
 @onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
 @onready var player_detection_raycast_4: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast4
 
+
 @onready var organ_sting_player: AudioStreamPlayer = $OrganStingPlayer
 @onready var wall_detection_raycast_short: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/WallDetectionRaycastShort
 

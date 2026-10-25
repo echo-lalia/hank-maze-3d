@@ -182,6 +182,7 @@ func _physics_process(delta: float) -> void:
 	var params := PhysicsRayQueryParameters3D.create(player_head.global_position, HankBody.current_hank_body_instance.player_to_hank_vision_area.global_position, 64)
 	params.hit_from_inside = true
 	params.collide_with_areas = true
+	params.hit_back_faces = true
 	var result: Dictionary = space.intersect_ray(params)
 	if "collider" in result and result["collider"] and (result["collider"] as Node3D).is_in_group("player_to_hank_vision"):
 		has_hank_line_of_sight = true
