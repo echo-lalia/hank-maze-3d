@@ -179,6 +179,7 @@ layout_mode = 2
 text = "Sneak button:"
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer4/MarginContainer/HBoxContainer" unique_id=908175523]
+custom_minimum_size = Vector2(50, 20)
 layout_mode = 2
 toggle_mode = true
 text = "SHIFT"
@@ -205,6 +206,7 @@ layout_mode = 2
 text = "Sprint button:"
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer5/MarginContainer/HBoxContainer" unique_id=781017437]
+custom_minimum_size = Vector2(50, 20)
 layout_mode = 2
 toggle_mode = true
 text = "CTRL"
@@ -231,6 +233,7 @@ layout_mode = 2
 text = "Hint button:"
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer6/MarginContainer/HBoxContainer" unique_id=1867891634]
+custom_minimum_size = Vector2(50, 20)
 layout_mode = 2
 toggle_mode = true
 text = "H"

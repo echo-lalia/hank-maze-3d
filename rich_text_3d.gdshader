@@ -1,7 +1,7 @@
 shader_type spatial;
 
 
-uniform sampler2D viewport_texture;
+uniform sampler2D viewport_texture: filter_nearest;
 
 
 

@@ -33,6 +33,11 @@ enabled=PackedStringArray("res://addons/raytraced_audio/plugin.cfg")
 
 player_to_hank_vision="Used to detect when we see hank's vision area3d."
 
+[gui]
+
+theme/default_font_antialiasing=0
+theme/custom="uid://bm2xy8x82f5ud"
+
 [input]
 
 move_forward={

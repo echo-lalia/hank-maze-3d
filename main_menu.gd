@@ -5,9 +5,9 @@ extends Panel
 @export var last_run_time_label: Label
 
 @export var best_run_time_label: Label
-@onready var last_run_root: MarginContainer = $LastRunRoot
+@export var last_run_root: MarginContainer
 
-@onready var best_run_root: MarginContainer = $BestRunRoot
+@export var best_run_root: MarginContainer
 
 const INIT_SCREEN_WAIT = preload("uid://nos2o78p06x2")
 

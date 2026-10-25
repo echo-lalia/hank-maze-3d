@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://dbhtveg1jfnli" path="res://rich_text_3d.gdshader" id="1_24gv7"]
 [ext_resource type="Script" uid="uid://eo6hu5ooni8h" path="res://rich_text_3d.gd" id="2_fog61"]
+[ext_resource type="Theme" uid="uid://bm2xy8x82f5ud" path="res://main_theme.tres" id="3_f7t8h"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pb32r"]
 viewport_path = NodePath("SubViewport")
@@ -32,6 +33,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_f7t8h")
+theme_override_colors/default_color = Color(0.97192556, 0.85361993, 0.60427105, 1)
+theme_override_colors/font_shadow_color = Color(0.3982164, 0.30191925, 0.042439364, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
 bbcode_enabled = true
 text = "asdfasdf"
 fit_content = true

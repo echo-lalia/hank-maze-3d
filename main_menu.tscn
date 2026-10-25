@@ -3,154 +3,162 @@
 [ext_resource type="Script" uid="uid://8v082wurip71" path="res://main_menu.gd" id="1_06t4h"]
 [ext_resource type="Theme" uid="uid://bm2xy8x82f5ud" path="res://main_theme.tres" id="1_fu7sn"]
 [ext_resource type="PackedScene" uid="uid://dr6m0q720io7v" path="res://settings_menu.tscn" id="2_7vrkn"]
+[ext_resource type="Texture2D" uid="uid://bji480xu4rrwx" path="res://textures/stylebox_bg.png" id="2_jix8l"]
 
-[node name="MainMenu" type="Panel" unique_id=1676622235 node_paths=PackedStringArray("success_label", "last_run_time_label", "best_run_time_label")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fu7sn"]
+texture = ExtResource("2_jix8l")
+
+[node name="MainMenu" type="Panel" unique_id=1676622235 node_paths=PackedStringArray("success_label", "last_run_time_label", "best_run_time_label", "last_run_root", "best_run_root")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_fu7sn")
+theme_override_styles/panel = SubResource("StyleBoxTexture_fu7sn")
 script = ExtResource("1_06t4h")
-success_label = NodePath("LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/SuccessLabel")
-last_run_time_label = NodePath("LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
-best_run_time_label = NodePath("BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
+success_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/SuccessLabel")
+last_run_time_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
+best_run_time_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
+last_run_root = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot")
+best_run_root = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=832138857]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.55
-anchor_right = 1.0
-anchor_bottom = 0.75
-size_flags_vertical = 4
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
-metadata/_edit_use_anchors_ = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=544262533]
-layout_mode = 2
-size_flags_vertical = 4
-alignment = 1
-
-[node name="PlayButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=1619425447]
-layout_mode = 2
-text = "Play"
-
-[node name="LastRunRoot" type="MarginContainer" parent="." unique_id=569159197]
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1420303901]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -424.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2" unique_id=1568118195]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer" unique_id=975888297]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="LastRunRoot" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer" unique_id=569159197]
+layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="PanelContainer" type="PanelContainer" parent="LastRunRoot" unique_id=1736721099]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot" unique_id=1736721099]
+custom_minimum_size = Vector2(360, 160)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LastRunRoot/PanelContainer" unique_id=765014115]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer" unique_id=765014115]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="LastRunRoot/PanelContainer/VBoxContainer" unique_id=338350609]
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer" unique_id=338350609]
 layout_mode = 2
 text = "Last run:"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="LastRunRoot/PanelContainer/VBoxContainer" unique_id=941619863]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer" unique_id=941619863]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 6
 
-[node name="HSeparator" type="HSeparator" parent="LastRunRoot/PanelContainer/VBoxContainer/MarginContainer" unique_id=234977460]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/MarginContainer" unique_id=234977460]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LastRunRoot/PanelContainer/VBoxContainer" unique_id=1469842559]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer" unique_id=1469842559]
 layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
 
-[node name="SuccessLabel" type="Label" parent="LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1173389675]
+[node name="SuccessLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1173389675]
 layout_mode = 2
 text = "You failed!"
 
-[node name="VSeparator" type="VSeparator" parent="LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1423153641]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1423153641]
 layout_mode = 2
 
-[node name="Time" type="Label" parent="LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1108631421]
+[node name="Time" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1108631421]
 layout_mode = 2
 text = "Time:"
 
-[node name="TimeLabel" type="Label" parent="LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=664257383]
+[node name="TimeLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=664257383]
 layout_mode = 2
 text = "123"
 
-[node name="BestRunRoot" type="MarginContainer" parent="." unique_id=206242180]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 202.0
-offset_bottom = -270.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="BestRunRoot" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer" unique_id=206242180]
+layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="PanelContainer" type="PanelContainer" parent="BestRunRoot" unique_id=916659467]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot" unique_id=916659467]
+custom_minimum_size = Vector2(200, 160)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BestRunRoot/PanelContainer" unique_id=1984618337]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer" unique_id=1984618337]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="BestRunRoot/PanelContainer/VBoxContainer" unique_id=1943567776]
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=1943567776]
 layout_mode = 2
 text = "Best:"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="BestRunRoot/PanelContainer/VBoxContainer" unique_id=2140052567]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=2140052567]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 6
 
-[node name="HSeparator" type="HSeparator" parent="BestRunRoot/PanelContainer/VBoxContainer/MarginContainer" unique_id=2141088652]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/MarginContainer" unique_id=2141088652]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BestRunRoot/PanelContainer/VBoxContainer" unique_id=895094902]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=895094902]
 layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Time" type="Label" parent="BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1921334900]
+[node name="Time" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1921334900]
 layout_mode = 2
 text = "Time:"
 
-[node name="TimeLabel" type="Label" parent="BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1172085892]
+[node name="TimeLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1172085892]
 layout_mode = 2
 text = "123"
 
-[node name="SettingsMenu" parent="." unique_id=664041274 instance=ExtResource("2_7vrkn")]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.75
-anchor_right = 0.95
-anchor_bottom = 0.95
-metadata/_edit_use_anchors_ = true
+[node name="PlayButtonContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer" unique_id=832138857]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/PlayButtonContainer" unique_id=544262533]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer" unique_id=1619425447]
+custom_minimum_size = Vector2(74.12, 43.47)
+layout_mode = 2
+text = "Play"
+
+[node name="SettingsMenu" parent="MarginContainer2/VBoxContainer" unique_id=664041274 instance=ExtResource("2_7vrkn")]
+layout_mode = 2
+size_flags_vertical = 10
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
