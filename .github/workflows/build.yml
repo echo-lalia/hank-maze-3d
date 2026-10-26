@@ -38,7 +38,7 @@ jobs:
           tag_name: latest
           name: Latest Build
           files: |
-            build/windows/windows.exe
+            build/windows/game.exe
           draft: false
-          prerelease: false
+          prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
