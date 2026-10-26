@@ -27,7 +27,7 @@ jobs:
 
       - name: Get Godot Version
         run: |
-          GODOT_VERSION=$(grep '^config/features' $WORKING_DIRECTORY/project.godot | cut -d "\"" -f 2)
+          GODOT_VERSION=$(grep '^config/features' ./project.godot | cut -d "\"" -f 2)
           echo "GODOT_VERSION=$GODOT_VERSION" >> $GITHUB_ENV
 
       - uses: Daniel-Griffiths/godot-deploy@master
