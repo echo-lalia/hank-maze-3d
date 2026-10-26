@@ -29,6 +29,7 @@ jobs:
         with:
           godot-version: "4.8"
           godot-channel: "beta1"
+          platforms: "windows"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
