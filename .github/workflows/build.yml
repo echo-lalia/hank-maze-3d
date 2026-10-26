@@ -26,12 +26,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
-      - uses: Daniel-Griffiths/godot-deploy@fc5b8cea07ae4a800220a94413a7866b399c2bf8
+      
+      - uses: echo-lalia/godot-deploy@d9798c2ed6b98900058a27d12bd989f47b31195a
         with:
           godot-version: "4.8"
           godot-channel: "beta1"
           platforms: "windows"
+          file-name: "hank"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
