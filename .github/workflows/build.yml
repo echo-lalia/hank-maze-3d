@@ -25,14 +25,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - name: Get Godot Version
-        run: |
-          GODOT_VERSION=$(grep '^config/features' ./project.godot | cut -d "\"" -f 2)
-          echo "GODOT_VERSION=$GODOT_VERSION" >> $GITHUB_ENV
-
       - uses: Daniel-Griffiths/godot-deploy@master
         with:
-          godot-version: ${{ env.GODOT_VERSION }}
+          godot-version: "4.8"
+          godot-channel: "beta1"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
