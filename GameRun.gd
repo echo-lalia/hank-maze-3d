@@ -24,8 +24,11 @@ func _init() -> void:
 	current_game_run = self
 
 
+
 func _ready() -> void:
+	Main.set_main_volume(-30)
 	await InitScreen.await_init_screen()
+	create_tween().tween_method(Main.set_main_volume, -60, Main.game_save.volume, 0.2)
 	run_start_time = get_engine_time()
 	
 	_enable_close_warning()

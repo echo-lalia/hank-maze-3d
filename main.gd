@@ -73,8 +73,13 @@ signal settings_changed
 
 
 
+static func set_main_volume(vol: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), vol)
+
+
+
 func _on_settings_changed() -> void:
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), game_save.volume)
+	set_main_volume(game_save.volume)
 
 
 static func notify_settings_changed() -> void:

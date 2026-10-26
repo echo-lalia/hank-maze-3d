@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://ihnvbpmse4bb" path="res://textures/Gourd.png" id="1_wmwda"]
 [ext_resource type="Shader" uid="uid://vkxg4yhpejvt" path="res://dithered_texture_quantized_with_emission.gdshader" id="2_1txte"]
 [ext_resource type="AudioStream" uid="uid://wvpv2354bk28" path="res://sfx/win.mp3" id="3_l5t5q"]
+[ext_resource type="Theme" uid="uid://bm2xy8x82f5ud" path="res://main_theme.tres" id="4_luvg0"]
+[ext_resource type="Script" uid="uid://ferv3m8ka8rf" path="res://fancy_name_effect.gd" id="5_5hoe6"]
 [ext_resource type="AudioStream" uid="uid://c4rpu2m3g3ck3" path="res://sfx/door_success.mp3" id="5_26557"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_85shy"]
@@ -55,11 +57,17 @@ fog_enabled = true
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 1.0
 
-[sub_resource type="LabelSettings" id="LabelSettings_l5t5q"]
-font_size = 42
+[sub_resource type="RichTextEffect" id="RichTextEffect_luvg0"]
+script = ExtResource("5_5hoe6")
+metadata/_custom_type_script = "uid://ferv3m8ka8rf"
 
 [sub_resource type="LabelSettings" id="LabelSettings_1txte"]
 font_size = 24
+font_color = Color(0.9607843, 0.9372549, 0.7882353, 1)
+outline_size = 2
+outline_color = Color(0.054804333, 0.008733191, 0.00049729296, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.35686275)
 
 [sub_resource type="Animation" id="Animation_l5t5q"]
 length = 0.001
@@ -333,16 +341,25 @@ light_energy = 0.0
 area_attenuation = 0.666
 area_size = Vector2(3, 3)
 
-[node name="YouWonLabel" type="Label" parent="Camera3D" unique_id=1214472478]
+[node name="YouWonLabel" type="RichTextLabel" parent="Camera3D" unique_id=63806742]
 visible = false
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.2037037
 grow_horizontal = 2
-text = "You won!"
-label_settings = SubResource("LabelSettings_l5t5q")
+theme = ExtResource("4_luvg0")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6156863)
+theme_override_constants/shadow_outline_size = 12
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/normal_font_size = 46
+bbcode_enabled = true
+text = "[outline_color=#591d01][outline_size=8][fancy_name clr1=#fcf9db clr2=#fcdea4]You won!"
+fit_content = true
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_luvg0")]
 metadata/_edit_use_anchors_ = true
 
 [node name="RunTimeLabel" type="Label" parent="Camera3D" unique_id=1476113227]
@@ -352,6 +369,7 @@ anchor_top = 0.87191355
 anchor_right = 1.0
 anchor_bottom = 0.9243827
 grow_horizontal = 2
+theme = ExtResource("4_luvg0")
 text = "Time: 123"
 label_settings = SubResource("LabelSettings_1txte")
 horizontal_alignment = 1

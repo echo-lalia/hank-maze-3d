@@ -10,6 +10,7 @@ extends Node3D
 
 func _on_interactable_area_interacted(player: PlayerBody) -> void:
 	player.remaining_hints += 1
+	bone_mesh.queue_free()
 	animation_player.queue_free()
 	interactable_area.queue_free()
 	
