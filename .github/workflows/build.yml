@@ -27,7 +27,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - uses: Daniel-Griffiths/godot-deploy@master
+      - uses: Daniel-Griffiths/godot-deploy@fc5b8cea07ae4a800220a94413a7866b399c2bf8
         with:
           godot-version: "4.8"
           godot-channel: "beta1"
