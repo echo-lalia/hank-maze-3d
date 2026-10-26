@@ -41,7 +41,7 @@ jobs:
           tag_name: prerelease
           name: Latest Prerelease
           files: |
-            build/windows/game.exe
+            build/windows/hank.exe
           draft: false
           prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
