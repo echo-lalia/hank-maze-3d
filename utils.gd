@@ -19,7 +19,7 @@ static func event_as_key_string(event: InputEvent) -> String:
 
 
 
-static func seconds_to_timer(time: float) -> String:
+static func seconds_to_m_s_ms(time: float) -> Array[int]:
 	@warning_ignore("narrowing_conversion")
 	var _seconds: int = time
 	
@@ -31,8 +31,14 @@ static func seconds_to_timer(time: float) -> String:
 	@warning_ignore("narrowing_conversion")
 	var _miliseconds: int = (time - _seconds) * 1000
 	
+	return [_minutes, _seconds, _miliseconds]
+
+
+static func seconds_to_timer(time: float) -> String:
+	var m_s_ms := seconds_to_m_s_ms(time)
+	
 	return (
-		str(_minutes) + ":" + str(_seconds) + "." + (str(_miliseconds).lpad(3, "0"))
+		str(m_s_ms[0]) + ":" + str(m_s_ms[1]) + "." + (str(m_s_ms[2]).lpad(3, "0"))
 	)
 
 

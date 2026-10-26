@@ -1,11 +1,14 @@
-extends Label
+extends MarginContainer
 
 
-# Called when the node enters the scene tree for the first time.
+@onready var time_label: RunTimeLabel = $TimeLabel
+
+
 func _ready() -> void:
-	pass # Replace with function body.
+	if not Main.game_save.has_won_run_ever:
+		queue_free()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	text = Utils.seconds_to_timer(GameRun.current_game_run.get_run_time())
+	time_label.time = GameRun.current_game_run.get_run_time()

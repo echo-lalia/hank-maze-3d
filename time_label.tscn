@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dx13pnwtfy8h1"]
+
+[ext_resource type="Script" uid="uid://dw2njisi3f1sj" path="res://time_label.gd" id="1_0r50c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qe12f"]
+font_size = 32
+font_color = Color(0.942691, 0.9097548, 0.7042115, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0.05628, 0.06, 0.0041999994, 0.6117647)
+shadow_offset = Vector2(0.5, 0.5)
+
+[node name="TimeLabel" type="Label" unique_id=1657482800 node_paths=PackedStringArray("ms_label")]
+text = "0:20      "
+label_settings = SubResource("LabelSettings_qe12f")
+script = ExtResource("1_0r50c")
+ms_label = NodePath("MSLabel")
+time = 20.015
+
+[node name="MSLabel" type="Label" parent="." unique_id=246936535]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 0.9
+offset_left = -38.0
+grow_vertical = 0
+text = ".015"
+vertical_alignment = 2

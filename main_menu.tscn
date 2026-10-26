@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://bm2xy8x82f5ud" path="res://main_theme.tres" id="1_fu7sn"]
 [ext_resource type="PackedScene" uid="uid://dr6m0q720io7v" path="res://settings_menu.tscn" id="2_7vrkn"]
 [ext_resource type="Texture2D" uid="uid://bji480xu4rrwx" path="res://textures/stylebox_bg.png" id="2_jix8l"]
+[ext_resource type="PackedScene" uid="uid://dx13pnwtfy8h1" path="res://time_label.tscn" id="4_glbon"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fu7sn"]
 texture = ExtResource("2_jix8l")
@@ -26,6 +27,7 @@ shadow_size = 6
 shadow_color = Color(0.05628, 0.06, 0.0041999994, 0.6117647)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nlkkf"]
+font_size = 20
 font_color = Color(0.9233832, 0.87896746, 0.61663896, 1)
 outline_size = 1
 outline_color = Color(0, 0, 0, 1)
@@ -33,9 +35,8 @@ shadow_size = 6
 shadow_color = Color(0.05628, 0.06, 0.0041999994, 0.6117647)
 shadow_offset = Vector2(0.5, 0.5)
 
-[sub_resource type="LabelSettings" id="LabelSettings_qe12f"]
-font_size = 22
-font_color = Color(0.942691, 0.9097548, 0.7042115, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_dy7ct"]
+font_color = Color(0.9233832, 0.87896746, 0.61663896, 1)
 outline_size = 1
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 6
@@ -126,10 +127,10 @@ layout_mode = 2
 text = "Time: "
 label_settings = SubResource("LabelSettings_nlkkf")
 
-[node name="TimeLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=664257383]
+[node name="TimeLabel" parent="MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1657482800 instance=ExtResource("4_glbon")]
 layout_mode = 2
-text = "123"
-label_settings = SubResource("LabelSettings_qe12f")
+text = "2:36      "
+time = 156.8
 
 [node name="BestRunRoot" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer" unique_id=206242180]
 layout_mode = 2
@@ -165,12 +166,12 @@ alignment = 1
 [node name="Time" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1921334900]
 layout_mode = 2
 text = "Best time: "
-label_settings = SubResource("LabelSettings_nlkkf")
+label_settings = SubResource("LabelSettings_dy7ct")
 
-[node name="TimeLabel" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1172085892]
+[node name="TimeLabel" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer" unique_id=431329483 instance=ExtResource("4_glbon")]
 layout_mode = 2
-text = "123"
-label_settings = SubResource("LabelSettings_qe12f")
+text = "2:36      "
+time = 156.335
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=489753171]
 layout_mode = 2
@@ -193,6 +194,7 @@ theme_override_constants/margin_bottom = 32
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/PlayButtonContainer" unique_id=544262533]
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_constants/separation = 64
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer" unique_id=1619425447]
@@ -200,8 +202,13 @@ custom_minimum_size = Vector2(74.12, 43.47)
 layout_mode = 2
 text = "Play"
 
+[node name="CreditsButton" type="Button" parent="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer" unique_id=663841415]
+layout_mode = 2
+text = "Credits"
+
 [node name="SettingsMenu" parent="MarginContainer2/VBoxContainer" unique_id=664041274 instance=ExtResource("2_7vrkn")]
 layout_mode = 2
 size_flags_vertical = 10
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]

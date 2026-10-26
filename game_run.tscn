@@ -225,14 +225,14 @@ shadow_mesh = SubResource("ArrayMesh_rcq0h")
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
 size = Vector3(1.9, 3.087, 0.208)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_fx1tk"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_rcq0h"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_x23xc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fx1tk"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_af7r6")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_fx1tk")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_rcq0h")
 
 [node name="GameRun" type="Node3D" unique_id=2100628311]
 script = ExtResource("1_3b0hh")
@@ -379,8 +379,8 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="RichText3D" parent="Exit" unique_id=816680510 instance=ExtResource("16_qem8s")]
 transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7216415)
-material_override = SubResource("ShaderMaterial_x23xc")
-texture = SubResource("ViewportTexture_fx1tk")
+material_override = SubResource("ShaderMaterial_fx1tk")
+texture = SubResource("ViewportTexture_rcq0h")
 size = Vector2i(144, 144)
 text = "[font_size=34]FIND IT"
 
@@ -431,6 +431,11 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Resume"
 
+[node name="CreditsButton" type="Button" parent="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1018852716]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Credits"
+
 [node name="QuitButton" type="Button" parent="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=991196791]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -442,4 +447,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/CreditsButton" to="PauseMenu" method="_on_credits_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/QuitButton" to="PauseMenu" method="_on_quit_button_pressed"]

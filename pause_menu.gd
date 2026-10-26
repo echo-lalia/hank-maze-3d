@@ -1,6 +1,11 @@
 extends PanelContainer
 
 
+const CREDITS = preload("uid://eitkhjbnlx05")
+
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	resume()
@@ -52,3 +57,7 @@ func _on_resume_button_pressed() -> void:
 func _on_quit_button_pressed() -> void:
 	resume()
 	Main.start_main_menu()
+
+
+func _on_credits_button_pressed() -> void:
+	add_child(CREDITS.instantiate())

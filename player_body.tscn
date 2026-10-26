@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cjmrv1sfunu28" path="res://run_timer.gd" id="7_bfax5"]
 [ext_resource type="Script" uid="uid://c84xa63xsqai3" path="res://hints_ui.gd" id="7_lti6e"]
 [ext_resource type="AudioStream" uid="uid://b4f4mdt8nxoxp" path="res://sfx/big_stop_random_stream.tres" id="7_xs03g"]
+[ext_resource type="PackedScene" uid="uid://dx13pnwtfy8h1" path="res://time_label.tscn" id="8_eoe08"]
 [ext_resource type="AudioStream" uid="uid://blsngu0i4ly3y" path="res://bone_crack_audio_stream_randomizer.tres" id="8_hqxm8"]
 [ext_resource type="Texture2D" uid="uid://b8rk00utyk3d7" path="res://textures/bone.png" id="8_mh846"]
 [ext_resource type="Texture2D" uid="uid://d38sigpehbcnc" path="res://textures/bone_icon.png" id="8_tlqjr"]
@@ -468,18 +469,19 @@ grow_horizontal = 0
 text = "sees_player = "
 script = ExtResource("5_f57or")
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerHead/PlayerCamera" unique_id=1980553542]
+[node name="RunTimeLabel" type="MarginContainer" parent="PlayerHead/PlayerCamera" unique_id=1980553542]
+process_mode = 3
 offset_right = 40.0
 offset_bottom = 40.0
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="RunTimer" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer" unique_id=1039856653]
-layout_mode = 2
-text = "123456"
+scale = Vector2(0.775, 0.775)
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 script = ExtResource("7_bfax5")
+
+[node name="TimeLabel" parent="PlayerHead/PlayerCamera/RunTimeLabel" unique_id=1657482800 instance=ExtResource("8_eoe08")]
+layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="PlayerHead/PlayerCamera" unique_id=441675107]
 anchors_preset = 2
@@ -518,13 +520,13 @@ script = ExtResource("5_0slni")
 metadata/_custom_type_script = "uid://c5d0rwkq0q1fc"
 
 [node name="Bone_001" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=1617616984]
-transform = Transform3D(0.19266964, -0.007464707, 0.05312878, 0.053088933, -0.0020568632, -0.19281425, 0.007742901, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.19266963, -0.007464707, 0.05312878, 0.05308893, -0.0020568632, -0.19281425, 0.0077429004, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_wh7ba")
 
 [node name="Bone_002" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=688415849]
-transform = Transform3D(0.19266964, -0.007464707, 0.05312878, 0.053088933, -0.0020568632, -0.19281425, 0.007742901, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.19266963, -0.007464707, 0.05312878, 0.05308893, -0.0020568632, -0.19281425, 0.0077429004, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_hqxm8")
