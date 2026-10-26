@@ -1,0 +1,45 @@
+name: BuildRelease
+
+# Controls when the workflow will run
+on: 
+  workflow_dispatch:
+    inputs:
+      releaseTag:
+        description: "Tag to use when creating release."
+        required: true
+        type: string
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - uses: Daniel-Griffiths/godot-deploy@fc5b8cea07ae4a800220a94413a7866b399c2bf8
+        with:
+          godot-version: "4.8"
+          godot-channel: "beta1"
+          platforms: "windows"
+          itch-io-api-key: ${{ secrets.ITCH_IO_API_KEY }}
+          itch-io-user: "echo-lalia"
+          itch-io-game: "hankmaze3d"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          tag_name: ${{ inputs.releaseTag }}
+          name: Latest Build
+          files: |
+            build/windows/game.exe
+          draft: false
+          prerelease: true
+          token: ${{ secrets.GITHUB_TOKEN }}
