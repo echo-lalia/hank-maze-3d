@@ -37,9 +37,9 @@ jobs:
         if: github.ref == 'refs/heads/master'
         with:
           tag_name: ${{ inputs.releaseTag }}
-          name: Latest Build
+          name: ${{ inputs.releaseTag }}
           files: |
             build/windows/game.exe
           draft: false
-          prerelease: true
+          prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
