@@ -4,8 +4,22 @@ extends PanelContainer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	resume()
+	
+	get_window().focus_entered.connect(_on_focus_entered)
+	get_window().focus_exited.connect(_on_focus_exited)
 
 
+
+func _on_focus_entered() -> void:
+	if visible:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+
+func _on_focus_exited() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 

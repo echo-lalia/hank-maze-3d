@@ -34,6 +34,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	await InitScreen.await_init_screen()
 	# These values need to be adjusted for the actor's speed
 	# and the navigation layout.
 	navigation_agent_3d.path_desired_distance = 1.0

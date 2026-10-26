@@ -12,6 +12,7 @@ var hank_exit_screen_time: int = -30000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	await InitScreen.await_init_screen()
 	screen_entered.connect(_on_screen_entered)
 	screen_exited.connect(_on_screen_exited)
 

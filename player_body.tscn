@@ -518,13 +518,13 @@ script = ExtResource("5_0slni")
 metadata/_custom_type_script = "uid://c5d0rwkq0q1fc"
 
 [node name="Bone_001" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=1617616984]
-transform = Transform3D(0.19266966, -0.007464707, 0.05312878, 0.053088937, -0.0020568632, -0.19281425, 0.007742902, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.19266964, -0.007464707, 0.05312878, 0.053088933, -0.0020568632, -0.19281425, 0.007742901, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_wh7ba")
 
 [node name="Bone_002" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=688415849]
-transform = Transform3D(0.19266966, -0.007464707, 0.05312878, 0.053088937, -0.0020568632, -0.19281425, 0.007742902, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.19266964, -0.007464707, 0.05312878, 0.053088933, -0.0020568632, -0.19281425, 0.007742901, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_hqxm8")

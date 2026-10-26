@@ -25,7 +25,9 @@ func _ready() -> void:
 	for child in get_children():
 		if child is State:
 			child.state_machine = self
-
+	
+	await InitScreen.await_init_screen()
+	
 	# Start in initial state
 	current_state = initial_state
 

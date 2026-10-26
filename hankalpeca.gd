@@ -82,11 +82,19 @@ var velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	current_hank_mesh_instance = self
+	set_process(false)
+	await InitScreen.await_init_screen()
+	await get_tree().physics_frame
+	
+	
 	if not Engine.is_editor_hint():
 		_update_playing_animation()
 	if OS.is_debug_build():
 		await get_tree().process_frame
 		PlayerBody.current_player_instance.played_sound.connect(_dbg_sound_heard)
+	
+	
+	set_process(true)
 
 
 func _dbg_sound_heard(sound_position: Vector3, travel_distance: float) -> void:

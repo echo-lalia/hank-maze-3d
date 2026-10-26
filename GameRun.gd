@@ -25,10 +25,12 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	await InitScreen.await_init_screen()
 	run_start_time = get_engine_time()
 	
 	_enable_close_warning()
 	_setup_browser_close_warning()
+
 
 
 func _exit_tree() -> void:

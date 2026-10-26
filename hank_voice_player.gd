@@ -3,6 +3,8 @@ extends RaytracedAudioPlayer3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	await InitScreen.await_init_screen()
+	
 	if not PlayerBody.current_player_instance:
 		await get_tree().process_frame
 	PlayerBody.current_player_instance.played_sound.connect(_play_hankapeka_maybe)

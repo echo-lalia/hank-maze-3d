@@ -96,6 +96,8 @@ static var current_player_instance: PlayerBody
 func _ready() -> void:
 	current_player_instance = self
 	set_physics_process(false)
+	await InitScreen.await_init_screen()
+	
 	if maze_generator:
 		if not maze_generator.is_node_ready():
 			await maze_generator.ready

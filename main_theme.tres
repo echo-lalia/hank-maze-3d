@@ -92,7 +92,7 @@ vertical = true
 [sub_resource type="FontVariation" id="FontVariation_0omi4"]
 base_font = ExtResource("1_470mv")
 spacing_glyph = 1
-spacing_space = 1
+spacing_space = 3
 spacing_top = 1
 spacing_bottom = 1
 

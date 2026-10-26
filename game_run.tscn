@@ -190,7 +190,7 @@ render_priority = 0
 shader = ExtResource("22_85shy")
 shader_parameter/texture_albedo = ExtResource("30_swfsk")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_swfsk"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_rcq0h"]
 _surfaces = [{
 "aabb": AABB(-1.1111112, -1, 0.6, 2.2222223, 2.064725, 1.1282932),
 "format": 34896613377,
@@ -220,19 +220,19 @@ _surfaces = [{
 "vertex_data": PackedByteArray("MvMAAP//AAAy8/j3wVoAADLz+Pf//wAAMvMAAMFaAAAy8wAAwVoAgMwM+PfBWgCAMvP498FaAIDMDAAAwVoAgMwMAADBWv+/zAz49////7/MDPj3wVr/v8wMAAD///+/zAz49///AID///////8AgDLz+Pf//wCAAAD/////AIDMDPj3wVr/PzLz+Pf///8/MvP498Fa/z/MDPj3////P8wMAAD//wCAAAD/////fJXMDPj3///ylAAAAAD//7qAMvP49///8pT//wAA//+6gDLzAAD//wCA////////fJUAAP////9U1f////8AAFTV////////VNUAAP//AABU1QAAAAD/////AAD//wAA//8AAP///////wAAAAAAAP///////////7///wAAAAD/v///AAD///+//////wAA/7//P/9//z//f/8//3//P/9//3////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///AAD/fwAA/38AAP9/AAD/f/9/////f/9//3//f/9//3////////////9/////////VNWqKlTVqipU1aoqVNWqKv8//3//P/9//z//f/8//3//fwAA/38AAP9/AAD/fwAA")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_swfsk")
+shadow_mesh = SubResource("ArrayMesh_rcq0h")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pb32r"]
 size = Vector3(1.9, 3.087, 0.208)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rcq0h"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_fx1tk"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fx1tk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x23xc"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_af7r6")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_rcq0h")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_fx1tk")
 
 [node name="GameRun" type="Node3D" unique_id=2100628311]
 script = ExtResource("1_3b0hh")
@@ -379,8 +379,8 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="RichText3D" parent="Exit" unique_id=816680510 instance=ExtResource("16_qem8s")]
 transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7216415)
-material_override = SubResource("ShaderMaterial_fx1tk")
-texture = SubResource("ViewportTexture_rcq0h")
+material_override = SubResource("ShaderMaterial_x23xc")
+texture = SubResource("ViewportTexture_fx1tk")
 size = Vector2i(144, 144)
 text = "[font_size=34]FIND IT"
 
