@@ -33,7 +33,7 @@ func _input(event: InputEvent) -> void:
 func _create_hint() -> void:
 	bone_animation_player.play("bone_crack")
 	await get_tree().create_timer(0.3).timeout
-	player_audio_player.play_player_sound_from_position(player.position, BONE_CRACK_AUDIO_STREAM_RANDOMIZER, 100, db_to_linear(-3))
+	player_audio_player.play_player_sound_from_position(player.position, BONE_CRACK_AUDIO_STREAM_RANDOMIZER, 200, db_to_linear(-3))
 	
 	var hint_path: PathHint = PATH_HINT.instantiate()
 	hint_path.maze_generator = player.maze_generator

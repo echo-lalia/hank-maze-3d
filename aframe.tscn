@@ -1,0 +1,57 @@
+[gd_scene format=4 uid="uid://n4q2pt1dq5ea"]
+
+[ext_resource type="Shader" uid="uid://v78gpxa1ldnr" path="res://dithered_texture_quantized_transparency.gdshader" id="1_46qvt"]
+[ext_resource type="Texture2D" uid="uid://cmkbo4bswd6tn" path="res://textures/aframe.png" id="3_njosd"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_46qvt"]
+points = PackedVector3Array(-0.605, 0, -0.805, 0, 1.97, -0.805, 0.605, 0, -0.805, -0.605, 0, 0.805, 0, 1.97, 0.805, 0.605, 0, 0.805)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_njosd"]
+render_priority = 0
+shader = ExtResource("1_46qvt")
+shader_parameter/texture_albedo = ExtResource("3_njosd")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_25hmu"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 2.462669, 2),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAADAAAABAAFAAMABgAHAAgABgAJAAcACgALAAwACgANAAsA"),
+"name": "Material.012",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 14,
+"vertex_data": PackedByteArray("/3//////AAD//wAAAAAAAP//AAD//wAA/3///wAAAAAAAAAA//8AAAAAAAAAAAAAfT7ofP//AABtv3yD//8AAIHB6Hz//wAAkUB8g///AAB9Puh8AAAAAG2/fIMAAAAAgcHofAAAAACRQHyDAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_46qvt"]
+resource_name = "ExtraModels_Plane"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 2.462669, 2),
+"attribute_data": PackedByteArray("/xMAAP//////E/////8AAP//////EwAA//8AAP8T////AwAA/w////8D////DwAA/wMAAP8P////A////w8AAA=="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0A"),
+"material": SubResource("ShaderMaterial_njosd"),
+"name": "Material.012",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("/3//////fsH//wAAAAB+wf//AAD//37B/3///wAAfsEAAAAA//9+wf9///8AAH7B/3//////fsEAAAAAAAB+wX0+6Hz//7W2bb98g///i8mBweh8//85ypFAfIP//8W1fT7ofAAAtbZtv3yDAACLyYHB6HwAADnKkUB8gwAAxbXyo/kR8qP5EfKj+RHyo/kR+ZEL3PmRC9z5kQvc+ZEL3P//////////////////////////////////////////")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_25hmu")
+
+[node name="Barrel" type="Node3D" unique_id=778982525]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=965983770]
+collision_layer = 77
+collision_mask = 77
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1282373976]
+shape = SubResource("ConvexPolygonShape3D_46qvt")
+
+[node name="Plane" type="MeshInstance3D" parent="." unique_id=1077490494]
+transform = Transform3D(0.6, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+mesh = SubResource("ArrayMesh_46qvt")

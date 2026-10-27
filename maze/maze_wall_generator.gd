@@ -19,6 +19,7 @@ const CEILING_SPEAKER = preload("uid://318qjienj8by")
 const COMPASS_ITEM = preload("uid://bj8eiy7kqdsw")
 const BONE_ITEM = preload("uid://dflqceyomgk4s")
 const CEILINGLIGHTWEB = preload("uid://e3mthtw4inlb")
+const AFRAME = preload("uid://n4q2pt1dq5ea")
 
 const CEILING_LIGHT_CHANCE: float = 0.02
 
@@ -308,7 +309,7 @@ func add_ceiling_light_to_position(pos: Vector3) -> void:
 
 func add_objects_to_room(room_position: Vector3) -> void:
 	var objects_to_add: int = randi_range(0, 1)
-	var rand_objects: Array[PackedScene] = [BANANATHING, BARREL, CEILING_SPEAKER]
+	var rand_objects: Array[PackedScene] = [BANANATHING, BARREL, CEILING_SPEAKER, AFRAME]
 	for i in objects_to_add:
 		var rand_obj: PackedScene = rand_objects.pick_random()
 		var item: Node3D
@@ -330,6 +331,12 @@ func add_objects_to_room(room_position: Vector3) -> void:
 				# Add to a random position with a random rotation.
 				item.position = room_position + _random_room_position(0.8)
 				add_child(item)
+			AFRAME:
+				item = AFRAME.instantiate()
+				# Add to a random position with a random rotation.
+				item.position = room_position + _random_room_position(0.8)
+				item.rotation.y = randf_range(0, deg_to_rad(360))
+				add_child(item)
 	
 	
 	if randf() < CEILING_LIGHT_CHANCE:
@@ -344,7 +351,7 @@ func generate_maze() -> void:
 	
 	
 	# Open some random walls before generating the maze
-	for i in 2:
+	for i in 3:
 		var x := randi_range(0, MAZE_WIDTH - 2)
 		var y := randi_range(0, MAZE_LENGTH - 2)
 		_connect_room_square(maze, x, y)
