@@ -19,6 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://d38sigpehbcnc" path="res://textures/bone_icon.png" id="8_tlqjr"]
 [ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="8_wh7ba"]
 [ext_resource type="AudioStream" uid="uid://k6ybm3bcew2o" path="res://sfx/tension_drone.mp3" id="10_xcy0b"]
+[ext_resource type="Script" uid="uid://0dyh2v4kab28" path="res://bottle_ui.gd" id="11_7f3fc"]
+[ext_resource type="Texture2D" uid="uid://cqbin53ogo8qg" path="res://textures/bottle_icon.png" id="12_kibih"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
 
@@ -495,17 +497,37 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HintsContainer" type="HBoxContainer" parent="PlayerHead/PlayerCamera/MarginContainer2" unique_id=45773235 node_paths=PackedStringArray("player")]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerHead/PlayerCamera/MarginContainer2" unique_id=1731279268]
+layout_mode = 2
+
+[node name="HintsContainer" type="HBoxContainer" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer" unique_id=45773235 node_paths=PackedStringArray("player", "bone_animation_player", "player_audio_player")]
 layout_mode = 2
 script = ExtResource("7_lti6e")
-player = NodePath("../../../..")
+player = NodePath("../../../../..")
+bone_animation_player = NodePath("../../../BoneRoot/BoneAnimationPlayer")
+player_audio_player = NodePath("../../../../../PlayerStepSoundPlayer")
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="PlayerHead/PlayerCamera/MarginContainer2/HintsContainer" unique_id=190844624]
+[node name="TextureRect" type="TextureRect" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/HintsContainer" unique_id=190844624]
 layout_mode = 2
 texture = ExtResource("8_tlqjr")
 
-[node name="HintsLabel" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer2/HintsContainer" unique_id=1523541332]
+[node name="HintsLabel" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/HintsContainer" unique_id=1523541332]
+layout_mode = 2
+text = "2"
+
+[node name="BottleContainer" type="HBoxContainer" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer" unique_id=2132113601 node_paths=PackedStringArray("player", "throw_source")]
+layout_mode = 2
+script = ExtResource("11_7f3fc")
+player = NodePath("../../../../..")
+throw_source = NodePath("../../../BottleThrowSource")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/BottleContainer" unique_id=1974206250]
+layout_mode = 2
+texture = ExtResource("12_kibih")
+
+[node name="BottlesLabel" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/BottleContainer" unique_id=524549605]
 layout_mode = 2
 text = "2"
 
@@ -520,13 +542,13 @@ script = ExtResource("5_0slni")
 metadata/_custom_type_script = "uid://c5d0rwkq0q1fc"
 
 [node name="Bone_001" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=1617616984]
-transform = Transform3D(0.19266962, -0.007464707, 0.05312878, 0.053088926, -0.0020568632, -0.19281425, 0.0077429, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.1926696, -0.007464707, 0.05312878, 0.053088922, -0.0020568632, -0.19281425, 0.0077428995, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_wh7ba")
 
 [node name="Bone_002" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=688415849]
-transform = Transform3D(0.19266962, -0.007464707, 0.05312878, 0.053088926, -0.0020568632, -0.19281425, 0.0077429, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.1926696, -0.007464707, 0.05312878, 0.053088922, -0.0020568632, -0.19281425, 0.0077428995, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_hqxm8")
@@ -535,11 +557,15 @@ mesh = SubResource("ArrayMesh_hqxm8")
 libraries/ = SubResource("AnimationLibrary_hqxm8")
 speed_scale = 1.2
 
+[node name="BottleThrowSource" type="Node3D" parent="PlayerHead/PlayerCamera" unique_id=1670536025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20964074, -0.2394743)
+
 [node name="RaytracedAudioListener" type="AudioListener3D" parent="PlayerHead" unique_id=678790517]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14049816)
 doppler_tracking = 2
 script = ExtResource("3_2lce7")
 rayCollisionLayers = 8
+rays_count = 16
 metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
 
 [node name="HankSightArea" type="Area3D" parent="." unique_id=1238339586 node_paths=PackedStringArray("player_body")]

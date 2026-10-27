@@ -108,6 +108,13 @@ static func setup_saved_input_events() -> void:
 		var events: Array[InputEvent] = InputMap.action_get_events("hint")
 		if events:
 			game_save.hint_button = events[0]
+	if game_save.bottle_button:
+		InputMap.action_erase_events("bottle")
+		InputMap.action_add_event("bottle", game_save.bottle_button)
+	else:
+		var events: Array[InputEvent] = InputMap.action_get_events("bottle")
+		if events:
+			game_save.bottle_button = events[0]
 	notify_settings_changed()
 
 

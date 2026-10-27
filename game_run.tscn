@@ -72,6 +72,9 @@ stream_2/stream = ExtResource("14_4b6ee")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_pb32r"]
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4b6ee"]
+plane = Plane(0, -1, 0, 0)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_pb32r"]
 radius = 1.0
 
@@ -303,11 +306,15 @@ maze_generator = NodePath("../MazeWallGenerator")
 [node name="MazeWallGenerator" parent="." unique_id=1371215540 instance=ExtResource("8_kuosh")]
 
 [node name="Floor" type="StaticBody3D" parent="MazeWallGenerator" unique_id=1132386947]
-collision_layer = 13
-collision_mask = 13
+collision_layer = 141
+collision_mask = 141
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MazeWallGenerator/Floor" unique_id=1587432430]
 shape = SubResource("WorldBoundaryShape3D_pb32r")
+
+[node name="RoofCollider" type="CollisionShape3D" parent="MazeWallGenerator/Floor" unique_id=2026070806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.3, 0)
+shape = SubResource("WorldBoundaryShape3D_4b6ee")
 
 [node name="Gourd" type="Node3D" parent="." unique_id=1233425170 node_paths=PackedStringArray("maze_generator")]
 script = ExtResource("9_vvw86")

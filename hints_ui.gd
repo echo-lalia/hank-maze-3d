@@ -9,8 +9,8 @@ const BONE_ICON_BROKEN = preload("uid://kb84iwkxmu03")
 @onready var hints_label: Label = $HintsLabel
 @export var player: PlayerBody
 const BONE_CRACK_AUDIO_STREAM_RANDOMIZER = preload("uid://blsngu0i4ly3y")
-@onready var bone_animation_player: AnimationPlayer = $"../../BoneRoot/BoneAnimationPlayer"
-@onready var player_audio_player: PlayerAudioPlayer = $"../../BoneRoot/PlayerAudioPlayer"
+@export var bone_animation_player: AnimationPlayer
+@export var player_audio_player: PlayerAudioPlayer
 
 
 const PATH_HINT = preload("uid://b6qma5cmho1kv")

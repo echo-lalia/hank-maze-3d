@@ -21,6 +21,7 @@ const BONE_ITEM = preload("uid://dflqceyomgk4s")
 const CEILINGLIGHTWEB = preload("uid://e3mthtw4inlb")
 const AFRAME = preload("uid://n4q2pt1dq5ea")
 const CART = preload("uid://b5p2gdlcshg2k")
+const BOTTLE_ITEM = preload("uid://c4tnrpo6h6st2")
 
 const CEILING_LIGHT_CHANCE: float = 0.02
 
@@ -130,13 +131,20 @@ func _ready() -> void:
 	
 	# Add compass item to maze
 	var compass_item: Node3D = COMPASS_ITEM.instantiate()
-	var rand_room: Vector2i = Vector2i(randi_range(0, MAZE_WIDTH), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	var rand_room: Vector2i = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
 	compass_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
 	add_child(compass_item)
 	banned_object_rooms.append(rand_room)
 	
+	# Add bottle item to maze
+	var bottle_item: Node3D = BOTTLE_ITEM.instantiate()
+	rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	bottle_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
+	add_child(bottle_item)
+	banned_object_rooms.append(rand_room)
+	
 	var bone_item: Node3D = BONE_ITEM.instantiate()
-	rand_room = Vector2i(randi_range(0, MAZE_WIDTH), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
 	bone_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
 	add_child(bone_item)
 	

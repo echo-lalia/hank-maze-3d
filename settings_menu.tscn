@@ -176,7 +176,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="FlowContainer2/PanelContainer4/MarginContainer/HBoxContainer" unique_id=1929008393]
 layout_mode = 2
-text = "Sneak button:"
+text = "Sneak button: "
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer4/MarginContainer/HBoxContainer" unique_id=908175523]
 custom_minimum_size = Vector2(50, 20)
@@ -203,7 +203,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="FlowContainer2/PanelContainer5/MarginContainer/HBoxContainer" unique_id=353937743]
 layout_mode = 2
-text = "Sprint button:"
+text = "Sprint button: "
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer5/MarginContainer/HBoxContainer" unique_id=781017437]
 custom_minimum_size = Vector2(50, 20)
@@ -230,7 +230,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="FlowContainer2/PanelContainer6/MarginContainer/HBoxContainer" unique_id=1705970360]
 layout_mode = 2
-text = "Hint button:"
+text = "Hint: "
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer6/MarginContainer/HBoxContainer" unique_id=1867891634]
 custom_minimum_size = Vector2(50, 20)
@@ -239,6 +239,33 @@ toggle_mode = true
 text = "H"
 script = ExtResource("1_ufg0w")
 game_save_event_name = &"hint_button"
+
+[node name="PanelContainer7" type="PanelContainer" parent="FlowContainer2" unique_id=1248187301]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="FlowContainer2/PanelContainer7" unique_id=1753170723]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FlowContainer2/PanelContainer7/MarginContainer" unique_id=834222665]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="FlowContainer2/PanelContainer7/MarginContainer/HBoxContainer" unique_id=1877746883]
+layout_mode = 2
+text = "Throw bottle: "
+
+[node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer7/MarginContainer/HBoxContainer" unique_id=1920991887]
+custom_minimum_size = Vector2(50, 20)
+layout_mode = 2
+toggle_mode = true
+text = "B"
+script = ExtResource("1_ufg0w")
+game_save_event_name = &"bottle_button"
 
 [node name="FullscreenButton" type="Button" parent="FlowContainer2" unique_id=1752136140]
 layout_mode = 2

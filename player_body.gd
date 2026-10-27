@@ -16,6 +16,7 @@ const JUMP_VELOCITY = 4.5
 
 
 var remaining_hints: int = 2
+var remaining_bottles: int = 1
 
 
 enum MOVEMENT_STATES {
