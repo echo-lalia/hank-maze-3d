@@ -6,9 +6,9 @@ extends HankState
 
 
 const PATROL_DISTANCE: float = 8.0
-const PATROL_DISTANCE_PHASE2: float = 13.0
+const PATROL_DISTANCE_PHASE2: float = 15.0
 const PATROL_MAX_PATH: float = 14.0
-const PATROL_MAX_PHASE2: float = 18.0
+const PATROL_MAX_PHASE2: float = 20.0
 
 
 const MAX_PLAYER_DISTANCE_FOLLOW_PHASE1: float = 40.0
@@ -29,6 +29,11 @@ func enter() -> void:
 		hank_mesh.animation_player.animation_finished.connect(_looking_finished)
 	if not PlayerBody.current_player_instance.played_sound.is_connected(_on_player_sound):
 		PlayerBody.current_player_instance.played_sound.connect(_on_player_sound)
+	
+	await get_tree().create_timer(0.2).timeout
+	# Rotate hank if he's staring at a wall
+	if is_active_state() and hank_mesh.wall_detection_raycast_short.is_colliding() and not hank_mesh.sees_player:
+		hank_mesh.rotation_degrees.y += 180
 
 
 func _on_player_sound(sound_position: Vector3, travel_distance: float) -> void:

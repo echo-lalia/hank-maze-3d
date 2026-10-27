@@ -349,7 +349,7 @@ func add_objects_to_room(room_position: Vector3) -> void:
 			CART:
 				item = CART.instantiate()
 				# Add to a random position with a random rotation.
-				item.position = room_position + _random_room_position(0.7)
+				item.position = room_position + _random_room_position(1.0)
 				item.rotation.y = randf_range(0, deg_to_rad(360))
 				add_child(item)
 	
@@ -366,7 +366,7 @@ func generate_maze() -> void:
 	
 	
 	# Open some random walls before generating the maze
-	for i in 3:
+	for i in 4:
 		var x := randi_range(0, MAZE_WIDTH - 2)
 		var y := randi_range(0, MAZE_LENGTH - 2)
 		_connect_room_square(maze, x, y)

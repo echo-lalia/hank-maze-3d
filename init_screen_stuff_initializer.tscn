@@ -246,14 +246,84 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_swfsk")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_y2u8n"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ycf2q"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dsdpp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r3tyy"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_frxmg")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_y2u8n")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_ycf2q")
+
+[sub_resource type="Shader" id="Shader_f6yrh"]
+code = "shader_type spatial;
+
+global uniform sampler2D beyer_matrix: filter_nearest;
+global uniform float viewport_width_beyer;
+global uniform float viewport_height_beyer;
+
+
+
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+	ALBEDO = COLOR.rgb;
+}
+
+
+void light() {
+	float beyer_threshold = texture(beyer_matrix, SCREEN_UV * vec2(viewport_width_beyer, viewport_height_beyer)).r;
+	float diffuse;
+	
+	// https://docs.godotengine.org/en/stable/tutorials/shaders/shader_reference/spatial_shader.html#light-built-ins
+	if (LIGHT_IS_AREA) {
+		if (LIGHT_AREA_DIFFUSE_MULTIPLIER.r > beyer_threshold) {
+			DIFFUSE_LIGHT += LIGHT_AREA_DIFFUSE_MULTIPLIER * ATTENUATION * LIGHT_COLOR;
+		}
+	}
+	else {
+		diffuse = clamp(dot(LIGHT, NORMAL), 0.0, 1.0);
+		if (diffuse > beyer_threshold) {
+			DIFFUSE_LIGHT += diffuse * LIGHT_COLOR * ATTENUATION;
+		}
+	}
+	
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v47jv"]
+render_priority = 0
+shader = SubResource("Shader_f6yrh")
+
+[sub_resource type="Gradient" id="Gradient_7rak8"]
+offsets = PackedFloat32Array(0, 0.15588236, 0.44558823, 0.7529412, 1)
+colors = PackedColorArray(0.16470589, 0.12156863, 0.09019608, 1, 0.039215688, 0.047058824, 0.05882353, 1, 0.19215687, 0.0627451, 0.07450981, 1, 0.38431373, 0.16470589, 0.16078432, 1, 0.6745098, 0.45490196, 0.43137255, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ic4r0"]
+gradient = SubResource("Gradient_7rak8")
+
+[sub_resource type="Curve" id="Curve_7f18w"]
+_data = [Vector2(0.5126227, 1), 0.0, 0.0, 0, 0, Vector2(0.9067321, 0.56829894), -2.9046357, -2.9046357, 0, 0, Vector2(1, 0), -13.10845, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ic4r0"]
+curve = SubResource("Curve_7f18w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pu8au"]
+lifetime_randomness = 1.0
+particle_flag_damping_as_friction = true
+emission_shape = 3
+emission_box_extents = Vector3(0.03, 0.115, 0.03)
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_max = 6.0
+scale_curve = SubResource("CurveTexture_ic4r0")
+color_initial_ramp = SubResource("GradientTexture1D_ic4r0")
+
+[sub_resource type="QuadMesh" id="QuadMesh_v6sv2"]
+size = Vector2(0.05, 0.05)
 
 [node name="InitScreenStuffInitializer" type="Camera3D" unique_id=1063802311]
 
@@ -308,7 +378,18 @@ mesh = SubResource("ArrayMesh_dv8hd")
 
 [node name="RichText3D" parent="Door" unique_id=1165830346 instance=ExtResource("16_lflej")]
 transform = Transform3D(1.175, 0, 0, 0, 1.175, 0, 0, 0, 1.175, 0, 1.550016, -2.7216415)
-material_override = SubResource("ShaderMaterial_dsdpp")
-texture = SubResource("ViewportTexture_y2u8n")
+material_override = SubResource("ShaderMaterial_r3tyy")
+texture = SubResource("ViewportTexture_ycf2q")
 size = Vector2i(144, 144)
 text = "[font_size=34]FIND IT"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=951006169]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0342616, -4.435069)
+material_override = SubResource("ShaderMaterial_v47jv")
+amount = 32
+explosiveness = 1.0
+fixed_fps = 60
+transform_align = 1
+transform_align_channel_filter = 1
+process_material = SubResource("ParticleProcessMaterial_pu8au")
+draw_pass_1 = SubResource("QuadMesh_v6sv2")

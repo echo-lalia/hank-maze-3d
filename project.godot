@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Hank Maze 3D"
-config/version="0.1.2"
+config/version="1.0.0"
 run/main_scene="uid://c4y80yjg2gxku"
 config/features=PackedStringArray("4.8", "GL Compatibility")
 boot_splash/bg_color=Color(0.03797171, 0.035502274, 0.0015411723, 1)
@@ -445,9 +445,7 @@ anti_aliasing/screen_space_roughness_limiter/enabled=false
 textures/decals/filter=0
 textures/light_projectors/filter=0
 environment/glow/upscale_mode=0
-limits/opengl/max_renderable_elements=32768
-limits/opengl/max_decals=32
-limits/opengl/max_renderable_lights=16
+limits/opengl/max_lights_per_object=12
 occlusion_culling/use_occlusion_culling=true
 
 [shader_globals]
