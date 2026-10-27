@@ -7,9 +7,7 @@ class_name  PlayerAudioPlayer
 
 
 func _calculate_travel_distance(travel_distance: float) -> float:
-	if PlayerBody.current_player_instance.has_gourd:
-		return travel_distance if PlayerBody.current_player_instance.has_hank_line_of_sight else travel_distance / 1.5
-	return travel_distance if PlayerBody.current_player_instance.has_hank_line_of_sight else travel_distance / 2
+	return travel_distance if PlayerBody.current_player_instance.has_hank_line_of_sight else travel_distance / 1.5
 
 
 

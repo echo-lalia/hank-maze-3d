@@ -9,7 +9,7 @@ const DIST_PER_STEP_SFX: float = 1
 
 const CONE_VISION_ANGLE: float = deg_to_rad(60)
 const STARE_PLAYER_MAX_ANGLE: float = deg_to_rad(75)
-const CONE_VISION_DISTANCE: float = 15
+const CONE_VISION_DISTANCE: float = 5
 
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer

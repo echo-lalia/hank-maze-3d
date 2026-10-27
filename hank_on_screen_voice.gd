@@ -5,7 +5,7 @@ extends VisibleOnScreenNotifier3D
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
-const OFF_SCREEN_DURATION_THRESHOLD = 30000
+const OFF_SCREEN_DURATION_THRESHOLD = 60000
 
 
 var hank_exit_screen_time: int = -30000

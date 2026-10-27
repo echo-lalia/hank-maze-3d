@@ -76,7 +76,7 @@ var movement_state: MOVEMENT_STATES = MOVEMENT_STATES.normal:
 		if movement_state != val:
 			# Play a loud step when finishing a jump
 			if movement_state == MOVEMENT_STATES.midair:
-				player_step_sound_player.play_player_sound_from_position(global_position, BIG_STOP_RANDOM_STREAM, GameRun.phase2_switchf(60, 75), -3.0)
+				player_step_sound_player.play_player_sound_from_position(global_position, BIG_STOP_RANDOM_STREAM, GameRun.phase2_switchf(50, 60), -3.0)
 			movement_state = val
 			_switch_movement_state()
 
@@ -228,11 +228,11 @@ func _handle_step_sounds() -> void:
 		_current_step_travel -= STEP_SOUND_DISTANCE
 		#print(MOVEMENT_STATES.find_key(movement_state))
 		if movement_state == MOVEMENT_STATES.sneak:
-			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, 10.0, -15.0)
+			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(8, 12), -15.0)
 		elif movement_state == MOVEMENT_STATES.sprint:
-			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(45, 60), -3.0)
+			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(40, 50), -3.0)
 		elif movement_state == MOVEMENT_STATES.normal:
-			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(30, 40), -9.0)
+			player_step_sound_player.play_player_sound_from_position(global_position, PLAYER_STEP_AUDIO_STREAM_RANDOMIZER, GameRun.phase2_switchf(25, 30), -9.0)
 
 
 func _process(_delta: float) -> void:

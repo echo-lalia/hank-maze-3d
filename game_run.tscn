@@ -270,6 +270,7 @@ metadata/_custom_type_script = "uid://byhpn01aq0yc7"
 
 [node name="HankVoicePlayer" type="AudioStreamPlayer3D" parent="HankBody" unique_id=1314254466]
 stream = SubResource("AudioStreamRandomizer_pb32r")
+unit_size = 20.0
 script = ExtResource("17_bsayt")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
