@@ -8,15 +8,16 @@ extends HankState
 const PATROL_DISTANCE: float = 8.0
 const PATROL_DISTANCE_PHASE2: float = 15.0
 const PATROL_MAX_PATH: float = 14.0
-const PATROL_MAX_PHASE2: float = 20.0
+const PATROL_MAX_PHASE2: float = 30.0
+
 
 
 const MAX_PLAYER_DISTANCE_FOLLOW_PHASE1: float = 40.0
 const MAX_PLAYER_DISTANCE_FOLLOW_PHASE2: float = 30.0
-const PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE1: float = 0.4
-const PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE2: float = 0.6
-const MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE1: float = 0.3
-const MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE2: float = 0.6
+const PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE1: float = 0.6
+const PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE2: float = 0.4
+const MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE1: float = 0.2
+const MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE2: float = 0.8
 
 
 ## Called when entering this state
@@ -60,13 +61,19 @@ func _looking_finished(anim_name: StringName) -> void:
 	if hank_mesh.saw_player_recently:
 		hank_body.hank_speed += 2
 	
-	# Select a random movement strategy.
 	
+	# Select a random movement strategy.
+	var max_path_length: float
 	if global_position.distance_to(PlayerBody.current_player_instance.global_position) > GameRun.phase2_switchf(MAX_PLAYER_DISTANCE_FOLLOW_PHASE1, MAX_PLAYER_DISTANCE_FOLLOW_PHASE2) \
 	and randf() < GameRun.phase2_switchf(PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE1, PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE2):
 		print("Moving toward player")
 		# Move toward the player.
 		target_position = PlayerBody.current_player_instance.global_position
+		if GameRun.current_game_run.phase_two:
+			hank_body.navigation_agent_3d.get_next_path_position()
+			max_path_length = hank_body.navigation_agent_3d.get_path_length() - MAX_PLAYER_DISTANCE_FOLLOW_PHASE2
+		else:
+			max_path_length = PATROL_MAX_PATH
 
 	elif randf() < GameRun.phase2_switchf(MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE1, MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE2):
 		print("Moving toward objective")
@@ -76,6 +83,7 @@ func _looking_finished(anim_name: StringName) -> void:
 			if PlayerBody.current_player_instance.has_gourd else
 			PlayerBody.current_player_instance.maze_generator.end_room_position.global_position
 		)
+		max_path_length = GameRun.phase2_switchf(PATROL_MAX_PATH, PATROL_MAX_PHASE2)
 
 	else:
 		print("Moving randomly")
@@ -86,16 +94,17 @@ func _looking_finished(anim_name: StringName) -> void:
 			0,
 		).rotated(Vector3(0, 1, 0), randf_range(0, deg_to_rad(360)))
 		target_position = global_position + direction
+		max_path_length = GameRun.phase2_switchf(PATROL_MAX_PATH, PATROL_MAX_PHASE2)
 	
 	hank_body.navigation_agent_3d.get_next_path_position()
 	
-	if hank_body.navigation_agent_3d.get_path_length() > GameRun.phase2_switchf(PATROL_MAX_PATH, PATROL_MAX_PHASE2):
+	if hank_body.navigation_agent_3d.get_path_length() > max_path_length:
 		# The path is too long and we need to sample a point closer to us along the navigation path.
 		# We should be able to pick a point along the path that's one before the first one outside of our max range.
 		var navigation_path := hank_body.navigation_agent_3d.get_current_navigation_path()
 		for i in range(1, len(navigation_path)):
 			var point: Vector3 = navigation_path[i]
-			if global_position.distance_to(point) > PATROL_MAX_PATH:
+			if global_position.distance_to(point) > max_path_length:
 				target_position = navigation_path[i - 1]
 				break
 	
