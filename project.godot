@@ -33,6 +33,10 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/raytraced_audio/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [global_group]
 
 player_to_hank_vision="Used to detect when we see hank's vision area3d."
