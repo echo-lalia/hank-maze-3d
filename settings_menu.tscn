@@ -16,7 +16,7 @@ script = ExtResource("1_0cmel")
 
 [node name="FlowContainer" type="FlowContainer" parent="." unique_id=803864120]
 layout_mode = 2
-theme_override_constants/h_separation = 24
+theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 12
 alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -55,7 +55,7 @@ text = "60"
 horizontal_alignment = 1
 
 [node name="FOVHSlider" type="HSlider" parent="FlowContainer/PanelContainer/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=1159530531]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -99,7 +99,7 @@ text = "60"
 horizontal_alignment = 1
 
 [node name="BrightnessHSlider" type="HSlider" parent="FlowContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=1845222099]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -144,13 +144,61 @@ text = "60"
 horizontal_alignment = 1
 
 [node name="VolumeHSlider" type="HSlider" parent="FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=1824942678]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -80.0
 max_value = 3.5
 tick_count = 10
+ticks_on_borders = true
+ticks_position = 1
+
+[node name="PanelContainer4" type="PanelContainer" parent="FlowContainer" unique_id=495632668]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="FlowContainer/PanelContainer4" unique_id=20908586]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FlowContainer/PanelContainer4/MarginContainer" unique_id=717462581]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="FlowContainer/PanelContainer4/MarginContainer/HBoxContainer" unique_id=567889247]
+layout_mode = 2
+text = "Mouse Speed"
+
+[node name="PanelContainer" type="PanelContainer" parent="FlowContainer/PanelContainer4/MarginContainer/HBoxContainer" unique_id=886253780]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FlowContainer/PanelContainer4/MarginContainer/HBoxContainer/PanelContainer" unique_id=321619537]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MouseSpeedValueLabel" type="Label" parent="FlowContainer/PanelContainer4/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=418418470]
+layout_mode = 2
+text = "60"
+horizontal_alignment = 1
+
+[node name="MouseSpeedHSlider" type="HSlider" parent="FlowContainer/PanelContainer4/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=1108567996]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.01
+max_value = 4.0
+step = 0.01
+value = 1.0
+allow_greater = true
+allow_lesser = true
+tick_count = 5
 ticks_on_borders = true
 ticks_position = 1
 
@@ -280,4 +328,6 @@ script = ExtResource("3_mlw3h")
 [connection signal="value_changed" from="FlowContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/BrightnessHSlider" to="." method="_on_brightness_h_slider_value_changed"]
 [connection signal="drag_ended" from="FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/VolumeHSlider" to="." method="_slider_drag_ended"]
 [connection signal="value_changed" from="FlowContainer/PanelContainer3/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/VolumeHSlider" to="." method="_on_volume_h_slider_value_changed"]
+[connection signal="drag_ended" from="FlowContainer/PanelContainer4/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/MouseSpeedHSlider" to="." method="_slider_drag_ended"]
+[connection signal="value_changed" from="FlowContainer/PanelContainer4/MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/MouseSpeedHSlider" to="." method="_on_mouse_speed_h_slider_value_changed"]
 [connection signal="pressed" from="FlowContainer2/FullscreenButton" to="FlowContainer2/FullscreenButton" method="_on_pressed"]

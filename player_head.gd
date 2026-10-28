@@ -2,7 +2,8 @@ extends Node3D
 class_name PlayerHead
 
 
-const MOUSE_SPEED: float = 0.001
+const MOUSE_SPEED_BASE: float = 0.001
+var mouse_speed: float = 0.001
 
 
 const NORMAL_HEAD_HEIGHT: float = 2.0
@@ -17,10 +18,15 @@ const SNEAK_HEAD_HEIGHT: float = 1.5
 
 
 # Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+func _ready() -> void:
+	Main.current_main_instance.settings_changed.connect(_update_mouse_speed)
+	_update_mouse_speed()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
+
+func _update_mouse_speed() -> void:
+	mouse_speed = MOUSE_SPEED_BASE * Main.game_save.mouse_speed
 
 
 
@@ -44,7 +50,7 @@ func _input(event: InputEvent) -> void:
 		var screen_movement: Vector2 = (event as InputEventMouseMotion).screen_relative
 		
 		rotation = Vector3(
-			clampf(rotation.x + (-screen_movement.y * MOUSE_SPEED), deg_to_rad(-85), deg_to_rad(89)),
-			rotation.y + (-screen_movement.x * MOUSE_SPEED),
+			clampf(rotation.x + (-screen_movement.y * mouse_speed), deg_to_rad(-85), deg_to_rad(89)),
+			rotation.y + (-screen_movement.x * mouse_speed),
 			0,
 		)

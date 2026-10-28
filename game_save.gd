@@ -16,6 +16,7 @@ const SAVE_PATH = "user://savedata.tres"
 @export var brightness: float = 100
 @export var volume: float = 0
 
+@export var mouse_speed: float = 1.0
 
 @export var sneak_button: InputEvent
 @export var sprint_button: InputEvent
@@ -50,4 +51,5 @@ func _to_string() -> String:
 		+ "\n\tsprint_button=" + str(sprint_button)
 		+ "\n\thint_button=" + str(hint_button)
 		+ "\n\tbottle_button=" + str(bottle_button)
+		+ "\n\tmouse_speed=" + str(mouse_speed)
 	)
