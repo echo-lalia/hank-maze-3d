@@ -20,6 +20,7 @@ const MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE1: float = 0.2
 const MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE2: float = 0.8
 
 
+
 ## Called when entering this state
 func enter() -> void:
 	auto_animation = false
