@@ -20,6 +20,7 @@ const CONE_VISION_DISTANCE: float = 5
 @onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
 @onready var player_detection_raycast_4: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast4
 @onready var player_detection_raycast_5: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast5
+@onready var player_detection_raycast_6: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast6
 
 
 @onready var organ_sting_player: AudioStreamPlayer = $OrganStingPlayer
@@ -214,6 +215,7 @@ func _process(delta: float) -> void:
 	or _raycast_sees_player(player_detection_raycast_3) \
 	or _raycast_sees_player(player_detection_raycast_4) \
 	or _raycast_sees_player(player_detection_raycast_5) \
+	or _raycast_sees_player(player_detection_raycast_6) \
 	or (_player_in_vision_cone() and PlayerBody.current_player_instance.has_hank_line_of_sight):
 		saw_player_this_frame = true
 		last_time_seeing_player = Time.get_ticks_msec()
