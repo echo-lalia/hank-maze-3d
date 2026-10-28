@@ -60,6 +60,12 @@ var _lowpass_max_safe_cutoff: float = LOWPASS_MAX_HZ
 var _is_enabled: bool = false
 
 
+
+
+## This variable was patched in to control the strength of the lowpass effect.
+## It can be used to reduce the strength of the low pass effect by scaling the lowest part of the effect up.
+@export_range(0, 1, 0.01) var lowpass_effect_minimum: float = 0.0
+
 var interaural_delay_effect: AudioEffectDelay
 
 
@@ -205,6 +211,13 @@ func _update(rays_count: int, interpolation: float, delta: float):
 	else:
 		var ratio: float = float(_lowpass_rays_count) / float(rays_count)
 		ratio = clamp(ratio, 0, 1)
+		
+		# Note: _lowpass_rays_count is updated by the audio rays themselves (for some reason).
+		# It represents how many rays have line of sight to the audio source.
+		if lowpass_effect_minimum:
+			ratio = Utils.map_range(ratio, 0, 1, lowpass_effect_minimum, 1)
+		
+		
 		var lowpass: AudioEffectLowPassFilter = AudioServer.get_bus_effect(idx, 0)
 
 		# Frequencies aren't linear, they scale logarithmically (log2 space) +1 octave = 2x the frequency

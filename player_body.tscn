@@ -537,18 +537,18 @@ text = "2"
 stream = ExtResource("8_hqxm8")
 volume_db = 3.0
 pitch_scale = 0.95
-bus = &"RaytracedAmbient"
+bus = &"RaytracedReverb"
 script = ExtResource("5_0slni")
 metadata/_custom_type_script = "uid://c5d0rwkq0q1fc"
 
 [node name="Bone_001" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=1617616984]
-transform = Transform3D(0.1926696, -0.007464707, 0.05312878, 0.053088922, -0.0020568632, -0.19281425, 0.0077428995, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.19266959, -0.007464707, 0.05312878, 0.05308892, -0.0020568632, -0.19281425, 0.0077428985, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_wh7ba")
 
 [node name="Bone_002" type="MeshInstance3D" parent="PlayerHead/PlayerCamera/BoneRoot" unique_id=688415849]
-transform = Transform3D(0.1926696, -0.007464707, 0.05312878, 0.053088922, -0.0020568632, -0.19281425, 0.0077428995, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
+transform = Transform3D(0.19266959, -0.007464707, 0.05312878, 0.05308892, -0.0020568632, -0.19281425, 0.0077428985, 0.19985007, -8.655777e-09, -0.07, -0.61, -1.1419079)
 visible = false
 material_override = SubResource("ShaderMaterial_wh7ba")
 mesh = SubResource("ArrayMesh_hqxm8")
@@ -566,6 +566,7 @@ doppler_tracking = 2
 script = ExtResource("3_2lce7")
 rayCollisionLayers = 8
 rays_count = 16
+ambient_enabled = false
 metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
 
 [node name="HankSightArea" type="Area3D" parent="." unique_id=1238339586 node_paths=PackedStringArray("player_body")]
@@ -592,6 +593,7 @@ debug_color = Color(0.27300003, 0.63, 0, 0.91764706)
 [node name="PlayerStepSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=882066462]
 stream = ExtResource("7_xs03g")
 max_polyphony = 3
+bus = &"RaytracedReverb"
 script = ExtResource("5_0slni")
 
 [node name="PlayerHurtArea" type="Area3D" parent="." unique_id=693048740 node_paths=PackedStringArray("player", "player_damage_effect")]

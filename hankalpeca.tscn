@@ -1434,13 +1434,13 @@ hit_from_inside = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 stream = SubResource("AudioStreamRandomizer_vhyvb")
 volume_db = 5.0
-unit_size = 20.0
+unit_size = 50.0
 pitch_scale = 0.9
 max_polyphony = 2
 doppler_tracking = 2
 script = ExtResource("9_bkn7k")
+lowpass_effect_minimum = 0.1
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="OrganStingPlayer" type="AudioStreamPlayer" parent="." unique_id=361379016]
 stream = ExtResource("4_utmuo")
-bus = &"RaytracedAmbient"

@@ -275,6 +275,7 @@ metadata/_custom_type_script = "uid://byhpn01aq0yc7"
 stream = SubResource("AudioStreamRandomizer_pb32r")
 unit_size = 20.0
 script = ExtResource("17_bsayt")
+lowpass_effect_minimum = 0.2
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="PlayerToHankVisionArea" type="Area3D" parent="HankBody" unique_id=240327546 groups=["player_to_hank_vision"]]
@@ -357,6 +358,7 @@ text = "Hes coming..."
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Gourd" unique_id=250049188]
 stream = ExtResource("16_af7r6")
+bus = &"RaytracedReverb"
 
 [node name="Exit" type="Node3D" parent="." unique_id=267469642 node_paths=PackedStringArray("maze_generator")]
 script = ExtResource("11_qem8s")

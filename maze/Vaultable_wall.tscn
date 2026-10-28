@@ -132,6 +132,7 @@ mesh = SubResource("ArrayMesh_l5xgk")
 
 [node name="PlayerAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1530406440]
 stream = ExtResource("6_jgfqr")
+bus = &"RaytracedReverb"
 script = ExtResource("7_vi3pv")
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." unique_id=110807127]

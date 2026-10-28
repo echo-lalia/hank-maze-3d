@@ -129,22 +129,27 @@ func _ready() -> void:
 	if is_baking():
 		await bake_finished
 	
-	# Add compass item to maze
-	var compass_item: Node3D = COMPASS_ITEM.instantiate()
-	var rand_room: Vector2i = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
-	compass_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
-	add_child(compass_item)
-	banned_object_rooms.append(rand_room)
+	var rand_room: Vector2i
 	
-	# Add bottle item to maze
-	var bottle_item: Node3D = BOTTLE_ITEM.instantiate()
-	rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
-	bottle_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
-	add_child(bottle_item)
-	banned_object_rooms.append(rand_room)
+	# Add compass items to maze
+	for i in 3:
+		var compass_item: Node3D = COMPASS_ITEM.instantiate()
+		@warning_ignore("integer_division")
+		rand_room = Vector2i(randi_range(1, MAZE_WIDTH - 2), randi_range(0, MAZE_LENGTH/3))
+		compass_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
+		add_child(compass_item)
+		banned_object_rooms.append(rand_room)
+	
+	# Add bottle items to maze
+	for i in 2:
+		var bottle_item: Node3D = BOTTLE_ITEM.instantiate()
+		rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.2), int(MAZE_LENGTH * 0.9)))
+		bottle_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
+		add_child(bottle_item)
+		banned_object_rooms.append(rand_room)
 	
 	var bone_item: Node3D = BONE_ITEM.instantiate()
-	rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.333), int(MAZE_LENGTH * 0.666)))
+	rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.2), int(MAZE_LENGTH * 0.9)))
 	bone_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
 	add_child(bone_item)
 	
