@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bji480xu4rrwx" path="res://textures/stylebox_bg.png" id="2_jix8l"]
 [ext_resource type="PackedScene" uid="uid://dx13pnwtfy8h1" path="res://time_label.tscn" id="4_glbon"]
 [ext_resource type="Texture2D" uid="uid://jhibta3gofy2" path="res://title_text.png" id="4_nlkkf"]
+[ext_resource type="AudioStream" uid="uid://bdv40k70xh4dg" path="res://sfx/ambience0.mp3" id="7_qe12f"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fu7sn"]
 texture = ExtResource("2_jix8l")
@@ -227,6 +228,11 @@ layout_mode = 2
 [node name="SettingsMenu" parent="MarginContainer2/VBoxContainer" unique_id=664041274 instance=ExtResource("2_7vrkn")]
 layout_mode = 2
 size_flags_vertical = 10
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=530582291]
+stream = ExtResource("7_qe12f")
+volume_db = -80.0
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]

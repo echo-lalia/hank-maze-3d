@@ -37,6 +37,7 @@
 [ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="22_85shy"]
 [ext_resource type="Texture2D" uid="uid://jfkjjfbh0edq" path="res://textures/door.png" id="30_swfsk"]
 [ext_resource type="AudioStream" uid="uid://dtiao8113nne1" path="res://sfx/try_door.mp3" id="32_j0lvp"]
+[ext_resource type="StyleBox" uid="uid://jmtxjbe03s5h" path="res://textures/more_opaque_panel_container.tres" id="37_g7dxb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j7oc2"]
 radius = 0.16
@@ -179,14 +180,14 @@ _data = {
 &"float": SubResource("Animation_gag4w")
 }
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_4b6ee"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_g7dxb"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ojlm1"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("17_af7r6")
-shader_parameter/viewport_texture = SubResource("ViewportTexture_4b6ee")
+shader_parameter/viewport_texture = SubResource("ViewportTexture_g7dxb")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g7dxb"]
 render_priority = 0
@@ -352,7 +353,7 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.739, 0)
 material_override = SubResource("ShaderMaterial_ojlm1")
 billboard = 1
-texture = SubResource("ViewportTexture_4b6ee")
+texture = SubResource("ViewportTexture_g7dxb")
 size = Vector2i(144, 144)
 text = "Hes coming..."
 
@@ -399,6 +400,7 @@ stream = ExtResource("32_j0lvp")
 bus = &"RaytracedReverb"
 
 [node name="AmbiencePlayer" type="AudioStreamPlayer" parent="." unique_id=1460895642]
+process_mode = 3
 stream = ExtResource("18_qem8s")
 volume_db = -12.0
 autoplay = true
@@ -408,9 +410,19 @@ stream = ExtResource("17_ldgum")
 volume_db = -20.0
 bus = &"RaytracedReverb"
 
-[node name="PauseMenu" type="PanelContainer" parent="." unique_id=1719766157]
+[node name="PauseMenu" type="ColorRect" parent="." unique_id=186775262]
 process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.003921569, 0.007843138, 0, 0.33333334)
+script = ExtResource("18_vvw86")
+
+[node name="PanelContainer" type="PanelContainer" parent="PauseMenu" unique_id=1719766157]
 z_index = 10
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
 anchor_top = 0.1
@@ -418,44 +430,45 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("18_vvw86")
+theme_override_styles/panel = ExtResource("37_g7dxb")
 
-[node name="MarginContainer" type="MarginContainer" parent="PauseMenu" unique_id=704826543]
+[node name="MarginContainer" type="MarginContainer" parent="PauseMenu/PanelContainer" unique_id=704826543]
 layout_mode = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu/MarginContainer" unique_id=1956236817]
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu/PanelContainer/MarginContainer" unique_id=1956236817]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/MarginContainer/HBoxContainer" unique_id=670681203]
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/PanelContainer/MarginContainer/HBoxContainer" unique_id=670681203]
 layout_mode = 2
 size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.67
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=733080728]
+[node name="ResumeButton" type="Button" parent="PauseMenu/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=733080728]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Resume"
 
-[node name="CreditsButton" type="Button" parent="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1018852716]
+[node name="CreditsButton" type="Button" parent="PauseMenu/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1018852716]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=991196791]
+[node name="QuitButton" type="Button" parent="PauseMenu/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=991196791]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 10
 text = "Quit"
 
-[node name="SettingsMenu" parent="PauseMenu/MarginContainer/HBoxContainer" unique_id=664041274 instance=ExtResource("18_kuosh")]
+[node name="SettingsMenu" parent="PauseMenu/PanelContainer/MarginContainer/HBoxContainer" unique_id=664041274 instance=ExtResource("18_kuosh")]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/CreditsButton" to="PauseMenu" method="_on_credits_button_pressed"]
-[connection signal="pressed" from="PauseMenu/MarginContainer/HBoxContainer/VBoxContainer/QuitButton" to="PauseMenu" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/CreditsButton" to="PauseMenu" method="_on_credits_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/QuitButton" to="PauseMenu" method="_on_quit_button_pressed"]

@@ -2461,6 +2461,7 @@ animations = [{
 }]
 
 [node name="CreditsPanel" type="ColorRect" unique_id=1742903043]
+z_index = 1000
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

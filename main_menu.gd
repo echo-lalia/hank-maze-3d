@@ -13,10 +13,13 @@ const INIT_SCREEN_WAIT = preload("uid://nos2o78p06x2")
 const CREDITS = preload("uid://eitkhjbnlx05")
 
 
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Utils.animate(audio_stream_player, "volume_db", -80, -20, 0.5)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
 	last_run_time_label.time = Main.game_save.last_run_time
 	best_run_time_label.time = Main.game_save.best_run_time
 	

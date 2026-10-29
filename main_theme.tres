@@ -1,8 +1,10 @@
 [gd_resource type="Theme" format=3 uid="uid://bm2xy8x82f5ud"]
 
+[ext_resource type="AudioStream" uid="uid://bstmdummbru13" path="res://sfx/ui_bump.mp3" id="1_1i34x"]
 [ext_resource type="Texture2D" uid="uid://csm20wwgvb411" path="res://textures/stylebox0disabled.png" id="1_466ly"]
 [ext_resource type="FontFile" uid="uid://diirmqwd1vvjr" path="res://Umbreia.ttf" id="1_470mv"]
 [ext_resource type="Texture2D" uid="uid://bel36xgqigkrx" path="res://textures/stylebox0.png" id="1_a2l2q"]
+[ext_resource type="AudioStream" uid="uid://byr371heohx2e" path="res://sfx/button_click.mp3" id="1_wnmfn"]
 [ext_resource type="Texture2D" uid="uid://bnwupk3844ifn" path="res://textures/stylebox0hovered.png" id="2_52mx2"]
 [ext_resource type="Texture2D" uid="uid://ch15at13la1va" path="res://textures/stylebox0pressed.png" id="4_py0i1"]
 [ext_resource type="Texture2D" uid="uid://d310klsp8xa4v" path="res://textures/styleboxpanelcontainer.png" id="5_52mx2"]
@@ -27,6 +29,7 @@ texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
+modulate_color = Color(1, 0.83137256, 0.45490196, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wnmfn"]
 texture = ExtResource("2_52mx2")
@@ -34,6 +37,7 @@ texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
+modulate_color = Color(0.9999997, 0.79658914, 0.65182304, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_glbon"]
 texture = ExtResource("1_a2l2q")
@@ -41,6 +45,7 @@ texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
+modulate_color = Color(0.9999997, 0.83041537, 0.45388317, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1i34x"]
 texture = ExtResource("4_py0i1")
@@ -48,21 +53,55 @@ texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
+modulate_color = Color(0.9999997, 0.7081593, 0.3502146, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7hjjl"]
+load_path = "res://.godot/imported/styleboxpanelcontainer.png-c9e049825ca6a6857762f7d13d8c7cc3.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0kida"]
+texture = SubResource("CompressedTexture2D_7hjjl")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+modulate_color = Color(1, 0.69, 0.39999998, 0.27058825)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1i34x"]
+load_path = "res://.godot/imported/styleboxpanelcontainer.png-c9e049825ca6a6857762f7d13d8c7cc3.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nxip8"]
+texture = SubResource("CompressedTexture2D_1i34x")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+modulate_color = Color(1, 0.74133337, 0.029999971, 0.60784316)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wnmfn"]
+load_path = "res://.godot/imported/styleboxpanelcontainer.png-c9e049825ca6a6857762f7d13d8c7cc3.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2u8nx"]
+texture = SubResource("CompressedTexture2D_wnmfn")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+modulate_color = Color(1, 0.78039217, 0.34117648, 0.50980395)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_52mx2"]
-color = Color(0.35074, 0.38, 0.2546, 0.16862746)
+color = Color(0.62, 0.34596, 0.19839999, 0.14117648)
 grow_begin = -30.0
 grow_end = -30.0
 thickness = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py0i1"]
-bg_color = Color(0.48901945, 0.4710217, 0.35071906, 1)
+bg_color = Color(0.6, 0.50980395, 0.10980392, 0.6666667)
 shadow_color = Color(0, 0, 0, 0.37254903)
 shadow_size = 1
 shadow_offset = Vector2(0.5, 0.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxwih"]
-bg_color = Color(0.5360401, 0.51321054, 0.351566, 1)
+bg_color = Color(0.6616894, 0.605197, 0.35376558, 0.6666667)
 shadow_color = Color(0, 0, 0, 0.37254903)
 shadow_size = 1
 shadow_offset = Vector2(0.5, 0.5)
@@ -72,18 +111,39 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
+bg_color = Color(0.052999094, 0.06983277, 0.0105432635, 0.6)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_py0i1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hjjl"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.58047724, 0.45197046, 0.15238604, 0.7490196)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yhfeq"]
 texture = ExtResource("5_52mx2")
 texture_margin_left = 6.0
 texture_margin_top = 6.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
-modulate_color = Color(1, 1, 1, 0.45882353)
+modulate_color = Color(1, 0.6901961, 0.4, 0.4)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_py0i1"]
-color = Color(0.35074, 0.38, 0.2546, 0.16862746)
+color = Color(0.61960787, 0.34509805, 0.2, 0.08235294)
 grow_begin = -3.0
 grow_end = -3.0
 thickness = 3
@@ -102,22 +162,33 @@ default_font_size = 20
 Button/colors/font_color = Color(0.92, 0.91126, 0.74520004, 1)
 Button/colors/font_outline_color = Color(0.07, 0.058333337, 0, 0.5803922)
 Button/constants/outline_size = 2
+Button/sounds/focus_sound = ExtResource("1_1i34x")
+Button/sounds/hover_sound = ExtResource("1_1i34x")
+Button/sounds/pressed_sound = ExtResource("1_wnmfn")
 Button/styles/disabled = SubResource("StyleBoxTexture_sxwih")
 Button/styles/focus = SubResource("StyleBoxTexture_7hjjl")
 Button/styles/hover = SubResource("StyleBoxTexture_wnmfn")
 Button/styles/normal = SubResource("StyleBoxTexture_glbon")
 Button/styles/pressed = SubResource("StyleBoxTexture_1i34x")
+FoldableContainer/font_sizes/font_size = 14
+FoldableContainer/styles/panel = SubResource("StyleBoxTexture_0kida")
+FoldableContainer/styles/title_collapsed_panel = SubResource("StyleBoxTexture_nxip8")
+FoldableContainer/styles/title_panel = SubResource("StyleBoxTexture_2u8nx")
 HSeparator/styles/separator = SubResource("StyleBoxLine_52mx2")
 HSlider/icons/grabber = ExtResource("5_py0i1")
 HSlider/icons/grabber_disabled = ExtResource("6_rt4o7")
 HSlider/icons/grabber_highlight = ExtResource("7_7hjjl")
 HSlider/icons/tick = ExtResource("8_7hjjl")
+HSlider/sounds/drag_ended_sound = ExtResource("1_wnmfn")
+HSlider/sounds/drag_started_sound = ExtResource("1_wnmfn")
+HSlider/sounds/value_changed_sound = ExtResource("1_wnmfn")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_py0i1")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_sxwih")
 HSlider/styles/slider = SubResource("StyleBoxFlat_52mx2")
-Label/colors/font_color = Color(0.96, 0.93983996, 0.7872, 1)
+Label/colors/font_color = Color(0.9606655, 0.9409956, 0.7876202, 1)
 Label/colors/font_shadow_color = Color(0.048450004, 0.05, 0.0034999996, 0.5686275)
 Label/constants/outline_size = 1
 Label/constants/shadow_outline_size = 2
-PanelContainer/styles/panel = SubResource("StyleBoxTexture_py0i1")
+Label/styles/focus = SubResource("StyleBoxFlat_7hjjl")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_yhfeq")
 VSeparator/styles/separator = SubResource("StyleBoxLine_py0i1")

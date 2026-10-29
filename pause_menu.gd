@@ -1,4 +1,4 @@
-extends PanelContainer
+extends ColorRect
 
 
 const CREDITS = preload("uid://eitkhjbnlx05")

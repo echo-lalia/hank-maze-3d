@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 func update_labels() -> void:
-	fov_value_label.text = Utils.simple_format_number(Main.game_save.fov)
+	fov_value_label.text = Utils.simple_format_number(Main.game_save.fov) + "°"
 	brightness_value_label.text = Utils.simple_format_number(Main.game_save.brightness) + "%"
 	volume_value_label.text = ("%+d" % Main.game_save.volume) + " dB"
 	mouse_speed_value_label.text = str(int(Main.game_save.mouse_speed * 100)) + "%"

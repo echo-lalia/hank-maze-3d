@@ -224,7 +224,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="FlowContainer2/PanelContainer4/MarginContainer/HBoxContainer" unique_id=1929008393]
 layout_mode = 2
-text = "Sneak button: "
+text = "Sneak: "
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer4/MarginContainer/HBoxContainer" unique_id=908175523]
 custom_minimum_size = Vector2(50, 20)
@@ -251,7 +251,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="FlowContainer2/PanelContainer5/MarginContainer/HBoxContainer" unique_id=353937743]
 layout_mode = 2
-text = "Sprint button: "
+text = "Sprint: "
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer5/MarginContainer/HBoxContainer" unique_id=781017437]
 custom_minimum_size = Vector2(50, 20)
@@ -278,7 +278,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="FlowContainer2/PanelContainer6/MarginContainer/HBoxContainer" unique_id=1705970360]
 layout_mode = 2
-text = "Hint: "
+text = "Use hint: "
 
 [node name="RemapActionButton" type="Button" parent="FlowContainer2/PanelContainer6/MarginContainer/HBoxContainer" unique_id=1867891634]
 custom_minimum_size = Vector2(50, 20)
