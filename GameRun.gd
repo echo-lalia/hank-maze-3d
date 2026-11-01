@@ -16,6 +16,9 @@ static var current_game_run: GameRun
 var run_start_time: float
 var phase_two: bool = false
 
+var hard_mode: bool = false
+
+
 func get_engine_time() -> float:
 	return Time.get_ticks_usec() / 1e+6
 

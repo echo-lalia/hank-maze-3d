@@ -7,9 +7,10 @@ const FLOOR_MATERIAL = preload("uid://de54k6p86uv8r")
 const CEILING_MATERIAL = preload("uid://cpmqma4scpyea")
 const PURE_BLACK_SHADER = preload("uid://dxlejllpnwoxc")
 
-const BIG_ROOM_CHANCE = 0.25
-const VAULT_CHANCE_THRESHOLD = 0.1
-const CHANCE_TO_DELETE_WALL_ENDS = 0.5
+
+var big_room_chance: float = 0.25
+var vault_chance_threshold: float = 0.1
+var chance_to_delete_wall_ends: float = 0.5
 
 
 const BANANATHING = preload("uid://detsxsphpkx4q")
@@ -25,16 +26,27 @@ const BOTTLE_ITEM = preload("uid://c4tnrpo6h6st2")
 
 const CEILING_LIGHT_CHANCE: float = 0.02
 
-const MAZE_LENGTH = 30
-const MAZE_RADIUS = 6
-const MAZE_WIDTH = MAZE_RADIUS*2 + 1
+
+
+var maze_length: int = 30
+var maze_radius: int = 6
+var maze_width: int:
+	get:
+		return maze_radius*2 + 1
+
+## The number of times to run the `_connect_room_square` function on the maze to open it up.
+var walls_to_open: int = 4
+
 
 
 const ROOM_SIZE: float = 6
 const ROOM_HEIGHT: float = 4
 const WALL_THICKNESS: float = 0.2
 const ROOM_SIZE_HALF: float = ROOM_SIZE / 2.0
-const MAZE_X_OFFSET: float = MAZE_WIDTH * ROOM_SIZE * 0.5 - ROOM_SIZE_HALF
+
+var maze_x_offset: float:
+	get:
+		return maze_width * ROOM_SIZE * 0.5 - ROOM_SIZE_HALF
 
 const ROOF_HEIGHT: float = 6.1
 
@@ -45,7 +57,7 @@ const SOUTH: int = 0b0100
 const WEST: int = 0b1000
 
 ## Room coordinates that can't generate objects
-var banned_object_rooms: Array[Vector2i] = [Vector2i(MAZE_RADIUS, 0), Vector2i(MAZE_RADIUS, MAZE_LENGTH-1)]
+var banned_object_rooms: Array[Vector2i] = [Vector2i(maze_radius, 0), Vector2i(maze_radius, maze_length-1)]
 
 
 @onready var csg_combiner_3d: CSGCombiner3D = $CSGCombiner3D
@@ -56,16 +68,31 @@ var banned_object_rooms: Array[Vector2i] = [Vector2i(MAZE_RADIUS, 0), Vector2i(M
 @onready var end_room_position: Node3D = $EndRoomPosition
 @onready var hank_room_position: Node3D = $HankRoomPosition
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Handle hard mode level setup
+	if GameRun.current_game_run.hard_mode:
+		print("Generating hard mode maze")
+		# Make the maze bigger
+		maze_length = 40
+		maze_radius = 9
+		# Make the maze more open
+		walls_to_open = 30
+		big_room_chance = 0.5
+		chance_to_delete_wall_ends = 0.75
+		# Reduce the number of vaultable walls.
+		vault_chance_threshold = 0.05
+	
+	
 	generate_maze()
 	
 	var floor_instance: MeshInstance3D = MeshInstance3D.new()
 	var floor_shape: QuadMesh = QuadMesh.new()
-	floor_shape.size = Vector2(MAZE_WIDTH * ROOM_SIZE + 1, ROOM_SIZE * MAZE_LENGTH + 1)
+	floor_shape.size = Vector2(maze_width * ROOM_SIZE + 1, ROOM_SIZE * maze_length + 1)
 	floor_shape.orientation = PlaneMesh.FACE_Y
 	floor_instance.mesh = floor_shape
-	floor_instance.position = Vector3(0, 0, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	floor_instance.position = Vector3(0, 0, ROOM_SIZE * maze_length * 0.5 - ROOM_SIZE_HALF)
 	floor_shape.material = FLOOR_MATERIAL
 	add_child(floor_instance)
 	
@@ -73,14 +100,14 @@ func _ready() -> void:
 	ceiling_instance.mesh = floor_shape.duplicate_deep()
 	ceiling_instance.mesh.material = CEILING_MATERIAL
 	ceiling_instance.mesh.flip_faces = true
-	ceiling_instance.position = Vector3(0, ROOF_HEIGHT, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	ceiling_instance.position = Vector3(0, ROOF_HEIGHT, ROOM_SIZE * maze_length * 0.5 - ROOM_SIZE_HALF)
 	add_child(ceiling_instance)
 	
 	# Add exterior walls
 	# Rear wall
 	var wall: MeshInstance3D = MeshInstance3D.new()
 	wall.mesh = QuadMesh.new()
-	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE + 1, ROOF_HEIGHT + 1)
+	wall.mesh.size = Vector2(maze_width * ROOM_SIZE + 1, ROOF_HEIGHT + 1)
 	wall.position = Vector3(0, ROOF_HEIGHT / 2, - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
 	add_child(wall)
@@ -88,8 +115,8 @@ func _ready() -> void:
 	wall = MeshInstance3D.new()
 	wall.mesh = QuadMesh.new()
 	wall.mesh.orientation = PlaneMesh.FACE_X
-	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH + 1, ROOF_HEIGHT + 1)
-	wall.position = Vector3(MAZE_WIDTH * ROOM_SIZE * -0.5, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	wall.mesh.size = Vector2(ROOM_SIZE * maze_length + 1, ROOF_HEIGHT + 1)
+	wall.position = Vector3(maze_width * ROOM_SIZE * -0.5, ROOF_HEIGHT / 2, ROOM_SIZE * maze_length * 0.5 - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
 	add_child(wall)
 	# Right wall
@@ -97,29 +124,29 @@ func _ready() -> void:
 	wall.mesh = QuadMesh.new()
 	wall.mesh.orientation = PlaneMesh.FACE_X
 	wall.mesh.flip_faces = true
-	wall.mesh.size = Vector2(ROOM_SIZE * MAZE_LENGTH + 1, ROOF_HEIGHT + 1)
-	wall.position = Vector3(MAZE_WIDTH * ROOM_SIZE * 0.5, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	wall.mesh.size = Vector2(ROOM_SIZE * maze_length + 1, ROOF_HEIGHT + 1)
+	wall.position = Vector3(maze_width * ROOM_SIZE * 0.5, ROOF_HEIGHT / 2, ROOM_SIZE * maze_length * 0.5 - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
 	add_child(wall)
 	# Far wall
 	wall = MeshInstance3D.new()
 	wall.mesh = QuadMesh.new()
-	wall.mesh.size = Vector2(MAZE_WIDTH * ROOM_SIZE + 1, ROOF_HEIGHT + 1)
+	wall.mesh.size = Vector2(maze_width * ROOM_SIZE + 1, ROOF_HEIGHT + 1)
 	wall.mesh.flip_faces = true
-	wall.position = Vector3(0, ROOF_HEIGHT / 2, ROOM_SIZE * MAZE_LENGTH - ROOM_SIZE_HALF)
+	wall.position = Vector3(0, ROOF_HEIGHT / 2, ROOM_SIZE * maze_length - ROOM_SIZE_HALF)
 	wall.mesh.material = PURE_BLACK_SHADER
 	add_child(wall)
 	
-	start_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, 0)
-	end_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH - 1)
+	start_room_position.global_position = global_position + room_coord_to_relative_position(maze_radius, 0)
+	end_room_position.global_position = global_position + room_coord_to_relative_position(maze_radius, maze_length - 1)
 	@warning_ignore("integer_division")
-	hank_room_position.global_position = global_position + room_coord_to_relative_position(MAZE_RADIUS, MAZE_LENGTH/2)
+	hank_room_position.global_position = global_position + room_coord_to_relative_position(maze_radius, maze_length/2)
 	
 	var floor_collider: StaticBody3D = StaticBody3D.new()
 	var floor_collision_shape: CollisionShape3D = CollisionShape3D.new()
 	floor_collision_shape.shape = BoxShape3D.new()
-	(floor_collision_shape.shape as BoxShape3D).size = Vector3(MAZE_WIDTH * ROOM_SIZE, 1, ROOM_SIZE * MAZE_LENGTH)
-	floor_collider.position = Vector3(0, -0.5, ROOM_SIZE * MAZE_LENGTH * 0.5 - ROOM_SIZE_HALF)
+	(floor_collision_shape.shape as BoxShape3D).size = Vector3(maze_width * ROOM_SIZE, 1, ROOM_SIZE * maze_length)
+	floor_collider.position = Vector3(0, -0.5, ROOM_SIZE * maze_length * 0.5 - ROOM_SIZE_HALF)
 	floor_collider.add_child(floor_collision_shape)
 	add_child(floor_collider)
 	
@@ -135,7 +162,7 @@ func _ready() -> void:
 	for i in 3:
 		var compass_item: Node3D = COMPASS_ITEM.instantiate()
 		@warning_ignore("integer_division")
-		rand_room = Vector2i(randi_range(1, MAZE_WIDTH - 2), randi_range(0, MAZE_LENGTH/3))
+		rand_room = Vector2i(randi_range(1, maze_width - 2), randi_range(0, maze_length/3))
 		compass_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
 		add_child(compass_item)
 		banned_object_rooms.append(rand_room)
@@ -143,21 +170,21 @@ func _ready() -> void:
 	# Add bottle items to maze
 	for i in 2:
 		var bottle_item: Node3D = BOTTLE_ITEM.instantiate()
-		rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.2), int(MAZE_LENGTH * 0.9)))
+		rand_room = Vector2i(randi_range(0, maze_width - 1), randi_range(int(maze_length * 0.2), int(maze_length * 0.9)))
 		bottle_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
 		add_child(bottle_item)
 		banned_object_rooms.append(rand_room)
 	
 	var bone_item: Node3D = BONE_ITEM.instantiate()
-	rand_room = Vector2i(randi_range(0, MAZE_WIDTH - 1), randi_range(int(MAZE_LENGTH * 0.2), int(MAZE_LENGTH * 0.9)))
+	rand_room = Vector2i(randi_range(0, maze_width - 1), randi_range(int(maze_length * 0.2), int(maze_length * 0.9)))
 	bone_item.position = room_coord_to_relative_position(rand_room.x, rand_room.y)
 	add_child(bone_item)
 	
 	# Add light to start room
-	add_ceiling_light_to_position(room_coord_to_relative_position(MAZE_RADIUS, 0))
+	add_ceiling_light_to_position(room_coord_to_relative_position(maze_radius, 0))
 	
 	
-	#var probe := create_reflection_probe(Vector3((MAZE_WIDTH + 2) * ROOM_SIZE, ROOM_HEIGHT * 3, ROOM_SIZE * (MAZE_LENGTH + 2)))
+	#var probe := create_reflection_probe(Vector3((maze_width + 2) * ROOM_SIZE, ROOM_HEIGHT * 3, ROOM_SIZE * (maze_length + 2)))
 	#probe.global_position = hank_room_position.global_position
 	#add_child(probe)
 
@@ -176,7 +203,7 @@ func _make_single_wall(allow_special: bool = true) -> Node3D:
 	# Chance for a special wall.
 	if allow_special:
 		var special_rand: float = randf()
-		if special_rand < VAULT_CHANCE_THRESHOLD:
+		if special_rand < vault_chance_threshold:
 			var wall: VaultableWall = VAULTABLE_WALL.instantiate()
 			wall.width = ROOM_SIZE
 			wall.height = ROOM_HEIGHT
@@ -236,7 +263,7 @@ func _count_maze_wall_connections(maze: MazeSquare.Shape, x: int, y: int, wall: 
 		var tx: int = x + tst[0]
 		var ty: int = y + tst[1]
 		var twall: int = tst[2]
-		if (0 <= tx and tx < MAZE_WIDTH) and (0 <= ty and ty < MAZE_LENGTH) \
+		if (0 <= tx and tx < maze_width) and (0 <= ty and ty < maze_length) \
 		and maze.room(tx, ty).walls_id() & twall:
 			result += 1
 	
@@ -272,7 +299,7 @@ func _wall_sides_with_connections(maze: MazeSquare.Shape, x: int, y: int, wall: 
 			var tx: int = x + tst[0]
 			var ty: int = y + tst[1]
 			var twall: int = tst[2]
-			if (0 <= tx and tx < MAZE_WIDTH) and (0 <= ty and ty < MAZE_LENGTH) \
+			if (0 <= tx and tx < maze_width) and (0 <= ty and ty < maze_length) \
 			and maze.room(tx, ty).walls_id() & twall:
 				connections += 1
 				break
@@ -299,7 +326,7 @@ func _dbg_label_wall_connections(wall: Node3D, maze: MazeSquare.Shape, x: int, y
 
 
 func room_coord_to_relative_position(x: int, y: int) -> Vector3:
-	return Vector3(x * ROOM_SIZE - MAZE_X_OFFSET, 0, y * ROOM_SIZE)
+	return Vector3(x * ROOM_SIZE - maze_x_offset, 0, y * ROOM_SIZE)
 
 
 
@@ -366,18 +393,18 @@ func add_objects_to_room(room_position: Vector3) -> void:
 
 
 func generate_maze() -> void:
-	var maze: MazeSquare.Shape = MazeSquare.Shape.new(MAZE_WIDTH, MAZE_LENGTH)
+	var maze: MazeSquare.Shape = MazeSquare.Shape.new(maze_width, maze_length)
 	
 	
 	
 	# Open some random walls before generating the maze
-	for i in 4:
-		var x := randi_range(0, MAZE_WIDTH - 2)
-		var y := randi_range(0, MAZE_LENGTH - 2)
+	for i in walls_to_open:
+		var x := randi_range(0, maze_width - 2)
+		var y := randi_range(0, maze_length - 2)
 		_connect_room_square(maze, x, y)
 		
-		var wide: bool = (x < MAZE_WIDTH - 3) and (randf() < BIG_ROOM_CHANCE)
-		var tall: bool = (y < MAZE_LENGTH - 3) and (randf() < BIG_ROOM_CHANCE)
+		var wide: bool = (x < maze_width - 3) and (randf() < big_room_chance)
+		var tall: bool = (y < maze_length - 3) and (randf() < big_room_chance)
 		if wide:
 			_connect_room_square(maze, x + 1, y)
 		if tall:
@@ -385,11 +412,11 @@ func generate_maze() -> void:
 		if wide and tall:
 			_connect_room_square(maze, x + 1, y + 1)
 	
-	MazeAlgoRecursiveBacktracker.generate(maze, maze.room(MAZE_RADIUS, 0))
+	MazeAlgoRecursiveBacktracker.generate(maze, maze.room(maze_radius, 0))
 	
 	
-	for y in MAZE_LENGTH:
-		for x in MAZE_WIDTH:
+	for y in maze_length:
+		for x in maze_width:
 			var room_position: Vector3 = room_coord_to_relative_position(x, y)
 			var room: MazeSquare.Room = maze.room(x, y)
 			
@@ -403,26 +430,26 @@ func generate_maze() -> void:
 			var wall: Node3D
 			# WSEN
 			if wall_bits & NORTH:  # N
-				var delete_wall_end: bool = (_wall_sides_with_connections(maze, x, y, NORTH) <= 1) and (randf() < CHANCE_TO_DELETE_WALL_ENDS)
+				var delete_wall_end: bool = (_wall_sides_with_connections(maze, x, y, NORTH) <= 1) and (randf() < chance_to_delete_wall_ends)
 				if not delete_wall_end:
 					wall = _make_single_wall(y != 0)
 					wall.position += room_position + Vector3(0, 0, -ROOM_SIZE_HALF)
 					csg_combiner_3d.add_child(wall)
 
 			if wall_bits & WEST:  # W
-				var delete_wall_end: bool = (_wall_sides_with_connections(maze, x, y, WEST) <= 1) and (randf() < CHANCE_TO_DELETE_WALL_ENDS)
+				var delete_wall_end: bool = (_wall_sides_with_connections(maze, x, y, WEST) <= 1) and (randf() < chance_to_delete_wall_ends)
 				if not delete_wall_end:
 					wall = _make_single_wall(x != 0)
 					wall.rotation_degrees.y = 90
 					wall.position += room_position + Vector3(-ROOM_SIZE_HALF, 0, 0)
 					csg_combiner_3d.add_child(wall)
 
-			if (y == MAZE_LENGTH - 1) and (wall_bits & SOUTH):  # S
+			if (y == maze_length - 1) and (wall_bits & SOUTH):  # S
 				wall = _make_single_wall(false)
 				wall.position += room_position + Vector3(0, 0, ROOM_SIZE_HALF)
 				csg_combiner_3d.add_child(wall)
 
-			if (x == MAZE_WIDTH - 1) and (wall_bits & EAST):  # E
+			if (x == maze_width - 1) and (wall_bits & EAST):  # E
 				wall = _make_single_wall(false)
 				wall.rotation_degrees.y = 90
 				wall.position += room_position + Vector3(ROOM_SIZE_HALF, 0, 0)

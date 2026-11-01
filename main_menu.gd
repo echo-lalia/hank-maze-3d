@@ -47,6 +47,15 @@ func _on_play_button_pressed() -> void:
 	Main.start_game_run()
 
 
+func _on_hard_mode_button_pressed() -> void:
+	var init_screen: InitScreen = INIT_SCREEN_WAIT.instantiate()
+	Main.current_main_instance.add_child(init_screen)
+	await init_screen.finished_initializing
+	await get_tree().process_frame
+	await get_tree().physics_frame
+	Main.start_hard_mode_run()
+
+
 func _on_credits_button_pressed() -> void:
 	add_child(CREDITS.instantiate())
 

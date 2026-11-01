@@ -30,6 +30,13 @@ static func start_game_run() -> void:
 	start_scene(GAME_RUN)
 
 
+static func start_hard_mode_run() -> void:
+	delete_created_instance()
+	created_instance = GAME_RUN.instantiate()
+	created_instance.hard_mode = true
+	current_main_instance.add_child(created_instance)
+
+
 static func start_main_menu() -> void:
 	start_scene(MAIN_MENU)
 
