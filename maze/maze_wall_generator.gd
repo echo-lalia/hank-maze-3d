@@ -78,7 +78,7 @@ func _ready() -> void:
 		maze_length = 40
 		maze_radius = 9
 		# Make the maze more open
-		walls_to_open = 30
+		walls_to_open = 40
 		big_room_chance = 0.5
 		chance_to_delete_wall_ends = 0.75
 		# Reduce the number of vaultable walls.

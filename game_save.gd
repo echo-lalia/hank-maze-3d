@@ -32,6 +32,8 @@ static func load_save() -> GameSave:
 		print("Loading game data...")
 		return load(SAVE_PATH)
 	print("Couldn't load stored game data. Starting new save.")
+	var save_sharing_warn := FileAccess.open("user://dont_share_saves.txt", FileAccess.WRITE)
+	save_sharing_warn.store_string("Hank Maze 3D save data is stored as a native Godot Resource, and Godot Resources can contain code!\nBecause of this, it is not safe to share your save files!")
 	return GameSave.new()
 
 
