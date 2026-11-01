@@ -12,8 +12,8 @@ const HARD_MODE_THEME = preload("uid://d3cy7i0amx47t")
 @export var last_run_root: MarginContainer
 @export var hard_mode_color_override_labels: Array[Label] = []
 
-#@export var best_run_root: MarginContainer
 
+#@export var best_run_root: MarginContainer
 #@export var hard_mode_button: Button
 
 

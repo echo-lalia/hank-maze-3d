@@ -20,6 +20,7 @@
 [ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="8_wh7ba"]
 [ext_resource type="AudioStream" uid="uid://k6ybm3bcew2o" path="res://sfx/tension_drone.mp3" id="10_xcy0b"]
 [ext_resource type="Script" uid="uid://0dyh2v4kab28" path="res://bottle_ui.gd" id="11_7f3fc"]
+[ext_resource type="FontFile" uid="uid://bk478mnws54xe" path="res://Basal.ttf" id="11_slaic"]
 [ext_resource type="Texture2D" uid="uid://cqbin53ogo8qg" path="res://textures/bottle_icon.png" id="12_kibih"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pb32r"]
@@ -68,6 +69,10 @@ colors = PackedColorArray(1, 1, 1, 1, 0.96891445, 0.96767586, 0.9468724, 1, 0.74
 gradient = SubResource("Gradient_ly6kn")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="FontVariation" id="FontVariation_slaic"]
+base_font = ExtResource("11_slaic")
+baseline_offset = -0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wh7ba"]
 render_priority = 0
@@ -514,7 +519,19 @@ texture = ExtResource("8_tlqjr")
 
 [node name="HintsLabel" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/HintsContainer" unique_id=1523541332]
 layout_mode = 2
-text = "2"
+text = "2 (H)"
+
+[node name="Label" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/HintsContainer/HintsLabel" unique_id=804928380]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("FontVariation_slaic")
+theme_override_font_sizes/font_size = 8
+text = "Hints"
 
 [node name="BottleContainer" type="HBoxContainer" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer" unique_id=2132113601 node_paths=PackedStringArray("player", "throw_source")]
 layout_mode = 2
@@ -529,7 +546,19 @@ texture = ExtResource("12_kibih")
 
 [node name="BottlesLabel" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/BottleContainer" unique_id=524549605]
 layout_mode = 2
-text = "2"
+text = "2 (B)"
+
+[node name="Label" type="Label" parent="PlayerHead/PlayerCamera/MarginContainer2/VBoxContainer/BottleContainer/BottlesLabel" unique_id=725197495]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("FontVariation_slaic")
+theme_override_font_sizes/font_size = 8
+text = "Bottles"
 
 [node name="BoneRoot" type="Node3D" parent="PlayerHead/PlayerCamera" unique_id=1436103197]
 
