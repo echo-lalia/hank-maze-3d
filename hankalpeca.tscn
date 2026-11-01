@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dmq0s77ijkuxr" path="res://hankalpeca.gd" id="2_ikp2g"]
 [ext_resource type="Shader" uid="uid://dopsx56b5uiw1" path="res://dithered_texture_quantized.gdshader" id="3_2vd70"]
 [ext_resource type="Texture2D" uid="uid://cvsdipqf0id15" path="res://HankFull.png" id="3_mra0b"]
+[ext_resource type="Script" uid="uid://cvjhxy00wwwib" path="res://hank_sight.gd" id="4_2vd70"]
 [ext_resource type="AudioStream" uid="uid://csttkax1whkpk" path="res://sfx/organ_sting.mp3" id="4_utmuo"]
 [ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="9_bkn7k"]
 
@@ -1179,9 +1180,11 @@ stream_3/stream = SubResource("AudioStreamMP3_ud64e")
 stream_4/stream = SubResource("AudioStreamMP3_s075e")
 stream_5/stream = SubResource("AudioStreamMP3_k8slt")
 
-[node name="HankAlpeca" type="Node3D" unique_id=307689099]
+[node name="HankAlpeca" type="Node3D" unique_id=307689099 node_paths=PackedStringArray("hank_sight_normal_mode", "hank_sight_hard_mode")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
 script = ExtResource("2_ikp2g")
+hank_sight_normal_mode = NodePath("Armature/Skeleton3D/BoneAttachment3D/HankSight")
+hank_sight_hard_mode = NodePath("Armature/Skeleton3D/BoneAttachment3D/HankSightHard")
 
 [node name="Armature" type="Node3D" parent="." unique_id=1831976288]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312, 0)
@@ -1378,54 +1381,130 @@ skeleton = NodePath("..")
 bone_name = "Head"
 bone_idx = 13
 
-[node name="PlayerDetectionRaycast" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=1375929066]
-transform = Transform3D(0.965829, 0.018938243, -0.25848782, -0.033112723, 0.9981711, -0.05059299, 0.2570565, 0.0574234, 0.9646897, -0.061, 0.165, 0.025)
-target_position = Vector3(0, 0, 20)
-collision_mask = 4
-hit_from_inside = true
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=1161230707]
-transform = Transform3D(0.9655581, 0.029499086, 0.25851035, -0.017431572, 0.998655, -0.048849836, -0.25960308, 0.042661108, 0.96477383, 0.06108719, 0.16430998, 0.024917759)
-target_position = Vector3(0, 0, 20)
-collision_mask = 4
-hit_from_inside = true
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycast3" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=816530086]
-transform = Transform3D(0.9973654, 0.02252882, -0.06895391, -0.032773692, 0.98795134, -0.15126097, 0.06471526, 0.15312235, 0.9860869, -0.088748306, 0.104563594, 0.015757978)
-target_position = Vector3(0, 0, 20)
-collision_mask = 4
-hit_from_inside = true
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycast4" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=873412605]
-transform = Transform3D(0.9968121, 0.040140804, 0.06895393, -0.029324904, 0.98806, -0.15126102, -0.07420219, 0.14875671, 0.98608726, 0.08522202, 0.1038686, 0.015825018)
-target_position = Vector3(0, 0, 20)
-collision_mask = 4
-hit_from_inside = true
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycast5" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=1730989475]
-transform = Transform3D(0.9999811, -0.00033408334, 0.0061653387, -0.0010407218, 0.97512996, 0.22163895, -0.006086031, -0.22164111, 0.97511065, 0.0027324352, 0.24871558, 0.037950218)
-target_position = Vector3(0, 0, 20)
-collision_mask = 4
-hit_from_inside = true
-collide_with_areas = true
-
-[node name="PlayerDetectionRaycast6" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=1726512492]
-transform = Transform3D(1.0000002, -4.011378e-05, -0.00033574132, -1.2530363e-06, 0.9924943, -0.12230673, 0.00033813273, 0.12230693, 0.99249357, 0.0014191866, 0.17916292, 0.02740059)
-target_position = Vector3(0, 0, 20)
-collision_mask = 4
-hit_from_inside = true
-collide_with_areas = true
-
 [node name="WallDetectionRaycastShort" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=865879631]
 transform = Transform3D(0.99999994, -3.0055958e-12, 2.2737368e-12, -1.4210855e-12, 0.98628664, -0.16504781, 7.275958e-12, 0.1650478, 0.9862867, 0, 0.182, 0.013)
 target_position = Vector3(0, 0, 1)
 hit_from_inside = true
 collide_with_areas = true
 debug_shape_custom_color = Color(0.7273735, 0.30263817, 0.8373477, 1)
+
+[node name="HankSight" type="Node3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=1531346821]
+script = ExtResource("4_2vd70")
+
+[node name="PlayerDetectionRaycast" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSight" unique_id=1375929066]
+transform = Transform3D(0.965829, 0.018938245, -0.25848785, -0.03311272, 0.99817103, -0.050593004, 0.25705647, 0.057423413, 0.9646896, -0.061000004, 0.16500002, 0.024999991)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSight" unique_id=1161230707]
+transform = Transform3D(0.9655582, 0.029499086, 0.25851032, -0.017431576, 0.99865496, -0.04884983, -0.25960305, 0.04266113, 0.9647738, 0.0610872, 0.16430992, 0.024917759)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast3" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSight" unique_id=816530086]
+transform = Transform3D(0.9973655, 0.02252882, -0.068953924, -0.032773692, 0.98795134, -0.15126097, 0.06471525, 0.15312238, 0.98608685, -0.088748306, 0.104563534, 0.015757978)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast4" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSight" unique_id=873412605]
+transform = Transform3D(0.9968121, 0.040140804, 0.068953946, -0.029324904, 0.98806, -0.15126102, -0.07420219, 0.14875673, 0.9860872, 0.08522203, 0.1038686, 0.015825026)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast5" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSight" unique_id=1730989475]
+transform = Transform3D(0.99998116, -0.00033408357, 0.0061653387, -0.0010407238, 0.9751299, 0.22163893, -0.00608603, -0.22164105, 0.9751106, 0.0027324362, 0.24871558, 0.037950218)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast6" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSight" unique_id=1726512492]
+transform = Transform3D(1.0000002, -4.0113824e-05, -0.00033574086, -1.2530654e-06, 0.9924943, -0.12230672, 0.00033813296, 0.12230694, 0.9924935, 0.0014191857, 0.17916286, 0.02740059)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="HankSightHard" type="Node3D" parent="Armature/Skeleton3D/BoneAttachment3D" unique_id=1090499083]
+script = ExtResource("4_2vd70")
+
+[node name="PlayerDetectionRaycast" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=737988032]
+transform = Transform3D(0.86638796, 0.003430669, -0.49936008, -0.03311272, 0.998171, -0.05059298, 0.49827242, 0.060368318, 0.86491704, 0, 0.165, 0.025)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast2" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=271356294]
+transform = Transform3D(0.8654673, 0.03953543, 0.49940366, -0.017431572, 0.99865496, -0.04884983, -0.50066227, 0.033572532, 0.8649925, 0, 0.164, 0.025)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast3" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=1925648245]
+transform = Transform3D(0.9973655, 0.02252882, -0.068953924, -0.032773692, 0.98795134, -0.15126097, 0.06471525, 0.15312238, 0.98608685, -0.088748306, 0.104563534, 0.015757978)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast4" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=213508045]
+transform = Transform3D(0.9968121, 0.040140804, 0.068953946, -0.029324904, 0.98806, -0.15126102, -0.07420219, 0.14875673, 0.9860872, 0.08522203, 0.1038686, 0.015825026)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast5" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=1708103486]
+transform = Transform3D(0.99998116, -0.00033408357, 0.0061653387, -0.0010407238, 0.9751299, 0.22163893, -0.00608603, -0.22164105, 0.9751106, 0.0027324362, 0.24871558, 0.037950218)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast6" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=489405480]
+transform = Transform3D(1.0000002, -4.0113824e-05, -0.00033574086, -1.2530654e-06, 0.9924943, -0.12230672, 0.00033813296, 0.12230694, 0.9924935, 0.0014191857, 0.17916286, 0.02740059)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast7" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=1156420430]
+transform = Transform3D(0.9915375, 0.031175505, -0.12602444, -0.032389708, 0.9994475, -0.0075968057, 0.12571765, 0.011614591, 0.9919985, -0.07144969, 0.21564198, 0.032651275)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast8" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=2087115376]
+transform = Transform3D(0.9915405, 0.033768285, 0.12533022, -0.03315438, 0.9994269, -0.0069812625, -0.125494, 0.00276696, 0.9920909, 0.071, 0.216, 0.033)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast9" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=1659625588]
+transform = Transform3D(0.9611955, 0.017933177, -0.27528456, -0.03311272, 0.99817073, -0.050592978, 0.2738734, 0.05774515, 0.96003133, -0.02, 0.165, 0.025)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="PlayerDetectionRaycast10" type="RayCast3D" parent="Armature/Skeleton3D/BoneAttachment3D/HankSightHard" unique_id=1885135788]
+transform = Transform3D(0.96027076, 0.045808464, 0.27528456, -0.033112716, 0.99817073, -0.050592978, -0.2770982, 0.03946753, 0.96003133, 0.02, 0.165, 0.025)
+target_position = Vector3(0, 0, 20)
+collision_mask = 4
+hit_from_inside = true
+collide_with_areas = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=936143054]
 libraries/ = SubResource("AnimationLibrary_jitxl")

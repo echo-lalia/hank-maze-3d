@@ -57,7 +57,7 @@ const SOUTH: int = 0b0100
 const WEST: int = 0b1000
 
 ## Room coordinates that can't generate objects
-var banned_object_rooms: Array[Vector2i] = [Vector2i(maze_radius, 0), Vector2i(maze_radius, maze_length-1)]
+var banned_object_rooms: Array[Vector2i]
 
 
 @onready var csg_combiner_3d: CSGCombiner3D = $CSGCombiner3D
@@ -83,6 +83,9 @@ func _ready() -> void:
 		chance_to_delete_wall_ends = 0.75
 		# Reduce the number of vaultable walls.
 		vault_chance_threshold = 0.05
+	
+	
+	banned_object_rooms = [Vector2i(maze_radius, 0), Vector2i(maze_radius, maze_length-1)]
 	
 	
 	generate_maze()

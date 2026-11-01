@@ -98,6 +98,10 @@ static func phase2_switchf(phase1f: float, phase2f: float) -> float:
 	return phase2f if current_game_run.phase_two else phase1f
 
 
+static func hard_mode_switchf(normalf: float, hardf: float) -> float:
+	return hardf if current_game_run.hard_mode else normalf
+
+
 #func win_game() -> void:
 	#won.emit()
 #

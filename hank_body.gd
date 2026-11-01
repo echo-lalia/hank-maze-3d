@@ -19,7 +19,8 @@ const ACCEL = 100.0
 
 static var current_hank_body_instance: HankBody
 
-
+## A single frame addition to hanks velocity (implemented for unsticking hank)
+var this_frame_force_velocity_addition: Vector2 = Vector2.ZERO
 
 
 ## The target position for the navigation agent.
@@ -66,6 +67,11 @@ func _physics_process(delta: float) -> void:
 		var direction_2d: Vector2 = Vector2(current_target_position.x - global_position.x, current_target_position.z - global_position.z).normalized()
 		var target_velocity_2d: Vector2 = direction_2d * hank_speed
 		var velocity_2d: Vector2 = Vector2(velocity.x, velocity.z).move_toward(target_velocity_2d, delta * ACCEL)
+		
+		if this_frame_force_velocity_addition:
+			velocity_2d += this_frame_force_velocity_addition
+			this_frame_force_velocity_addition = Vector2.ZERO
+		
 		velocity.x = velocity_2d.x
 		velocity.z = velocity_2d.y
 	

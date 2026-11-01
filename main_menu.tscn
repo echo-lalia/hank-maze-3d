@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bji480xu4rrwx" path="res://textures/stylebox_bg.png" id="2_jix8l"]
 [ext_resource type="PackedScene" uid="uid://dx13pnwtfy8h1" path="res://time_label.tscn" id="4_glbon"]
 [ext_resource type="Texture2D" uid="uid://jhibta3gofy2" path="res://title_text.png" id="4_nlkkf"]
+[ext_resource type="Theme" uid="uid://d3cy7i0amx47t" path="res://hard_mode_theme.tres" id="5_8qtwp"]
 [ext_resource type="AudioStream" uid="uid://bdv40k70xh4dg" path="res://sfx/ambience0.mp3" id="7_qe12f"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fu7sn"]
@@ -45,7 +46,24 @@ shadow_size = 6
 shadow_color = Color(0.05628, 0.06, 0.0041999994, 0.6117647)
 shadow_offset = Vector2(0.5, 0.5)
 
-[node name="MainMenu" type="Panel" unique_id=1676622235 node_paths=PackedStringArray("success_label", "last_run_time_label", "best_run_time_label", "last_run_root", "best_run_root")]
+[sub_resource type="LabelSettings" id="LabelSettings_8qtwp"]
+font_color = Color(0.9019608, 0.8156863, 0.65882355, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0.039215688, 0.007843138, 0, 0.5686275)
+shadow_offset = Vector2(0.5, 0.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0o4t1"]
+font_size = 32
+font_color = Color(0.9019608, 0.8156863, 0.65882355, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0.039215688, 0.007843138, 0, 0.5686275)
+shadow_offset = Vector2(0.5, 0.5)
+
+[node name="MainMenu" type="Panel" unique_id=1676622235 node_paths=PackedStringArray("success_label", "last_run_time_label", "best_run_time_label", "last_run_root", "hard_mode_color_override_labels", "delete_if_not_beaten_run", "delete_if_not_beaten_hard_mode")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -58,7 +76,9 @@ success_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRo
 last_run_time_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
 best_run_time_label = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")
 last_run_root = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot")
-best_run_root = NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot")
+hard_mode_color_override_labels = [NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/Label"), NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/SuccessLabel"), NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/Time"), NodePath("MarginContainer2/VBoxContainer/HBoxContainer/LastRunRoot/PanelContainer/VBoxContainer/HBoxContainer/TimeLabel")]
+delete_if_not_beaten_run = [NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot"), NodePath("MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer/HardModeButton")]
+delete_if_not_beaten_hard_mode = [NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HardModeBestTimeContainer"), NodePath("MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/MarginContainer3")]
 
 [node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1420303901]
 layout_mode = 1
@@ -93,6 +113,7 @@ alignment = 1
 [node name="LastRunRoot" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer" unique_id=569159197]
 layout_mode = 2
 size_flags_vertical = 4
+theme = ExtResource("1_fu7sn")
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
@@ -152,7 +173,7 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot" unique_id=916659467]
-custom_minimum_size = Vector2(200, 160)
+custom_minimum_size = Vector2(220, 160)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer" unique_id=1984618337]
@@ -194,6 +215,33 @@ theme_override_constants/margin_bottom = 6
 [node name="HSeparator" type="HSeparator" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/MarginContainer2" unique_id=1596239919]
 layout_mode = 2
 
+[node name="HardModeBestTimeContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=2090731674]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("5_8qtwp")
+alignment = 1
+
+[node name="Time" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HardModeBestTimeContainer" unique_id=1711480350]
+layout_mode = 2
+text = "Hard mode: "
+label_settings = SubResource("LabelSettings_8qtwp")
+
+[node name="TimeLabel" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/HardModeBestTimeContainer" unique_id=1075240052 instance=ExtResource("4_glbon")]
+layout_mode = 2
+text = "2:36      "
+label_settings = SubResource("LabelSettings_0o4t1")
+time = 156.335
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer" unique_id=174938688]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 6
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer2/VBoxContainer/HBoxContainer/BestRunRoot/PanelContainer/VBoxContainer/MarginContainer3" unique_id=1315402677]
+layout_mode = 2
+
 [node name="PlayButtonContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer" unique_id=832138857]
 layout_mode = 2
 size_flags_vertical = 6
@@ -216,7 +264,8 @@ text = "Play"
 [node name="HardModeButton" type="Button" parent="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer" unique_id=1828397585]
 custom_minimum_size = Vector2(74.12, 43.47)
 layout_mode = 2
-text = "Play"
+theme = ExtResource("5_8qtwp")
+text = "Hard Mode"
 
 [node name="CreditsButton" type="Button" parent="MarginContainer2/VBoxContainer/PlayButtonContainer/HBoxContainer" unique_id=663841415]
 layout_mode = 2

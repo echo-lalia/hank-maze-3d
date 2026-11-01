@@ -6,11 +6,14 @@ const SAVE_PATH = "user://savedata.tres"
 
 
 @export var best_run_time: float = 100_000_000_000.0
+@export var best_hard_mode_time: float = 100_000_000_000.0
 @export var last_run_time: float = 0.0
 @export var pb_last_run: bool = false
 @export var won_last_run: bool = false
+@export var last_run_was_hard_mode: bool = false
 @export var has_finished_run_ever: bool = false
 @export var has_won_run_ever: bool = false
+@export var has_won_hard_mode_ever: bool = false
 
 @export var fov: float = 75
 @export var brightness: float = 100
@@ -42,11 +45,14 @@ func _to_string() -> String:
 	return (
 		"GameSave:"
 		+ "\n\tbest_run_time=" + str(best_run_time)
+		+ "\n\tbest_hard_mode_time=" + str(best_hard_mode_time)
 		+ "\n\tlast_run_time=" + str(last_run_time)
 		+ "\n\tpb_last_run=" + str(pb_last_run)
 		+ "\n\twon_last_run=" + str(won_last_run)
+		+ "\n\tlast_run_was_hard_mode=" + str(last_run_was_hard_mode)
 		+ "\n\thas_finished_run_ever=" + str(has_finished_run_ever)
 		+ "\n\thas_won_run_ever=" + str(has_won_run_ever)
+		+ "\n\thas_won_hard_mode_ever=" + str(has_won_hard_mode_ever)
 		+ "\n\tsneak_button=" + str(sneak_button)
 		+ "\n\tsprint_button=" + str(sprint_button)
 		+ "\n\thint_button=" + str(hint_button)

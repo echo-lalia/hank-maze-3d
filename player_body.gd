@@ -197,11 +197,24 @@ func _physics_process(delta: float) -> void:
 func win() -> void:
 	Main.game_save.last_run_time = game_run.get_run_time()
 	Main.game_save.won_last_run = true
-	if Main.game_save.last_run_time < Main.game_save.best_run_time:
-		Main.game_save.best_run_time = Main.game_save.last_run_time
-		Main.game_save.pb_last_run = true
+	
+	if game_run.hard_mode:
+		if Main.game_save.last_run_time < Main.game_save.best_hard_mode_time:
+			Main.game_save.best_hard_mode_time = Main.game_save.last_run_time
+			Main.game_save.pb_last_run = true
+		else:
+			Main.game_save.pb_last_run = false
+		Main.game_save.has_won_hard_mode_ever = true
+		Main.game_save.last_run_was_hard_mode = true
+	
 	else:
-		Main.game_save.pb_last_run = false
+		if Main.game_save.last_run_time < Main.game_save.best_run_time:
+			Main.game_save.best_run_time = Main.game_save.last_run_time
+			Main.game_save.pb_last_run = true
+		else:
+			Main.game_save.pb_last_run = false
+		Main.game_save.last_run_was_hard_mode = false
+	
 	Main.game_save.has_finished_run_ever = true
 	Main.game_save.has_won_run_ever = true
 	Main.save_game()
@@ -213,6 +226,12 @@ func lose() -> void:
 	Main.game_save.won_last_run = false
 	Main.game_save.pb_last_run = false
 	Main.game_save.has_finished_run_ever = true
+	
+	if game_run.hard_mode:
+		Main.game_save.last_run_was_hard_mode = true
+	else:
+		Main.game_save.last_run_was_hard_mode = false
+	
 	Main.save_game()
 	Main.start_hank_death_screen()
 

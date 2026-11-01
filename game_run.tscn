@@ -255,7 +255,8 @@ shape = SubResource("CapsuleShape3D_j7oc2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="HankBody" unique_id=760305261]
-debug_enabled = true
+path_desired_distance = 0.6
+path_height_offset = 0.5
 
 [node name="HankStateMachine" type="Node" parent="HankBody" unique_id=1345710326 node_paths=PackedStringArray("hank_body", "hank_mesh", "initial_state")]
 script = ExtResource("4_bltg3")

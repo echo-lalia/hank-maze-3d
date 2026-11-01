@@ -5,6 +5,8 @@ extends HankState
 
 
 const LITTLE_MOVEMENT_DIST_THRESHOLD_SQUARED = 0.5
+## How much time should pass before trying to unstick hank.
+const LITTLE_MOVEMENT_TIME_TRY_UNSTICK = 1.0
 const MAX_TIME_LITTLE_MOVEMENT = 5.0
 
 
@@ -58,13 +60,16 @@ func physics_update(delta: float) -> void:
 	elif hank_body.navigation_agent_3d.is_navigation_finished():
 		state_machine.current_state = looking_state
 		override_head_look_at = Vector3.ZERO
-
+	
 	if _smooth_prev_global_position.distance_squared_to(global_position) < LITTLE_MOVEMENT_DIST_THRESHOLD_SQUARED:
 		time_not_moving += delta
 		if time_not_moving > MAX_TIME_LITTLE_MOVEMENT:
-			print("Hank hasn't been moving much; unsticking him.")
+			print("Hank hasn't been moving much; returning to looking state.")
 			target_position = global_position
 			state_machine.current_state = looking_state
 			override_head_look_at = Vector3.ZERO
+		elif time_not_moving > LITTLE_MOVEMENT_TIME_TRY_UNSTICK:
+			print("Hank hasn't been moving much; trying to unstick him.")
+			hank_body.this_frame_force_velocity_addition = Vector2(randfn(0, 5), randfn(0, 2))
 	
 	_smooth_prev_global_position = _smooth_prev_global_position.lerp(global_position, delta)

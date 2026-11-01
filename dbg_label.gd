@@ -18,3 +18,4 @@ func _process(_delta: float) -> void:
 	)
 	if Input.is_action_just_pressed("dbg_label"):
 		visible = not visible
+		HankBody.current_hank_body_instance.navigation_agent_3d.debug_enabled = visible

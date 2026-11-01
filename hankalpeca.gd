@@ -15,12 +15,18 @@ const CONE_VISION_DISTANCE: float = 5
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var armature: Node3D = $Armature
 @onready var floor_detection_raycast: RayCast3D = $FloorDetectionRaycast
-@onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast
-@onready var player_detection_raycast_2: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast2
-@onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
-@onready var player_detection_raycast_4: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast4
-@onready var player_detection_raycast_5: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast5
-@onready var player_detection_raycast_6: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast6
+
+@export var hank_sight_normal_mode: HankSight
+@export var hank_sight_hard_mode: HankSight
+var hank_sight: HankSight
+
+
+#@onready var player_detection_raycast: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast
+#@onready var player_detection_raycast_2: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast2
+#@onready var player_detection_raycast_3: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast3
+#@onready var player_detection_raycast_4: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast4
+#@onready var player_detection_raycast_5: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast5
+#@onready var player_detection_raycast_6: RayCast3D = $Armature/Skeleton3D/BoneAttachment3D/PlayerDetectionRaycast6
 
 
 @onready var organ_sting_player: AudioStreamPlayer = $OrganStingPlayer
@@ -83,6 +89,13 @@ var velocity: Vector3 = Vector3.ZERO
 
 
 func _ready() -> void:
+	if GameRun.current_game_run.hard_mode:
+		hank_sight = hank_sight_hard_mode
+		hank_sight_normal_mode.queue_free()
+	else:
+		hank_sight = hank_sight_normal_mode
+		hank_sight_hard_mode.queue_free()
+	
 	current_hank_mesh_instance = self
 	set_process(false)
 	await InitScreen.await_init_screen()
@@ -146,24 +159,25 @@ func update_animation_speed_direction() -> void:
 var _step_sfx_current_distance: float = 0.0
 
 
-func _raycast_sees_player(raycast: RayCast3D) -> bool:
-	if raycast.is_colliding() and player_detection_raycast.get_collider() is HankSightArea:
-		#print("RAYCAST SEES PLAYER")
-		return true
-	#print("RAYCAST SEES ", player_detection_raycast.get_collider())
-	return false
+#func _raycast_sees_player(raycast: RayCast3D) -> bool:
+#	if raycast.is_colliding() and raycast.get_collider() is HankSightArea:
+#		#print("RAYCAST SEES PLAYER")
+#		return true
+#	#print("RAYCAST SEES ", player_detection_raycast.get_collider())
+#	return false
+
 
 func _player_in_vision_cone() -> bool:
-	var player_direction_vector: Vector3 = player_detection_raycast.global_position.direction_to(PlayerBody.current_player_instance.global_position)
-	var player_angle: float = (player_detection_raycast.global_basis.z).angle_to(player_direction_vector)
+	var player_direction_vector: Vector3 = hank_sight.global_position.direction_to(PlayerBody.current_player_instance.global_position)
+	var player_angle: float = (hank_sight.global_basis.z).angle_to(player_direction_vector)
 	return (
 		player_angle < CONE_VISION_ANGLE
-		and player_detection_raycast.global_position.distance_to(PlayerBody.current_player_instance.global_position) < CONE_VISION_DISTANCE
+		and hank_sight.global_position.distance_to(PlayerBody.current_player_instance.global_position) < CONE_VISION_DISTANCE
 	)
 
 
 func _can_look_at_point(point: Vector3) -> bool:
-	var direction_vector: Vector3 = player_detection_raycast.global_position.direction_to(point)
+	var direction_vector: Vector3 = hank_sight.global_position.direction_to(point)
 	var angle: float = (global_basis.z).angle_to(direction_vector)
 	return (angle < STARE_PLAYER_MAX_ANGLE)
 
@@ -210,12 +224,7 @@ func _process(delta: float) -> void:
 	# Handle player sight
 	saw_player_last_frame = saw_player_this_frame
 	
-	if _raycast_sees_player(player_detection_raycast) \
-	or _raycast_sees_player(player_detection_raycast_2) \
-	or _raycast_sees_player(player_detection_raycast_3) \
-	or _raycast_sees_player(player_detection_raycast_4) \
-	or _raycast_sees_player(player_detection_raycast_5) \
-	or _raycast_sees_player(player_detection_raycast_6) \
+	if hank_sight.can_see_player() \
 	or (_player_in_vision_cone() and PlayerBody.current_player_instance.has_hank_line_of_sight):
 		saw_player_this_frame = true
 		last_time_seeing_player = Time.get_ticks_msec()

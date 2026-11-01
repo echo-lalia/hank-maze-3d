@@ -14,6 +14,7 @@ const PATROL_MAX_PHASE2: float = 30.0
 
 const MAX_PLAYER_DISTANCE_FOLLOW_PHASE1: float = 40.0
 const MAX_PLAYER_DISTANCE_FOLLOW_PHASE2: float = 30.0
+const MAX_PLAYER_DISTANCE_FOLLOW_HARD_MODE: float = 12.0
 const PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE1: float = 0.6
 const PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE2: float = 0.4
 const MOVE_TOWARD_OBJECTIVE_CHANCE_PHASE1: float = 0.2
@@ -65,14 +66,14 @@ func _looking_finished(anim_name: StringName) -> void:
 	
 	# Select a random movement strategy.
 	var max_path_length: float
-	if global_position.distance_to(PlayerBody.current_player_instance.global_position) > GameRun.phase2_switchf(MAX_PLAYER_DISTANCE_FOLLOW_PHASE1, MAX_PLAYER_DISTANCE_FOLLOW_PHASE2) \
+	if global_position.distance_to(PlayerBody.current_player_instance.global_position) > GameRun.phase2_switchf(MAX_PLAYER_DISTANCE_FOLLOW_PHASE1, GameRun.hard_mode_switchf(MAX_PLAYER_DISTANCE_FOLLOW_PHASE2, MAX_PLAYER_DISTANCE_FOLLOW_HARD_MODE)) \
 	and randf() < GameRun.phase2_switchf(PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE1, PLAYER_DISTANCE_FOLLOW_CHANCE_PHASE2):
 		print("Moving toward player")
 		# Move toward the player.
 		target_position = PlayerBody.current_player_instance.global_position
 		if GameRun.current_game_run.phase_two:
 			hank_body.navigation_agent_3d.get_next_path_position()
-			max_path_length = hank_body.navigation_agent_3d.get_path_length() - MAX_PLAYER_DISTANCE_FOLLOW_PHASE2
+			max_path_length = hank_body.navigation_agent_3d.get_path_length() - GameRun.hard_mode_switchf(MAX_PLAYER_DISTANCE_FOLLOW_PHASE2, MAX_PLAYER_DISTANCE_FOLLOW_HARD_MODE)
 		else:
 			max_path_length = PATROL_MAX_PATH
 

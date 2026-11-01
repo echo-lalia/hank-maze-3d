@@ -36,5 +36,12 @@ func _on_interacted(player: PlayerBody) -> void:
 		global_position,
 		1000,
 	)
-	await get_tree().create_timer(2.0).timeout
+	if GameRun.current_game_run.hard_mode:
+		# Inform hank of the players position a few times >:)
+		for i in 10:
+			await get_tree().create_timer(0.2).timeout
+			PlayerBody.current_player_instance.played_sound.emit(global_position, 1000)
+	else:
+		await get_tree().create_timer(2.0).timeout
+	
 	queue_free()
